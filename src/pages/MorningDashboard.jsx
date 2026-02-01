@@ -46,11 +46,12 @@ function MorningDashboard() {
                 </p>
                 <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20">상승</span>
               </div>
-              <h2 className="text-white text-2xl font-extrabold tracking-tight leading-tight mb-2">₩72,450,000</h2>
-              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/25 mb-4">
-                <span className="material-symbols-outlined text-emerald-400 text-lg">trending_up</span>
-                <span className="text-emerald-400 text-base font-bold">+₩1,240,000</span>
-                <span className="text-emerald-400/90 text-sm font-semibold">+2.14%</span>
+              <div className="flex flex-col gap-1 mb-2">
+                <h2 className="text-emerald-400 text-2xl font-extrabold tracking-tight leading-tight">+₩1,240,000 (+2.14%)</h2>
+                <div className="flex items-center gap-1.5 opacity-60">
+                  <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
+                  <p className="text-white text-xs font-bold">₩72,450,000</p>
+                </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
                 {[25, 38, 42, 48, 55, 62, 70, 78, 88, 100].map((height, index) => (
@@ -81,11 +82,12 @@ function MorningDashboard() {
                 </p>
                 <span className="text-rose-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20">하락</span>
               </div>
-              <h2 className="text-white text-2xl font-extrabold tracking-tight leading-tight mb-2">₩35,670,450</h2>
-              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-rose-500/15 border border-rose-500/25 mb-4">
-                <span className="material-symbols-outlined text-rose-400 text-lg">trending_down</span>
-                <span className="text-rose-400 text-base font-bold">-₩180,000</span>
-                <span className="text-rose-400/90 text-sm font-semibold">-0.42%</span>
+              <div className="flex flex-col gap-1 mb-2">
+                <h2 className="text-rose-400 text-2xl font-extrabold tracking-tight leading-tight">-₩180,000 (-0.42%)</h2>
+                <div className="flex items-center gap-1.5 opacity-60">
+                  <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
+                  <p className="text-white text-xs font-bold">₩35,670,450</p>
+                </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
                 {[100, 92, 88, 85, 82, 78, 75, 72, 68, 65].map((height, index) => (
@@ -109,15 +111,14 @@ function MorningDashboard() {
         {/* 총 자산 잔액 (해외 ₩72,450,000 + 국내 ₩35,670,450 = ₩108,120,450 / +₩1,060,000, +0.99%) */}
         <div className="px-6 py-2 shrink-0 animate-slide-in-up">
           <div className="glass rounded-xl p-6 relative overflow-hidden hover-lift transition-all duration-300">
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 blur-3xl rounded-full"></div>
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full"></div>
             <div className="relative z-10">
-              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1.5">총 자산 잔액</p>
-              <h1 className="text-white text-4xl font-extrabold tracking-tight leading-tight mb-4">₩108,120,450</h1>
-              <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                <span className="material-symbols-outlined text-emerald-400 text-2xl">trending_up</span>
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-emerald-400 text-xl font-bold tracking-tight">+₩1,060,000</span>
-                  <span className="text-emerald-400/90 text-lg font-semibold">+0.99%</span>
+              <p className="text-slate-400 text-sm font-medium mb-1">총 수익</p>
+              <div className="flex flex-col gap-1 mb-4">
+                <h1 className="text-emerald-400 text-3xl font-extrabold tracking-tight">+₩1,060,000 (+0.99%)</h1>
+                <div className="flex items-center gap-1.5 opacity-60">
+                  <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
+                  <p className="text-white text-sm font-bold">₩108,120,450</p>
                 </div>
               </div>
               <div className="mt-8 h-28 w-full flex items-end gap-1.5">
