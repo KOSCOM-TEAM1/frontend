@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>자산 현황</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Pretendard", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-primary {
+            background: rgba(19, 91, 236, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 91, 236, 0.3);
+        }
+        .bg-gradient-blur {
+            background: radial-gradient(circle at 50% -20%, rgba(19, 91, 236, 0.15) 0%, rgba(16, 22, 34, 0) 60%);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden bg-gradient-blur">
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 z-50 backdrop-blur-md">
+<div class="text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">자산 현황</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 cursor-pointer items-center justify-center rounded-full glass text-white">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center py-6 px-4">
+<p class="text-slate-400 text-sm font-medium mb-1">총 자산</p>
+<h1 class="text-white tracking-tight text-[40px] font-bold leading-tight text-center">₩198,420,500</h1>
+<div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="text-sm font-semibold leading-none">+2.45% (+₩4,750,200)</span>
+</div>
+<p class="text-slate-500 text-xs mt-3">방금 전 업데이트됨</p>
+</div>
+<div class="px-4 py-4">
+<div class="glass rounded-xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white text-base font-bold">지역별 비중</h3>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-8">
+<div class="relative size-48 flex items-center justify-center">
+<svg class="size-full -rotate-90 transform" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#135bec" stroke-dasharray="251.2" stroke-dashoffset="80.38" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="rgba(255,255,255,0.3)" stroke-dasharray="251.2" stroke-dashoffset="201.0" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold text-white">68%</span>
+<span class="text-[10px] text-slate-400 uppercase tracking-widest">국내</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="glass-primary rounded-lg p-3">
+<div class="flex items-center gap-2 mb-1">
+<div class="size-2 rounded-full bg-primary"></div>
+<span class="text-slate-300 text-xs">국내 자산</span>
+</div>
+<p class="text-white text-lg font-bold">₩134.9M</p>
+<p class="text-emerald-400 text-[10px] font-medium">+1.4% (24시간)</p>
+</div>
+<div class="glass rounded-lg p-3">
+<div class="flex items-center gap-2 mb-1">
+<div class="size-2 rounded-full bg-slate-400"></div>
+<span class="text-slate-300 text-xs">해외 자산</span>
+</div>
+<p class="text-white text-lg font-bold">₩63.5M</p>
+<p class="text-emerald-400 text-[10px] font-medium">+4.2% (24시간)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 pt-6 pb-3 flex items-center justify-between">
+<h3 class="text-white text-lg font-bold tracking-tight">보유 종목</h3>
+<button class="text-primary text-sm font-semibold">전체보기</button>
+</div>
+<div class="px-4 flex flex-col gap-3 pb-24">
+<div class="glass flex items-center justify-between p-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg glass-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">currency_bitcoin</span>
+</div>
+<div>
+<p class="text-white font-bold leading-tight">비트코인</p>
+<p class="text-slate-500 text-xs">BTC · 1.24 BTC</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold leading-tight">₩106,210,450</p>
+<div class="flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[12px] text-emerald-400">arrow_drop_up</span>
+<p class="text-emerald-400 text-xs font-medium">3.4%</p>
+</div>
+</div>
+</div>
+<div class="glass flex items-center justify-between p-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg glass flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-300">account_balance</span>
+</div>
+<div>
+<p class="text-white font-bold leading-tight">애플</p>
+<p class="text-slate-500 text-xs">AAPL · 120주</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold leading-tight">₩31,410,120</p>
+<div class="flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[12px] text-rose-400 rotate-180">arrow_drop_up</span>
+<p class="text-rose-400 text-xs font-medium">0.8%</p>
+</div>
+</div>
+</div>
+<div class="glass flex items-center justify-between p-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg glass flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-300">token</span>
+</div>
+<div>
+<p class="text-white font-bold leading-tight">이더리움</p>
+<p class="text-slate-500 text-xs">ETH · 14.5 ETH</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold leading-tight">₩49,971,430</p>
+<div class="flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[12px] text-emerald-400">arrow_drop_up</span>
+<p class="text-emerald-400 text-xs font-medium">1.2%</p>
+</div>
+</div>
+</div>
+<div class="glass flex items-center justify-between p-4 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg glass flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-300">savings</span>
+</div>
+<div>
+<p class="text-white font-bold leading-tight">S&amp;P 500 인덱스</p>
+<p class="text-slate-500 text-xs">VOO · 18주</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold leading-tight">₩10,828,500</p>
+<div class="flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[12px] text-slate-400">horizontal_rule</span>
+<p class="text-slate-400 text-xs font-medium">0.0%</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 left-4 right-4 z-50">
+<div class="glass flex items-center justify-around h-16 rounded-full px-4 shadow-2xl">
+<button class="flex flex-col items-center justify-center gap-0.5 text-primary">
+<span class="material-symbols-outlined fill-1">grid_view</span>
+<span class="text-[10px] font-bold">자산</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-0.5 text-slate-400">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-medium">분석</span>
+</button>
+<button class="size-12 rounded-full bg-primary flex items-center justify-center text-white -mt-10 border-4 border-[#101622] shadow-xl">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-0.5 text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+<span class="text-[10px] font-medium">알림</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-0.5 text-slate-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">프로필</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

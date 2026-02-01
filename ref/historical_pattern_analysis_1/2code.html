@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>리스크 방어 전략 수립 (수정본)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0e17",
+                        "ai-glow": "#3b82f6",
+                        "risk-high": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Pretendard", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card-deep {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .ai-glow-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(19, 91, 236, 0.25) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .ios-bottom-bar {
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+    </style>
+<style>
+        body {
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-white overflow-x-hidden">
+<header class="fixed top-0 w-full z-50 ios-bottom-bar border-b border-white/5">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center -ml-1">
+<span class="material-symbols-outlined text-white text-xl">arrow_back_ios_new</span>
+</button>
+<h2 class="text-white text-[17px] font-bold tracking-tight">리스크 방어 전략 수립</h2>
+</div>
+<div class="flex items-center gap-1.5 bg-primary/20 px-3 py-1 rounded-full border border-primary/30">
+<span class="flex h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+<span class="text-[11px] font-bold text-blue-400 uppercase tracking-tight">AI Active</span>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-36 px-5 max-w-md mx-auto space-y-6 relative">
+<div class="ai-glow-effect top-0 -left-20"></div>
+<div class="ai-glow-effect bottom-20 -right-20 opacity-50"></div>
+<section class="relative">
+<div class="glass-card-deep rounded-2xl p-5 shadow-2xl">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary text-xl">psychology</span>
+</div>
+<h3 class="text-white font-bold text-base">AI 분석 결과</h3>
+</div>
+<div class="bg-black/20 rounded-xl p-4 mb-5 border border-white/5">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-white/95 text-[14px] leading-[1.6] break-keep">
+                                현재 시장 데이터는 <span class="text-primary font-bold">2008년 금융위기 당시와 85% 유사한 패턴</span>을 보입니다. 변동성 대응을 위한 전략이 즉시 필요합니다.
+                            </p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end px-1">
+<span class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Similarity Graph</span>
+<div class="flex gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[11px] text-white/50">현재</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full border border-white/30"></span>
+<span class="text-[11px] text-white/50">2008년</span>
+</div>
+</div>
+</div>
+<div class="relative h-[110px] w-full bg-white/5 rounded-xl flex items-center justify-center p-3 border border-white/5">
+<svg class="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 100 40">
+<path d="M0 35 Q 25 35, 35 12 T 65 28 T 100 8" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3" stroke-width="1.5"></path>
+<path d="M0 38 Q 22 38, 32 15 T 60 30" stroke="#135bec" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<circle cx="32" cy="15" fill="#135bec" r="3"></circle>
+<circle cx="32" cy="15" fill="#135bec" opacity="0.3" r="6"></circle>
+</svg>
+</div>
+<button class="w-full py-3.5 bg-primary/10 hover:bg-primary/20 rounded-xl border border-primary/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="text-primary text-[13px] font-bold tracking-tight">AI 심층 분석 리포트 보기</span>
+</button>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<h4 class="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em] px-1">AI 추천 방어 전략</h4>
+<div class="space-y-3">
+<div class="glass-card rounded-2xl p-4 flex items-center justify-between group active:bg-white/10 transition-all border-l-4 border-l-primary ring-1 ring-primary/20">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-2xl">trending_down</span>
+</div>
+<div>
+<p class="text-white font-bold text-[15px] mb-0.5">인버스 ETF 매수</p>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-white/40 bg-white/5 px-1.5 py-0.5 rounded">리스크 헤징</span>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-risk-high rounded-full"></div>
+<span class="text-[11px] text-risk-high font-bold">점수: 92</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40">
+<span class="material-symbols-outlined text-white text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-4 flex items-center justify-between group active:bg-white/10 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-white/60 text-2xl">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-white font-bold text-[15px] mb-0.5">안전자산 비중 확대</p>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-white/40 bg-white/5 px-1.5 py-0.5 rounded">금/달러 30%</span>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+<span class="text-[11px] text-blue-400 font-bold">점수: 88</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-white/20 flex items-center justify-center"></div>
+</div>
+<div class="glass-card rounded-2xl p-4 flex items-center justify-between group active:bg-white/10 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-white/60 text-2xl">do_not_disturb_on</span>
+</div>
+<div>
+<p class="text-white font-bold text-[15px] mb-0.5">손절가 설정</p>
+<div class="flex items-center gap-2">
+<span class="text-[11px] text-white/40 bg-white/5 px-1.5 py-0.5 rounded">현재가 -5%</span>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+<span class="text-[11px] text-yellow-400 font-bold">점수: 75</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-white/20 flex items-center justify-center"></div>
+</div>
+</div>
+</section>
+<div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex gap-3">
+<span class="material-symbols-outlined text-red-500 text-xl shrink-0">info</span>
+<p class="text-red-100/70 text-[12px] leading-snug break-keep">
+                본 전략 적용 시 시장 변동에 따라 자산이 실시간으로 매매될 수 있습니다. 충분히 숙지 후 실행해 주시기 바랍니다.
+            </p>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-[60] ios-bottom-bar border-t border-white/5 px-5 pt-4 pb-10">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-primary h-[60px] rounded-2xl flex items-center justify-center gap-3 shadow-[0_12px_30px_-5px_rgba(19,91,236,0.6)] active:scale-[0.97] active:brightness-110 transition-all duration-200">
+<span class="material-symbols-outlined text-white text-[22px] font-bold">verified_user</span>
+<span class="text-white font-bold text-[17px] tracking-tight">방어 전략 적용하기</span>
+</button>
+</div>
+</div>
+
+</body></html>

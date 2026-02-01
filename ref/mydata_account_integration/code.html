@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>통합 자산 현황 (국내/해외)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans KR", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .bg-gradient-mesh {
+            background: radial-gradient(circle at 0% 0%, #1a2a44 0%, #101622 100%);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">
+<div class="orb w-64 h-64 bg-primary/20 top-[-50px] left-[-50px]"></div>
+<div class="orb w-80 h-80 bg-blue-900/10 bottom-[10%] right-[-100px]"></div>
+<div class="relative z-10 flex flex-col min-h-screen">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-white flex size-12 shrink-0 items-center cursor-pointer" data-icon="arrow_back_ios">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">통합 자산 현황</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+<div class="px-4 py-6">
+<h1 class="text-white tracking-tight text-[28px] font-extrabold leading-tight">내 자산 한눈에 보기</h1>
+<p class="text-gray-400 text-sm font-normal leading-relaxed pt-2">연결된 모든 계좌의 자산을 실시간으로 확인하세요.</p>
+</div>
+<div class="px-4 space-y-6 flex-1">
+<div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">국내 자산</span>
+<h3 class="text-3xl font-extrabold text-white tracking-tight">1,200,000원</h3>
+</div>
+<div class="bg-white/5 p-2 rounded-xl">
+<span class="material-symbols-outlined text-white">account_balance_wallet</span>
+</div>
+</div>
+<div class="space-y-4 pt-4 border-t border-white/5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] font-bold">A</div>
+<span class="text-sm font-medium text-gray-200">종합 위탁 계좌</span>
+</div>
+<span class="text-sm font-bold text-white">850,000원</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center text-[10px] font-bold">B</div>
+<span class="text-sm font-medium text-gray-200">CMA 파킹 계좌</span>
+</div>
+<span class="text-sm font-bold text-white">350,000원</span>
+</div>
+</div>
+<button class="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold text-gray-400 transition-all border border-white/5">
+                    국내 계좌 추가 연결하기
+                </button>
+</div>
+<div class="glass-card rounded-3xl p-6 relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">해외 자산</span>
+<h3 class="text-3xl font-extrabold text-white tracking-tight">$8,400.00</h3>
+</div>
+<div class="bg-white/5 p-2 rounded-xl">
+<span class="material-symbols-outlined text-white">language</span>
+</div>
+</div>
+<div class="space-y-4 pt-4 border-t border-white/5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-[10px] font-bold">U</div>
+<span class="text-sm font-medium text-gray-200">미국 주식 일반</span>
+</div>
+<span class="text-sm font-bold text-white">$7,200.00</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-[10px] font-bold">V</div>
+<span class="text-sm font-medium text-gray-200">외화 예수금</span>
+</div>
+<span class="text-sm font-bold text-white">$1,200.00</span>
+</div>
+</div>
+<button class="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold text-gray-400 transition-all border border-white/5">
+                    해외 계좌 추가 연결하기
+                </button>
+</div>
+</div>
+<div class="p-6 text-center space-y-4 mt-4">
+<div class="flex items-center justify-center gap-2 text-gray-500 text-[11px] font-medium">
+<span class="material-symbols-outlined text-sm">lock</span>
+                AES-256 은행급 암호화 적용 &amp; 마이데이터 보안 표준 준수
+            </div>
+<div class="h-1.5 w-32 bg-gray-800 rounded-full mx-auto mb-2"></div>
+</div>
+</div>
+
+</body></html>

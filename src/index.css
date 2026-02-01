@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #135bec;
+  --background-light: #f6f6f8;
+  --background-dark: #101622;
+  --accent-purple: #8b5cf6;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: max(884px, 100dvh);
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-card-deep {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-chip {
+  background: rgba(19, 91, 236, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-header {
+  background: rgba(5, 7, 10, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 50;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-primary {
+  background: rgba(19, 91, 236, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(19, 91, 236, 0.3);
+}
+
+.ios-bottom-bar {
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.mesh-gradient {
+  background-color: #101622;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(225, 85%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(260, 85%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(210, 85%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(240, 85%, 50%, 0.15) 0px, transparent 50%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+}
+
+.bg-gradient-mesh {
+  background: radial-gradient(circle at 0% 0%, #1a2a44 0%, #101622 100%);
+}
+
+.bg-gradient-blur {
+  background: radial-gradient(circle at 50% -20%, rgba(19, 91, 236, 0.15) 0%, rgba(16, 22, 34, 0) 60%);
+}
+
+/* 앱 화면 너비 제한 (모바일 뷰) */
+.app-frame {
+  width: 100%;
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* TTS 플로팅 패널 */
+.frosty-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.glowing-border {
+  box-shadow: 0 0 15px rgba(19, 91, 236, 0.3), inset 0 0 8px rgba(157, 80, 187, 0.2);
+}
+
+.visualizer-bar {
+  width: 3px;
+  background: linear-gradient(to top, #135bec, #9d50bb);
+  border-radius: 2px;
+  animation: barPulse 1.5s ease-in-out infinite;
+}
+
+.visualizer-bar:nth-child(1) { animation-delay: 0s; }
+.visualizer-bar:nth-child(2) { animation-delay: 0.1s; }
+.visualizer-bar:nth-child(3) { animation-delay: 0.2s; }
+.visualizer-bar:nth-child(4) { animation-delay: 0.3s; }
+.visualizer-bar:nth-child(5) { animation-delay: 0.4s; }
+.visualizer-bar:nth-child(6) { animation-delay: 0.5s; }
+.visualizer-bar:nth-child(7) { animation-delay: 0.6s; }
+.visualizer-bar:nth-child(8) { animation-delay: 0.7s; }
+.visualizer-bar:nth-child(9) { animation-delay: 0.8s; }
+.visualizer-bar:nth-child(10) { animation-delay: 0.9s; }
+.visualizer-bar:nth-child(11) { animation-delay: 1s; }
+.visualizer-bar:nth-child(12) { animation-delay: 1.1s; }
+
+.playlist-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.playlist-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(19, 91, 236, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(19, 91, 236, 0.6);
+  }
+}
+
+/* 막대 그래프 애니메이션 */
+@keyframes barGrowUp {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes barPulse {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-in.fade-in.slide-in-from-bottom-4 {
+  animation: fadeInSlide 0.3s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-bar-grow {
+  animation: barGrowUp 0.8s ease-out forwards;
+}
+
+.animate-bar-pulse {
+  animation: barPulse 2s ease-in-out infinite;
+}
+
+/* 호버 트랜지션 */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(19, 91, 236, 0.4);
+  border-color: rgba(19, 91, 236, 0.5);
+}
+
+/* 차트 바 호버 효과 */
+.chart-bar {
+  transition: all 0.3s ease;
+  transform-origin: bottom;
+}
+
+.chart-bar:hover {
+  filter: brightness(1.2);
+  transform: scaleY(1.05);
+}

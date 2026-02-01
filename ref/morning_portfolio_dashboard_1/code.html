@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>메인 대시보드 (TTS 플로팅 모달 포함)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "accent-blue": "#00d2ff",
+                        "accent-purple": "#9d50bb",
+                        "background-dark": "#0a0c12",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans KR", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .frosty-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        .glowing-border {
+            box-shadow: 0 0 15px rgba(19, 91, 236, 0.3), inset 0 0 8px rgba(157, 80, 187, 0.2);
+        }
+        .visualizer-bar {
+            width: 3px;
+            background: linear-gradient(to top, #135bec, #9d50bb);
+            border-radius: 2px;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }.playlist-scroll::-webkit-scrollbar {
+            width: 3px;
+        }
+        .playlist-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-white min-h-screen selection:bg-primary/30 overflow-x-hidden">
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[20%] right-[-10%] w-[40%] h-[40%] bg-accent-purple/10 blur-[100px] rounded-full"></div>
+</div>
+<main class="relative z-10 max-w-[430px] mx-auto min-h-screen flex flex-col pb-32">
+<header class="flex items-center p-6 justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 shrink-0 rounded-full border-2 border-primary/30 overflow-hidden">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACbqGGaRPoi78VeQ7GeZgTPi3HfPzKG9YgPvqUjtc33HBaMlWJQYroCQf4NnLrjdrxj4IrYjUzvy_-9-g_2Zg-E9wP5LZZc5DIIcov8h76EY6VTZJscewQby-uBFX0Qj_VqRxwO59cpOqpzjIfN9qVBzxtHlJ40ihboIThaAoiXfihf4kVdWAEGjy_9EUOdttXioMrz_Ba-BP3BtinGRT1XPp0vw8lZnkLlwGh25j-ioc0vCVqMsoN2mZcmrSUH0JeC7xE4r5UmtI");'></div>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight">좋은 아침입니다, Alex님</h2>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-widest">시장 업데이트 • 오전 7:30</p>
+</div>
+</div>
+<button class="flex size-10 items-center justify-center rounded-full glass text-white transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</button>
+</header>
+<div class="px-6 py-2">
+<div class="glass rounded-xl p-6 relative overflow-hidden">
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="relative z-10">
+<p class="text-slate-400 text-sm font-medium mb-1">자산 잔액</p>
+<div class="flex items-baseline gap-2 mb-4">
+<h1 class="text-white text-3xl font-extrabold tracking-tight">₩108,120,450</h1>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit">
+<span class="material-symbols-outlined text-emerald-400 text-sm">trending_up</span>
+<p class="text-emerald-400 text-sm font-bold">+₩2,440,120 (2.24%)</p>
+</div>
+<div class="mt-8 h-28 w-full flex items-end gap-1.5">
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[30%]"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[35%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[45%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[40%]"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[55%]"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-[70%]"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm h-[65%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm h-[85%]"></div>
+<div class="flex-1 bg-primary/80 rounded-t-sm h-[95%]"></div>
+<div class="flex-1 bg-primary rounded-t-sm h-[100%] shadow-[0_0_15px_rgba(19,91,236,0.5)]"></div>
+</div>
+<div class="flex justify-between mt-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+<span>오후 11:00 (취침)</span>
+<span>현재</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pt-8 pb-2">
+<h3 class="text-white text-xl font-bold tracking-tight">잠든 사이 변화</h3>
+</div>
+<div class="px-6 pb-4">
+<p class="text-slate-300 text-sm leading-relaxed opacity-80">
+                반도체 섹터의 강력한 분기 실적에 힘입어 아시아 및 유럽 시장이 반등했습니다. 보유 중인 암호화폐 자산도 완만한 회복세를 보였습니다.
+            </p>
+</div>
+<div class="grid grid-cols-2 gap-4 px-6 mb-8">
+<div class="glass p-5 rounded-xl flex flex-col gap-3 border-l-4 border-l-emerald-500">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-400 text-lg">rocket_launch</span>
+<p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">시장 영향</p>
+</div>
+<div>
+<p class="text-white text-lg font-bold">강세장</p>
+<p class="text-emerald-400 text-xs font-medium">+15.2% 모멘텀</p>
+</div>
+</div>
+<div class="glass p-5 rounded-xl flex flex-col gap-3 border-l-4 border-l-primary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">currency_bitcoin</span>
+<p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider">최고 상승 자산</p>
+</div>
+<div>
+<p class="text-white text-lg font-bold">BTC +4.2%</p>
+<p class="text-slate-400 text-xs font-medium">거래대금: ₩58조</p>
+</div>
+</div>
+</div>
+<div class="px-6 space-y-3">
+<div class="flex items-center justify-between p-4 glass rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 glass rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">data_object</span>
+</div>
+<div>
+<p class="text-white font-bold">NVDA</p>
+<p class="text-slate-400 text-xs">엔비디아</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold">₩168,450</p>
+<p class="text-emerald-400 text-xs font-bold">+5.21%</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 glass rounded-xl">
+<div class="flex items-center gap-3">
+<div class="size-10 glass rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">token</span>
+</div>
+<div>
+<p class="text-white font-bold">ETH</p>
+<p class="text-slate-400 text-xs">이더리움</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-white font-bold">₩3,841,100</p>
+<p class="text-emerald-400 text-xs font-bold">+2.14%</p>
+</div>
+</div>
+</div>
+<div class="mt-auto px-6 py-6">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 transition-all active:scale-95">
+<span class="material-symbols-outlined">analytics</span>
+<span>포트폴리오 정밀 분석 실행</span>
+</button>
+</div>
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[400px] z-40">
+<nav class="glass rounded-full px-6 h-16 flex items-center justify-between shadow-2xl border border-white/10">
+<button class="flex flex-col items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined text-[28px] fill-[1]">home</span>
+<span class="text-[10px] font-bold">홈</span>
+</button>
+<button class="flex flex-col items-center gap-0.5 text-slate-500">
+<span class="material-symbols-outlined text-[28px]">insights</span>
+<span class="text-[10px] font-bold">분석</span>
+</button>
+<button class="flex flex-col items-center gap-0.5 text-slate-500">
+<span class="material-symbols-outlined text-[28px]">newspaper</span>
+<span class="text-[10px] font-bold">뉴스</span>
+</button>
+<button class="flex flex-col items-center gap-0.5 text-slate-500">
+<span class="material-symbols-outlined text-[28px]">account_balance_wallet</span>
+<span class="text-[10px] font-bold">자산</span>
+</button>
+<button class="flex flex-col items-center gap-0.5 text-slate-500">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+<span class="text-[10px] font-bold">설정</span>
+</button>
+</nav>
+</div>
+</main>
+<div class="fixed inset-0 z-[60] flex items-end justify-end p-6 pointer-events-none">
+<div class="flex flex-col items-end gap-4 max-w-[280px] w-full pointer-events-auto">
+<div class="frosty-glass glowing-border rounded-2xl w-full p-4 flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-300" id="tts-modal">
+<div class="flex items-center gap-4 p-2 bg-white/5 rounded-xl border border-white/5">
+<button class="size-12 rounded-full bg-gradient-to-tr from-primary to-accent-purple flex items-center justify-center shadow-lg shadow-primary/20 transition-transform active:scale-90">
+<span class="material-symbols-outlined text-white text-3xl fill-[1]">pause</span>
+</button>
+<div class="flex-1 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary/80">Now Playing</span>
+<span class="text-[10px] font-medium text-slate-400">01:24</span>
+</div>
+<div class="flex items-end gap-0.5 h-6">
+<div class="visualizer-bar h-[40%]"></div>
+<div class="visualizer-bar h-[70%]"></div>
+<div class="visualizer-bar h-[100%]"></div>
+<div class="visualizer-bar h-[80%]"></div>
+<div class="visualizer-bar h-[50%]"></div>
+<div class="visualizer-bar h-[90%]"></div>
+<div class="visualizer-bar h-[60%]"></div>
+<div class="visualizer-bar h-[40%]"></div>
+<div class="visualizer-bar h-[75%]"></div>
+<div class="visualizer-bar h-[30%]"></div>
+<div class="visualizer-bar h-[55%]"></div>
+<div class="visualizer-bar h-[85%]"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<h4 class="text-[11px] font-bold text-slate-400 px-1 uppercase tracking-wider">오늘의 브리핑</h4>
+<div class="playlist-scroll overflow-y-auto max-h-[180px] space-y-2 pr-1">
+<div class="flex items-center justify-between p-3 rounded-lg bg-primary/10 border border-primary/20">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-white">2월 24일 마켓 브리핑</span>
+<span class="text-[10px] text-primary/70">3:45</span>
+</div>
+<span class="material-symbols-outlined text-primary text-lg fill-[1]">equalizer</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-200">어제 주요 지표 분석</span>
+<span class="text-[10px] text-slate-500">2:12</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">play_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-200">섹터별 수급 현황</span>
+<span class="text-[10px] text-slate-500">4:30</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">play_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-200">포트폴리오 리밸런싱 제언</span>
+<span class="text-[10px] text-slate-500">1:55</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">play_circle</span>
+</div>
+</div>
+</div>
+</div>
+<button class="size-14 rounded-full bg-background-dark/80 frosty-glass glowing-border flex items-center justify-center shadow-2xl transition-transform active:scale-90 group">
+<div class="relative flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl group-hover:text-primary transition-colors">headset</span>
+<span class="absolute -top-1 -right-1 size-3 bg-accent-blue rounded-full border-2 border-background-dark animate-pulse"></span>
+</div>
+</button>
+</div>
+</div>
+<div class="fixed inset-0 z-50 bg-black/20 backdrop-blur-[2px] pointer-events-none"></div>
+
+</body></html>

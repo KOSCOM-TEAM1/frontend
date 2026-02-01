@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>온보딩 화면</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&amp;family=Manrope:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Pretendard", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mesh-gradient {
+            background-color: #101622;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(225, 85%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(260, 85%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(210, 85%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(240, 85%, 50%, 0.15) 0px, transparent 50%);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
+<div class="relative flex h-screen w-full flex-col overflow-hidden mesh-gradient">
+<div class="flex items-center p-6 justify-between z-10">
+<div class="size-10 flex items-center justify-center rounded-full glass">
+<span class="material-symbols-outlined text-white text-[20px]">close</span>
+</div>
+<div class="flex gap-1.5">
+<div class="h-1.5 w-6 rounded-full bg-primary"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-white/20"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-white/20"></div>
+</div>
+<div class="size-10 flex items-center justify-center rounded-full glass">
+<span class="material-symbols-outlined text-white text-[20px]">help_outline</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center px-6 pb-12 z-10">
+<div class="glass w-full rounded-xl p-8 flex flex-col items-center shadow-2xl relative">
+<div class="w-full mb-8">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-400 text-sm">light_mode</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-white/50">활동 시간</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-white/50 text-right">취침 시간</span>
+<span class="material-symbols-outlined text-indigo-300 text-sm">dark_mode</span>
+</div>
+</div>
+<div class="relative h-32 w-full flex items-end gap-1">
+<div class="flex-1 h-[40%] bg-primary/20 rounded-t-lg border-t border-primary/50 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+1.2%</span>
+</div>
+<div class="flex-1 h-[60%] bg-primary/30 rounded-t-lg border-t border-primary/60 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+2.8%</span>
+</div>
+<div class="flex-1 h-[35%] bg-primary/20 rounded-t-lg border-t border-primary/50 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+0.9%</span>
+</div>
+<div class="w-1"></div>
+<div class="flex-1 h-[75%] bg-indigo-500/20 rounded-t-lg border-t border-indigo-400/50 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+3.1%</span>
+</div>
+<div class="flex-1 h-[90%] bg-indigo-500/30 rounded-t-lg border-t border-indigo-400/60 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+4.5%</span>
+</div>
+<div class="flex-1 h-[65%] bg-indigo-500/20 rounded-t-lg border-t border-indigo-400/50 flex flex-col justify-end items-center pb-2">
+<span class="text-[10px] font-bold">+2.2%</span>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-baseline">
+<div>
+<p class="text-[11px] text-white/40">밤사이 변동폭</p>
+<p class="text-xl font-bold text-indigo-300">+4.2%</p>
+</div>
+<div class="text-right">
+<p class="text-[11px] text-white/40">글로벌 마켓 영향</p>
+<p class="text-xl font-bold text-primary">+1.5%</p>
+</div>
+</div>
+</div>
+<div class="text-center mb-4 px-2">
+<p class="text-primary font-bold text-sm mb-1 uppercase tracking-wider">반가워요!</p>
+<h1 class="text-white text-[26px] font-bold leading-tight">
+                        잠든 사이에도 시장은<br/>멈추지 않습니다.
+                    </h1>
+</div>
+<p class="text-white/70 text-base font-normal leading-relaxed text-center px-2 mb-8">
+                    당신이 쉬는 동안 포트폴리오의 변화를 분석합니다. 24시간 엔진으로 '취침 중' 영향과 '오늘 아침 포트폴리오' 수익을 비교해보세요.
+                </p>
+<button class="w-full bg-primary hover:bg-primary/90 transition-all text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                    시작하기
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<p class="mt-8 text-white/30 text-[12px] text-center">
+                좋은 아침입니다. 실시간 신경망 분석 기반 데이터.<br/>전 세계 100만 명 이상의 투자자가 신뢰합니다.
+            </p>
+</div>
+<div class="absolute -top-20 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute -bottom-20 -right-20 w-80 h-80 bg-indigo-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+</div>
+
+</body></html>

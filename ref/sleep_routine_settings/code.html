@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>설정</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a0a",
+                        "accent-purple": "#8b5cf6",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans KR", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass {
+            background: rgba(25, 34, 51, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .bg-blur-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.5;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">
+<div class="bg-blur-circle bg-primary w-64 h-64 -top-20 -left-20"></div>
+<div class="bg-blur-circle bg-accent-purple w-72 h-72 top-1/3 -right-20"></div>
+<div class="bg-blur-circle bg-primary w-80 h-80 -bottom-20 left-1/4"></div>
+<div class="relative z-10 flex flex-col min-h-screen max-w-md mx-auto">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">설정</h2>
+<div class="size-12 shrink-0 flex items-center justify-end">
+<span class="material-symbols-outlined text-primary">info</span>
+</div>
+</div>
+<div class="px-6 py-4">
+<h4 class="text-[#92a4c9] text-sm font-semibold leading-relaxed tracking-[0.015em] text-center">
+                24시간 시장 모니터링 및 변동성 영향 분석을 위한 휴식 시간을 설정하세요.
+            </h4>
+</div>
+<div class="flex flex-col gap-4 px-4">
+<div class="glass rounded-xl p-4 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">bedtime</span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-xs font-medium uppercase tracking-wider">Bedtime</p>
+<p class="text-white text-lg font-bold">취침 시간</p>
+</div>
+</div>
+<div class="flex items-center justify-center bg-black/20 rounded-xl py-2">
+<div class="flex flex-1">
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">21</div>
+<div class="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-primary/40 rounded-lg py-1">22</div>
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">23</div>
+</div>
+<div class="text-white font-bold px-2">:</div>
+<div class="flex flex-1">
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">15</div>
+<div class="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-primary/40 rounded-lg py-1">30</div>
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">45</div>
+</div>
+</div>
+</div>
+<div class="glass rounded-xl p-4 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-accent-purple/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-accent-purple">wb_sunny</span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-xs font-medium uppercase tracking-wider">Morning</p>
+<p class="text-white text-lg font-bold">기상 시간</p>
+</div>
+</div>
+<div class="flex items-center justify-center bg-black/20 rounded-xl py-2">
+<div class="flex flex-1">
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">05</div>
+<div class="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-accent-purple/40 rounded-lg py-1">06</div>
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">07</div>
+</div>
+<div class="text-white font-bold px-2">:</div>
+<div class="flex flex-1">
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">15</div>
+<div class="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-accent-purple/40 rounded-lg py-1">30</div>
+<div class="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">45</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 px-4">
+<h3 class="text-white text-sm font-bold px-2 mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">analytics</span>
+                영향 분석 미리보기
+            </h3>
+<div class="glass rounded-xl p-4 overflow-hidden relative">
+<div class="flex justify-between items-end h-32 w-full gap-1 mb-2">
+<div class="w-full bg-white/10 h-1/2 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-3/4 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-2/3 rounded-t-sm"></div>
+<div class="w-full bg-primary h-5/6 rounded-t-sm relative group">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-[10px] px-1.5 py-0.5 rounded">취침</div>
+</div>
+<div class="w-full bg-primary/60 h-full rounded-t-sm"></div>
+<div class="w-full bg-primary/60 h-4/5 rounded-t-sm"></div>
+<div class="w-full bg-primary/60 h-2/3 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-3/4 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-1/2 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-2/3 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-1/3 rounded-t-sm"></div>
+<div class="w-full bg-white/10 h-1/2 rounded-t-sm"></div>
+</div>
+<div class="flex justify-between text-[10px] text-[#92a4c9] font-medium border-t border-white/10 pt-2">
+<span>18:00</span>
+<span class="text-primary font-bold">22:30</span>
+<span class="text-primary font-bold">06:30</span>
+<span>12:00</span>
+</div>
+<div class="mt-4 flex items-center justify-between bg-white/5 p-3 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+<span class="text-xs text-[#92a4c9]">8시간 시장 대응 공백</span>
+</div>
+<span class="text-xs font-bold text-white">예상 변동성 4.2%</span>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between glass p-4 rounded-xl">
+<span class="text-sm font-medium">주말 루틴 적용</span>
+<div class="w-10 h-5 bg-primary rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20">
+                분석 보정하기
+            </button>
+</div>
+<div class="h-8"></div>
+</div>
+
+</body></html>
