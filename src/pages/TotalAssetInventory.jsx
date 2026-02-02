@@ -75,7 +75,7 @@ function TotalAssetInventory() {
             <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift transition-all duration-300">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="text-xs font-bold text-purple-400 bg-purple-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
+                  <span className="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     국내 주식
                   </span>
                   <h3 className="text-2xl font-extrabold text-rose-400 tracking-tight mb-1">
