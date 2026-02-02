@@ -341,3 +341,17 @@ body {
   filter: brightness(1.2);
   transform: scaleY(1.05);
 }
+
+/* 잠든 사이 변화 마키 (가로 무한 스크롤) */
+@keyframes overnightMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-overnight-marquee {
+  animation: overnightMarquee 22s linear infinite;
+}

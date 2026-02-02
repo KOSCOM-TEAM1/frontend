@@ -3,6 +3,15 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import userService from '../api/userService';
 
+// 잠든 사이 변화 - 작은 아이콘 카드 (마키용, 간단한 내용)
+const overnightItems = [
+  { id: 'kospi', icon: 'show_chart', label: '코스피', change: '-5.26%', positive: false },
+  { id: 'usdkrw', icon: 'currency_exchange', label: 'USD/KRW', change: '+0.03%', positive: true },
+  { id: 'overseas', icon: 'language', label: '해외', change: '+2.50%', positive: true },
+  { id: 'domestic', icon: 'account_balance', label: '국내', change: '-0.85%', positive: false },
+  { id: 'total', icon: 'account_balance_wallet', label: '총자산', change: '+0.37%', positive: true },
+];
+
 function MorningDashboard() {
   const [memberInfo, setMemberInfo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -89,7 +98,7 @@ function MorningDashboard() {
               <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
                 좋은 아침입니다, {displayName}님
               </h2>
-              <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:53</p>
+              <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:53</p>
             </div>
           </div>
           <button className="flex size-10 items-center justify-center rounded-full glass text-white transition-all duration-200 active:scale-95 hover-scale hover:bg-white/10">
@@ -104,10 +113,10 @@ function MorningDashboard() {
                 <span className="material-symbols-outlined text-primary text-lg">show_chart</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">코스피</span>
+                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">코스피</span>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-white text-base font-bold">4,949.67</span>
-                  <span className="text-rose-400 text-xs font-semibold">-5.26%</span>
+                  <span className="text-rose-400 text-sm font-semibold">-5.26%</span>
                 </div>
               </div>
             </div>
@@ -116,10 +125,10 @@ function MorningDashboard() {
                 <span className="material-symbols-outlined text-accent-purple text-lg">currency_exchange</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
+                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-white text-base font-bold">1,452.40</span>
-                  <span className="text-emerald-400 text-xs font-semibold">+0.03%</span>
+                  <span className="text-emerald-400 text-sm font-semibold">+0.03%</span>
                 </div>
               </div>
             </div>
@@ -128,16 +137,26 @@ function MorningDashboard() {
         <div className="px-6 pt-6 pb-2 shrink-0">
           <h3 className="text-white text-xl font-bold tracking-tight">잠든 사이 변화</h3>
         </div>
-        <div className="px-6 pb-4 shrink-0 space-y-2">
-          <p className="text-slate-300 text-sm leading-relaxed opacity-80">
-            <strong className="text-white">코스피</strong>는 4,949.67로 전일 대비 <span className="text-rose-400 font-semibold">-5.26%</span> 하락했고, <strong className="text-white">USD/KRW</strong> 환율은 1,452.40원으로 <span className="text-emerald-400 font-semibold">+0.03%</span> 소폭 오른 상태입니다.
-          </p>
-          <p className="text-slate-300 text-sm leading-relaxed opacity-80">
-            보유 <strong className="text-white">해외 주식</strong>은 <span className="text-emerald-400 font-semibold">+₩235,000 (+2.50%)</span>로 ₩9,380,000, <strong className="text-white">국내 주식</strong>은 <span className="text-rose-400 font-semibold">-₩140,000 (-0.85%)</span>로 ₩16,449,000입니다. 잠든 사이 <strong className="text-white">총 자산</strong>은 <span className="text-emerald-400 font-semibold">+₩95,000 (+0.37%)</span>로 ₩25,829,000입니다.
-          </p>
+        <div className="px-6 pb-4 shrink-0">
+          <div className="w-full overflow-hidden rounded-xl">
+            <div className="flex w-max animate-overnight-marquee gap-2">
+              {[...overnightItems, ...overnightItems].map((item, idx) => (
+                <div
+                  key={`${item.id}-${idx}`}
+                  className="shrink-0 flex items-center gap-2 rounded-lg glass border border-white/5 px-3 py-2 min-w-[100px]"
+                >
+                  <span className="material-symbols-outlined text-base text-primary/90">{(item.icon)}</span>
+                  <div className="flex flex-col">
+                    <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider leading-tight">{item.label}</span>
+                    <span className={`text-sm font-bold leading-tight ${item.positive ? 'text-emerald-400' : 'text-rose-400'}`}>{item.change}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="px-6 pt-2 pb-2 shrink-0">
-          <h3 className="text-white text-sm font-semibold uppercase tracking-wider text-slate-400">국내·해외 구분</h3>
+          <h3 className="text-white text-base font-semibold uppercase tracking-wider text-slate-400">국내·해외 구분</h3>
         </div>
         <div className="space-y-4 px-6 mb-6 shrink-0">
           {/* 해외주식 카드 - 상승 */}
@@ -145,17 +164,17 @@ function MorningDashboard() {
             <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-1.5">
-                <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-emerald-400 text-base">language</span>
                   해외주식
                 </p>
-                <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20">상승</span>
+                <span className="text-emerald-400 text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20">상승</span>
               </div>
               <div className="flex flex-col gap-1 mb-2">
                 <h2 className="text-emerald-400 text-2xl font-extrabold tracking-tight leading-tight">+₩235,000 (+2.50%)</h2>
                 <div className="flex items-center gap-1.5 opacity-60">
-                  <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
-                  <p className="text-white text-xs font-bold">₩9,380,000</p>
+                  <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
+                  <p className="text-white text-sm font-bold">₩9,380,000</p>
                 </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
@@ -170,7 +189,7 @@ function MorningDashboard() {
                   />
                 ))}
               </div>
-              <div className="flex justify-between mt-2 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+              <div className="flex justify-between mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
                 <span>오후 11:00 (취침)</span>
                 <span>현재</span>
               </div>
@@ -181,17 +200,17 @@ function MorningDashboard() {
             <div className="absolute -top-12 -right-12 w-24 h-24 bg-rose-500/10 blur-2xl rounded-full" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-1.5">
-                <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-rose-400 text-base">account_balance</span>
                   국내 주식
                 </p>
-                <span className="text-rose-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20">하락</span>
+                <span className="text-rose-400 text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20">하락</span>
               </div>
               <div className="flex flex-col gap-1 mb-2">
                 <h2 className="text-rose-400 text-2xl font-extrabold tracking-tight leading-tight">-₩140,000 (-0.85%)</h2>
                 <div className="flex items-center gap-1.5 opacity-60">
-                  <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
-                  <p className="text-white text-xs font-bold">₩16,449,000</p>
+                  <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
+                  <p className="text-white text-sm font-bold">₩16,449,000</p>
                 </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
@@ -206,7 +225,7 @@ function MorningDashboard() {
                   />
                 ))}
               </div>
-              <div className="flex justify-between mt-2 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+              <div className="flex justify-between mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
                 <span>오후 11:00 (취침)</span>
                 <span>현재</span>
               </div>
@@ -246,7 +265,7 @@ function MorningDashboard() {
                   />
                 ))}
               </div>
-              <div className="flex justify-between mt-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+              <div className="flex justify-between mt-3 text-sm text-slate-500 font-bold uppercase tracking-wider">
                 <span>오후 11:00 (취침)</span>
                 <span>현재</span>
               </div>
@@ -257,7 +276,7 @@ function MorningDashboard() {
           <h3 className="text-white text-xl font-bold tracking-tight">보유 자산</h3>
         </div>
         <div className="px-6 space-y-3 flex-grow">
-          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">해외</p>
+          <p className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">해외</p>
           {[
             { icon: 'data_object', name: 'NVIDIA', subName: '엔비디아', price: '$951.25', change: '+1.50%', positive: true },
             { icon: 'directions_car', name: 'Tesla', subName: '테슬라', price: '$5,090.04', change: '+2.50%', positive: true },
@@ -276,16 +295,16 @@ function MorningDashboard() {
                 </div>
                 <div>
                   <p className="text-white font-bold">{stock.name}</p>
-                  <p className="text-slate-400 text-xs">{stock.subName}</p>
+                  <p className="text-slate-400 text-sm">{stock.subName}</p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-white font-bold">{stock.price}</p>
-                <p className={`${stock.positive ? 'text-emerald-400' : 'text-rose-400'} text-xs font-bold`}>{stock.change}</p>
+                <p className={`${stock.positive ? 'text-emerald-400' : 'text-rose-400'} text-sm font-bold`}>{stock.change}</p>
               </div>
             </motion.div>
           ))}
-          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1 mt-4">국내</p>
+          <p className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1 mt-4">국내</p>
           {[
             { icon: 'precision_manufacturing', name: '삼성전자', subName: 'Samsung Electronics Co', price: '₩1,283,600', change: '-3.00%', positive: false },
             { icon: 'memory', name: 'SK하이닉스', subName: 'SK Hynix', price: '₩9,876,000', change: '-2.00%', positive: false },
@@ -305,12 +324,12 @@ function MorningDashboard() {
                 </div>
                 <div>
                   <p className="text-white font-bold">{stock.name}</p>
-                  <p className="text-slate-400 text-xs">{stock.subName}</p>
+                  <p className="text-slate-400 text-sm">{stock.subName}</p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-white font-bold">{stock.price}</p>
-                <p className={`${stock.positive ? 'text-emerald-400' : 'text-rose-400'} text-xs font-bold`}>{stock.change}</p>
+                <p className={`${stock.positive ? 'text-emerald-400' : 'text-rose-400'} text-sm font-bold`}>{stock.change}</p>
               </div>
             </motion.div>
           ))}
