@@ -1,8 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Navigation from '../components/Navigation';
 
 function SleepRoutineSettings() {
   const navigate = useNavigate();
+
+  // 현재 설정 시간
+  const [bedtimeHour, setBedtimeHour] = useState(22);
+  const [bedtimeMinute, setBedtimeMinute] = useState(30);
+  const [wakeHour, setWakeHour] = useState(6);
+  const [wakeMinute, setWakeMinute] = useState(30);
 
   // 설정 변경 히스토리 (최근 7일)
   const settingsHistory = [
@@ -14,6 +21,35 @@ function SleepRoutineSettings() {
     { date: '1/30', bedtime: '22:30', wakeTime: '06:30' },
     { date: '1/31', bedtime: '22:30', wakeTime: '06:30' },
   ];
+
+  // 시간 조정 함수
+  const adjustTime = (type, unit, direction) => {
+    if (type === 'bedtime') {
+      if (unit === 'hour') {
+        const newHour = direction === 'up' 
+          ? (bedtimeHour + 1) % 24 
+          : (bedtimeHour - 1 + 24) % 24;
+        setBedtimeHour(newHour);
+      } else {
+        const newMinute = direction === 'up'
+          ? (bedtimeMinute + 10) % 60
+          : (bedtimeMinute - 10 + 60) % 60;
+        setBedtimeMinute(newMinute);
+      }
+    } else {
+      if (unit === 'hour') {
+        const newHour = direction === 'up' 
+          ? (wakeHour + 1) % 24 
+          : (wakeHour - 1 + 24) % 24;
+        setWakeHour(newHour);
+      } else {
+        const newMinute = direction === 'up'
+          ? (wakeMinute + 10) % 60
+          : (wakeMinute - 10 + 60) % 60;
+        setWakeMinute(newMinute);
+      }
+    }
+  };
 
   // 시간을 분으로 변환 (그래프 높이 계산용)
   const timeToMinutes = (time) => {
@@ -68,17 +104,49 @@ function SleepRoutineSettings() {
                 <p className="text-white text-lg font-bold">취침 시간</p>
               </div>
             </div>
-            <div className="flex items-center justify-center bg-black/20 rounded-xl py-2">
-              <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">21</div>
-                <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-primary/40 rounded-lg py-1">22</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">23</div>
+            <div className="flex items-center justify-center bg-black/20 rounded-xl py-3 gap-2">
+              {/* 시간 선택 */}
+              <div className="flex flex-col items-center flex-1">
+                <button 
+                  onClick={() => adjustTime('bedtime', 'hour', 'up')}
+                  className="material-symbols-outlined text-primary text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_up
+                </button>
+                <div className="flex flex-col items-center justify-center py-2">
+                  <div className="text-xs text-slate-500 mb-1">{String((bedtimeHour - 1 + 24) % 24).padStart(2, '0')}</div>
+                  <div className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2">{String(bedtimeHour).padStart(2, '0')}</div>
+                  <div className="text-xs text-slate-500 mt-1">{String((bedtimeHour + 1) % 24).padStart(2, '0')}</div>
+                </div>
+                <button 
+                  onClick={() => adjustTime('bedtime', 'hour', 'down')}
+                  className="material-symbols-outlined text-primary text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_down
+                </button>
               </div>
-              <div className="text-white font-bold px-2">:</div>
-              <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">20</div>
-                <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-primary/40 rounded-lg py-1">30</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">40</div>
+              
+              <div className="text-white font-bold text-2xl px-2">:</div>
+              
+              {/* 분 선택 */}
+              <div className="flex flex-col items-center flex-1">
+                <button 
+                  onClick={() => adjustTime('bedtime', 'minute', 'up')}
+                  className="material-symbols-outlined text-primary text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_up
+                </button>
+                <div className="flex flex-col items-center justify-center py-2">
+                  <div className="text-xs text-slate-500 mb-1">{String((bedtimeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
+                  <div className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2">{String(bedtimeMinute).padStart(2, '0')}</div>
+                  <div className="text-xs text-slate-500 mt-1">{String((bedtimeMinute + 10) % 60).padStart(2, '0')}</div>
+                </div>
+                <button 
+                  onClick={() => adjustTime('bedtime', 'minute', 'down')}
+                  className="material-symbols-outlined text-primary text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_down
+                </button>
               </div>
             </div>
           </div>
@@ -92,17 +160,49 @@ function SleepRoutineSettings() {
                 <p className="text-white text-lg font-bold">기상 시간</p>
               </div>
             </div>
-            <div className="flex items-center justify-center bg-black/20 rounded-xl py-2">
-              <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">05</div>
-                <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-accent-purple/40 rounded-lg py-1">06</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">07</div>
+            <div className="flex items-center justify-center bg-black/20 rounded-xl py-3 gap-2">
+              {/* 시간 선택 */}
+              <div className="flex flex-col items-center flex-1">
+                <button 
+                  onClick={() => adjustTime('wake', 'hour', 'up')}
+                  className="material-symbols-outlined text-accent-purple text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_up
+                </button>
+                <div className="flex flex-col items-center justify-center py-2">
+                  <div className="text-xs text-slate-500 mb-1">{String((wakeHour - 1 + 24) % 24).padStart(2, '0')}</div>
+                  <div className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2">{String(wakeHour).padStart(2, '0')}</div>
+                  <div className="text-xs text-slate-500 mt-1">{String((wakeHour + 1) % 24).padStart(2, '0')}</div>
+                </div>
+                <button 
+                  onClick={() => adjustTime('wake', 'hour', 'down')}
+                  className="material-symbols-outlined text-accent-purple text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_down
+                </button>
               </div>
-              <div className="text-white font-bold px-2">:</div>
-              <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">20</div>
-                <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-accent-purple/40 rounded-lg py-1">30</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">40</div>
+              
+              <div className="text-white font-bold text-2xl px-2">:</div>
+              
+              {/* 분 선택 */}
+              <div className="flex flex-col items-center flex-1">
+                <button 
+                  onClick={() => adjustTime('wake', 'minute', 'up')}
+                  className="material-symbols-outlined text-accent-purple text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_up
+                </button>
+                <div className="flex flex-col items-center justify-center py-2">
+                  <div className="text-xs text-slate-500 mb-1">{String((wakeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
+                  <div className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2">{String(wakeMinute).padStart(2, '0')}</div>
+                  <div className="text-xs text-slate-500 mt-1">{String((wakeMinute + 10) % 60).padStart(2, '0')}</div>
+                </div>
+                <button 
+                  onClick={() => adjustTime('wake', 'minute', 'down')}
+                  className="material-symbols-outlined text-accent-purple text-lg hover:scale-110 transition-transform active:scale-95"
+                >
+                  keyboard_arrow_down
+                </button>
               </div>
             </div>
           </div>
