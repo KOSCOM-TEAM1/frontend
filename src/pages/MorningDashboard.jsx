@@ -1,7 +1,59 @@
 import Navigation from '../components/Navigation';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import userService from '../api/userService';
 
 function MorningDashboard() {
+  const [memberInfo, setMemberInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 회원 정보 불러오기
+    const fetchMemberInfo = async () => {
+      try {
+        setLoading(true);
+        console.log('🔄 회원 정보 요청 시작...');
+        
+        const result = await userService.getMemberInfo(1);
+        
+        if (result.success) {
+          setMemberInfo(result.data);
+          console.log('✅ 회원 정보 조회 성공:', result.data);
+          console.log('📌 사용자 이름:', result.data.name);
+          console.log('📌 프로필 이미지:', result.data.profileImage);
+        } else {
+          setError(result.error);
+          console.error('❌ 회원 정보 조회 실패:', result.error);
+        }
+      } catch (err) {
+        setError({ message: '알 수 없는 오류가 발생했습니다.' });
+        console.error('❌ fetchMemberInfo 에러:', err);
+      } finally {
+        setLoading(false);
+        console.log('✅ 회원 정보 요청 완료');
+      }
+    };
+
+    fetchMemberInfo();
+  }, []);
+
+  // 기본값 (API 데이터가 없을 때 사용)
+  const displayName = memberInfo?.name || 'Alex';
+  const profileImage = memberInfo?.profileImage || 'https://lh3.googleusercontent.com/aida-public/AB6AXuACbqGGaRPoi78VeQ7GeZgTPi3HfPzKG9YgPvqUjtc33HBaMlWJQYroCQf4NnLrjdrxj4IrYjUzvy_-9-g_2Zg-E9wP5LZZc5DIIcov8h76EY6VTZJscewQby-uBFX0Qj_VqRxwO59cpOqpzjIfN9qVBzxtHlJ40ihboIThaAoiXfihf4kVdWAEGjy_9EUOdttXioMrz_Ba-BP3BtinGRT1XPp0vw8lZnkLlwGh25j-ioc0vCVqMsoN2mZcmrSUH0JeC7xE4r5UmtI';
+  
+  // 로딩 중일 때 표시
+  if (loading) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4"></div>
+          <p className="text-slate-400">회원 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-background-dark font-display text-white min-h-screen selection:bg-primary/30 overflow-x-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -12,10 +64,24 @@ function MorningDashboard() {
         <header className="flex items-center p-6 justify-between shrink-0 animate-fade-in">
           <div className="flex items-center gap-3">
             <div className="size-10 shrink-0 rounded-full border-2 border-primary/30 overflow-hidden hover-scale transition-all duration-200">
-              <div className="w-full h-full bg-center bg-no-repeat bg-cover" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuACbqGGaRPoi78VeQ7GeZgTPi3HfPzKG9YgPvqUjtc33HBaMlWJQYroCQf4NnLrjdrxj4IrYjUzvy_-9-g_2Zg-E9wP5LZZc5DIIcov8h76EY6VTZJscewQby-uBFX0Qj_VqRxwO59cpOqpzjIfN9qVBzxtHlJ40ihboIThaAoiXfihf4kVdWAEGjy_9EUOdttXioMrz_Ba-BP3BtinGRT1XPp0vw8lZnkLlwGh25j-ioc0vCVqMsoN2mZcmrSUH0JeC7xE4r5UmtI")'}}></div>
+              <div className="w-full h-full bg-center bg-no-repeat bg-cover" style={{backgroundImage: `url("${profileImage}")`}}></div>
             </div>
             <div>
-              <h2 className="text-white text-lg font-bold leading-tight tracking-tight">좋은 아침입니다, Alex님</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
+                  좋은 아침입니다, {displayName}님
+                </h2>
+                {memberInfo && (
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-bold uppercase tracking-wider border border-emerald-500/30">
+                    API 연결됨
+                  </span>
+                )}
+                {error && (
+                  <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 text-[9px] font-bold uppercase tracking-wider border border-rose-500/30">
+                    API 오류
+                  </span>
+                )}
+              </div>
               <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">시장 업데이트 • 오전 7:30</p>
             </div>
           </div>
@@ -23,6 +89,35 @@ function MorningDashboard() {
             <span className="material-symbols-outlined text-[22px]">notifications</span>
           </button>
         </header>
+        {/* 시장 정보 인포 바 */}
+        <div className="px-6 pt-2 pb-4 shrink-0 animate-fade-in">
+          <div className="flex gap-3 overflow-x-auto no-scrollbar">
+            <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 min-w-fit hover-lift transition-all duration-200 border border-white/5">
+              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-primary text-lg">show_chart</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">코스피</span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-white text-base font-bold">2,548.32</span>
+                  <span className="text-emerald-400 text-xs font-semibold">+0.85%</span>
+                </div>
+              </div>
+            </div>
+            <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 min-w-fit hover-lift transition-all duration-200 border border-white/5">
+              <div className="w-8 h-8 rounded-lg bg-accent-purple/20 flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-accent-purple text-lg">currency_exchange</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-white text-base font-bold">1,345.80</span>
+                  <span className="text-rose-400 text-xs font-semibold">-0.12%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="px-6 pt-6 pb-2 shrink-0">
           <h3 className="text-white text-xl font-bold tracking-tight">잠든 사이 변화</h3>
         </div>
