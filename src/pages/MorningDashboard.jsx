@@ -57,9 +57,9 @@ function MorningDashboard() {
     fetchMemberInfo();
   }, []);
 
-  // 고정된 사용자 정보
+  // 고정된 사용자 정보 (여성 프로필)
   const displayName = '최지원';
-  const profileImage = memberInfo?.profileImage || 'https://lh3.googleusercontent.com/aida-public/AB6AXuACbqGGaRPoi78VeQ7GeZgTPi3HfPzKG9YgPvqUjtc33HBaMlWJQYroCQf4NnLrjdrxj4IrYjUzvy_-9-g_2Zg-E9wP5LZZc5DIIcov8h76EY6VTZJscewQby-uBFX0Qj_VqRxwO59cpOqpzjIfN9qVBzxtHlJ40ihboIThaAoiXfihf4kVdWAEGjy_9EUOdttXioMrz_Ba-BP3BtinGRT1XPp0vw8lZnkLlwGh25j-ioc0vCVqMsoN2mZcmrSUH0JeC7xE4r5UmtI';
+  const profileImage = memberInfo?.profileImage || '/profile.jpg';
   
   // 로딩 중일 때 표시
   if (loading) {
@@ -128,9 +128,12 @@ function MorningDashboard() {
         <div className="px-6 pt-6 pb-2 shrink-0">
           <h3 className="text-white text-xl font-bold tracking-tight">잠든 사이 변화</h3>
         </div>
-        <div className="px-6 pb-4 shrink-0">
+        <div className="px-6 pb-4 shrink-0 space-y-2">
           <p className="text-slate-300 text-sm leading-relaxed opacity-80">
-            반도체 섹터의 강력한 분기 실적에 힘입어 아시아 및 유럽 시장이 반등했습니다. 보유 중인 암호화폐 자산도 완만한 회복세를 보였습니다.
+            <strong className="text-white">코스피</strong>는 4,949.67로 전일 대비 <span className="text-rose-400 font-semibold">-5.26%</span> 하락했고, <strong className="text-white">USD/KRW</strong> 환율은 1,452.40원으로 <span className="text-emerald-400 font-semibold">+0.03%</span> 소폭 오른 상태입니다.
+          </p>
+          <p className="text-slate-300 text-sm leading-relaxed opacity-80">
+            보유 <strong className="text-white">해외 주식</strong>은 <span className="text-emerald-400 font-semibold">+₩235,000 (+2.50%)</span>로 ₩9,380,000, <strong className="text-white">국내 주식</strong>은 <span className="text-rose-400 font-semibold">-₩140,000 (-0.85%)</span>로 ₩16,449,000입니다. 잠든 사이 <strong className="text-white">총 자산</strong>은 <span className="text-emerald-400 font-semibold">+₩95,000 (+0.37%)</span>로 ₩25,829,000입니다.
           </p>
         </div>
         <div className="px-6 pt-2 pb-2 shrink-0">

@@ -2,27 +2,44 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import ttsService from '../api/ttsService';
 
+// 타임라인 뉴스 6개와 동일한 플레이리스트 (CLOVA TTS용)
 const TTS_PLAYLIST = [
-  { 
-    id: 1, 
-    title: '2월 24일 마켓 브리핑', 
-    text: '좋은 아침입니다. 2월 24일 오늘의 주요 시장 업데이트를 전해드립니다. 반도체 섹터의 강력한 실적 발표로 코스피가 0.85% 상승하며 2548포인트로 마감했습니다.',
+  {
+    id: 1,
+    time: '오후 11:30',
+    title: '엔비디아, CES 2026서 루빈 GPU 양산 가속화·자율주행 AI 공개',
+    text: '엔비디아, CES 2026서 루빈 GPU 양산 가속화·자율주행 AI 공개. 젠슨 황 엔비디아 CEO는 CES 2026 기조연설에서 블랙웰을 이을 차세대 GPU 아키텍처 루빈이 예상보다 빠르게 본격 양산에 돌입했다고 밝혔다. 루빈은 블랙웰 대비 성능이 4배 향상됐으며, 추론 토큰 비용은 10분의 1로 절감됐다.',
   },
-  { 
-    id: 2, 
-    title: '어제 주요 지표 분석', 
-    text: '어제 발표된 주요 경제 지표를 분석해드리겠습니다. 미국 소비자물가지수가 전월 대비 0.3% 상승하며 시장 예상치를 소폭 상회했습니다.',
+  {
+    id: 2,
+    time: '오전 1:15',
+    title: '테슬라, 모델 S·모델 X 2026년 2분기 단종 확정',
+    text: '테슬라, 모델 S·모델 X 2026년 2분기 단종 확정. 일론 머스크 테슬라 CEO는 2026년 2분기 말까지 모델 S와 모델 X의 생산을 완전히 중단할 계획이라고 공식적으로 밝혔다. 기존 생산 라인은 휴머노이드 로봇 옵티머스 생산 라인으로 전환된다.',
   },
-  { 
-    id: 3, 
-    title: '섹터별 수급 현황', 
-    text: '섹터별 자금 흐름을 살펴보겠습니다. 반도체와 이차전지 섹터로 외국인 자금이 집중되고 있으며, 바이오 섹터는 자금 이탈이 지속되고 있습니다.',
+  {
+    id: 3,
+    time: '오전 3:20',
+    title: '삼성전자, 2025년 4분기 영업이익 20조원 달성…HBM4 공급 가속화',
+    text: '삼성전자, 2025년 4분기 영업이익 20조원 달성, HBM4 공급 가속화. 삼성전자는 2025년 4분기 매출은 93.8조원으로 집계돼 분기 기준 역대 최대치를 경신했다. DS 부문이 주도한 고부가 제품 판매 확대 전략이 전사 실적을 강력하게 견인한 결과로 풀이된다. 2026년 1분기부터 차세대 HBM4 제품 공급을 시작할 계획이다.',
   },
-  { 
-    id: 4, 
-    title: '포트폴리오 리밸런싱 제언', 
-    text: '현재 포트폴리오를 분석한 결과, 해외 주식 비중 조정을 권장드립니다. 변동성이 큰 섹터의 비중을 줄이고 안정적인 배당주 비중을 늘리는 것이 좋겠습니다.',
-  }
+  {
+    id: 4,
+    time: '오전 5:00',
+    title: '코스피, 5,200 돌파하며 사상 최고치 경신',
+    text: '코스피, 5,200 돌파하며 사상 최고치 경신. 벤치마크 KOSPI는 목요일 0.98% 상승하여 5,221로 마감하며 강력한 반도체 실적이 시장 심리를 끌어올리면서 사상 최고치를 기록했다. 투자자들은 4분기 강력한 실적과 지속적인 AI 주도의 수요에 힘입어 첨단 메모리 제품의 지속적인 성장 기대를 강화했다.',
+  },
+  {
+    id: 5,
+    time: '오전 6:45',
+    title: 'SK하이닉스, 주가 91만원 돌파…황제주 진입 코앞',
+    text: 'SK하이닉스, 주가 91만원 돌파, 황제주 진입 코앞. SK하이닉스가 주가 91만원을 돌파하며 황제주 진입을 코앞에 뒀다. 증권사들은 목표가를 일제히 상향 조정했으며, 메리츠증권이 145만원으로 가장 높게 제시했다. 모건 스탠리는 2026년 DRAM 평균 가격이 62%, NAND는 75% 상승할 것으로 전망했다.',
+  },
+  {
+    id: 6,
+    time: '오전 7:30',
+    title: '네이버, 2026년 안정적 이익 성장 확정…신사업 가치 주가 반영 전망',
+    text: '네이버, 2026년 안정적 이익 성장 확정, 신사업 가치 주가 반영 전망. 하나증권은 네이버에 대해 2026년 안정적 이익 성장이 확정적인 상황에서 신사업 가치가 주가에 반영될 가능성이 높다고 밝혔다. 목표주가는 35만 원으로 제시했으며, 1분기 쇼핑 에이전트, 2분기 AI 탭, 이후 통합 에이전트를 출시할 계획이다.',
+  },
 ];
 
 const VISUALIZER_HEIGHTS = [40, 70, 100, 80, 50, 90, 60, 40, 75, 30, 55, 85];
@@ -36,10 +53,13 @@ function TTSToggle() {
   const [duration, setDuration] = useState(0);
   const [trackDurations, setTrackDurations] = useState({}); // 각 트랙의 실제 길이 저장
   const audioRef = useRef(null);
+  const urlCacheRef = useRef({}); // 트랙별 오디오 URL 캐시 (재생 시 API 재호출 방지)
+  const preloadAbortRef = useRef(false);
 
   // 컴포넌트 언마운트 시 오디오 정리
   useEffect(() => {
     return () => {
+      preloadAbortRef.current = true;
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -47,36 +67,88 @@ function TTSToggle() {
     };
   }, []);
 
-  // 트랙 재생
+  // 패널 열면 재생 안 한 트랙들의 재생 시간 미리 로드 (순차 호출로 API 부담 완화)
+  useEffect(() => {
+    if (!isOpen) return;
+    preloadAbortRef.current = false;
+
+    const preloadDurations = async () => {
+      for (const track of TTS_PLAYLIST) {
+        if (preloadAbortRef.current) break;
+        if (trackDurations[track.id]) continue; // 이미 있으면 스킵
+
+        try {
+          const result = await ttsService.textToSpeech({
+            text: track.text,
+            speaker: 'jinho',
+            speed: 0,
+            pitch: 0,
+            volume: 0,
+          });
+          if (preloadAbortRef.current) break;
+          if (!result.success || !result.data?.downloadUrl) continue;
+
+          const audioUrl = result.data.downloadUrl;
+          urlCacheRef.current[track.id] = audioUrl;
+
+          const audio = new Audio(audioUrl);
+          await new Promise((resolve, reject) => {
+            const onLoaded = () => {
+              audio.removeEventListener('loadedmetadata', onLoaded);
+              audio.removeEventListener('error', onError);
+              setTrackDurations(prev => ({ ...prev, [track.id]: audio.duration }));
+              resolve();
+            };
+            const onError = (e) => {
+              audio.removeEventListener('loadedmetadata', onLoaded);
+              audio.removeEventListener('error', onError);
+              reject(e);
+            };
+            audio.addEventListener('loadedmetadata', onLoaded);
+            audio.addEventListener('error', onError);
+            if (audio.duration && !isNaN(audio.duration)) onLoaded();
+          });
+        } catch (e) {
+          if (!preloadAbortRef.current) console.warn('TTS 미리로드 실패:', track.id, e);
+        }
+      }
+    };
+    preloadDurations();
+  }, [isOpen]); // trackDurations 의존성 제거해 무한루프 방지
+
+  // 트랙 재생 (캐시 있으면 API 생략)
   const playTrack = async (track) => {
     console.log('🎙️ 트랙 재생 시작:', track.title);
     setIsLoading(true);
     setCurrentTrackId(track.id);
 
     try {
-      // TTS API 호출
-      const result = await ttsService.textToSpeech({
-        text: track.text,
-        speaker: 'jinho',
-        speed: 0,
-        pitch: 0,
-        volume: 0,
-      });
+      let audioUrl = urlCacheRef.current[track.id];
 
-      if (result.success) {
-        console.log('✅ 음성 변환 성공:', result.data);
-        
-        // 기존 오디오 정리
-        if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current = null;
+      if (!audioUrl) {
+        const result = await ttsService.textToSpeech({
+          text: track.text,
+          speaker: 'jinho',
+          speed: 0,
+          pitch: 0,
+          volume: 0,
+        });
+        if (!result.success) {
+          alert(result.error?.message || '음성 변환에 실패했습니다.');
+          setIsLoading(false);
+          return;
         }
-        
-        const audioUrl = result.data.downloadUrl;
-        console.log('🎵 오디오 URL:', audioUrl);
-        
-        // 새로운 오디오 생성
-        const newAudio = new Audio(audioUrl);
+        audioUrl = result.data.downloadUrl;
+        urlCacheRef.current[track.id] = audioUrl;
+      }
+
+      // 기존 오디오 정리
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+
+      const newAudio = new Audio(audioUrl);
         audioRef.current = newAudio;
         
         // 이벤트 리스너 설정
@@ -107,9 +179,9 @@ function TTSToggle() {
         newAudio.addEventListener('ended', () => {
           setIsPlaying(false);
           setCurrentTime(0);
-          // 다음 트랙 자동 재생
-          const currentIndex = TTS_PLAYLIST.findIndex(t => t.id === currentTrackId);
-          if (currentIndex < TTS_PLAYLIST.length - 1) {
+          // 방금 끝난 트랙 기준으로 다음 트랙 자동 재생
+          const currentIndex = TTS_PLAYLIST.findIndex(t => t.id === track.id);
+          if (currentIndex >= 0 && currentIndex < TTS_PLAYLIST.length - 1) {
             const nextTrack = TTS_PLAYLIST[currentIndex + 1];
             playTrack(nextTrack);
           }
@@ -129,10 +201,6 @@ function TTSToggle() {
         await newAudio.play();
         setIsPlaying(true);
         console.log('✅ 재생 시작됨');
-      } else {
-        console.error('❌ 음성 변환 실패:', result.error);
-        alert(`음성 변환 실패: ${result.error.message}`);
-      }
     } catch (error) {
       console.error('❌ 재생 에러:', error);
       alert('음성 재생에 실패했습니다.');
@@ -178,6 +246,25 @@ function TTSToggle() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // 전체 재생: 1번 트랙부터 끝까지 연속 재생 (기존 ended → 다음 트랙 로직 활용)
+  const handlePlayAll = async () => {
+    if (isPlaying && currentTrackId === 1) {
+      audioRef.current?.pause();
+      setIsPlaying(false);
+      return;
+    }
+    await playTrack(TTS_PLAYLIST[0]);
+  };
+
+  // 전체 재생용: 총 길이, 전체 경과 시간
+  const totalDuration = TTS_PLAYLIST.reduce((sum, t) => sum + (trackDurations[t.id] || 0), 0);
+  const currentIndex = TTS_PLAYLIST.findIndex(t => t.id === currentTrackId) + 1;
+  const elapsedBeforeCurrent = TTS_PLAYLIST.slice(0, currentIndex - 1).reduce(
+    (sum, t) => sum + (trackDurations[t.id] || 0),
+    0
+  );
+  const totalElapsed = elapsedBeforeCurrent + currentTime;
+
   const content = (
     <div
       className="fixed inset-0 flex items-end justify-end p-4 pointer-events-none"
@@ -209,11 +296,19 @@ function TTSToggle() {
                 </button>
                 <div className="flex-1 flex flex-col gap-1.5 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary/80">Now Playing</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary/80">
+                      {isPlaying || duration > 0 ? `트랙 ${currentIndex}/${TTS_PLAYLIST.length}` : 'Now Playing'}
+                    </span>
                     <span className="text-[10px] font-medium text-slate-400">
                       {formatTime(currentTime)} / {formatTime(duration)}
                     </span>
                   </div>
+                  {totalDuration > 0 && (
+                    <div className="flex items-center justify-between text-[10px] text-slate-500">
+                      <span>전체</span>
+                      <span>{formatTime(totalElapsed)} / {formatTime(totalDuration)}</span>
+                    </div>
+                  )}
                   <div className="flex items-end gap-0.5 h-6">
                     {VISUALIZER_HEIGHTS.map((h, i) => (
                       <div
@@ -228,9 +323,18 @@ function TTSToggle() {
                   </div>
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={handlePlayAll}
+                disabled={isLoading}
+                className="w-full py-2.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 flex items-center justify-center gap-2 text-primary font-bold text-sm transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-lg">playlist_play</span>
+                <span>전체 재생 (1→6 연속)</span>
+              </button>
               <div className="flex flex-col gap-2">
-                <h4 className="text-[11px] font-bold text-slate-400 px-1 uppercase tracking-wider">오늘의 브리핑</h4>
-                <div className="playlist-scroll overflow-y-auto max-h-[180px] space-y-2 pr-1">
+                <h4 className="text-[11px] font-bold text-slate-400 px-1 uppercase tracking-wider">오늘의 뉴스 (타임라인 6건)</h4>
+                <div className="playlist-scroll overflow-y-auto max-h-[220px] space-y-2 pr-1">
                   {TTS_PLAYLIST.map((item) => {
                     const isActive = item.id === currentTrackId;
                     const isCurrentlyPlaying = isActive && isPlaying;
@@ -246,15 +350,18 @@ function TTSToggle() {
                             : 'hover:bg-white/5 border-transparent'
                         }`}
                       >
-                        <div className="flex flex-col min-w-0">
-                          <span className={`text-xs font-bold truncate ${isActive ? 'text-white' : 'text-slate-200'}`}>
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className={`text-[10px] font-semibold text-slate-400 ${isActive ? 'text-primary/90' : ''}`}>
+                            {item.time}
+                          </span>
+                          <span className={`text-xs font-bold truncate mt-0.5 ${isActive ? 'text-white' : 'text-slate-200'}`}>
                             {item.title}
                           </span>
-                          <span className={`text-[10px] ${isActive ? 'text-primary/70' : 'text-slate-500'}`}>
+                          <span className={`text-[10px] mt-0.5 ${isActive ? 'text-primary/70' : 'text-slate-500'}`}>
                             {trackDuration ? formatTime(trackDuration) : '로딩 중...'}
                           </span>
                         </div>
-                        <span className={`material-symbols-outlined text-lg shrink-0 ${isActive ? 'text-primary fill-[1]' : 'text-slate-400'}`}>
+                        <span className={`material-symbols-outlined text-lg shrink-0 ml-2 ${isActive ? 'text-primary fill-[1]' : 'text-slate-400'}`}>
                           {isCurrentlyPlaying ? 'equalizer' : 'play_circle'}
                         </span>
                       </div>

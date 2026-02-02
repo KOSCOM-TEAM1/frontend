@@ -375,7 +375,10 @@ function SleepRoutineSettings() {
           </div>
         </div>
         <div className="mt-auto p-6 flex flex-col gap-4 pb-32">
-          <button className="w-full bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all duration-300 py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02]">
+          <button 
+            onClick={() => navigate('/home')}
+            className="w-full bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all duration-300 py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02]"
+          >
             설정 저장하기
           </button>
         </div>

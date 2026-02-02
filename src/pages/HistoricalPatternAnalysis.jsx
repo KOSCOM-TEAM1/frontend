@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 
 function HistoricalPatternAnalysis() {
   const navigate = useNavigate();
@@ -32,11 +33,11 @@ function HistoricalPatternAnalysis() {
           >
             <div className="p-5">
               <div className="flex gap-2 mb-2">
-                <span className="text-[10px] font-bold bg-primary px-2 py-0.5 rounded uppercase tracking-wider">거시 경제</span>
-                <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">심층 분석</span>
+                <span className="text-[10px] font-bold bg-primary px-2 py-0.5 rounded uppercase tracking-wider">과거 사례</span>
+                <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">유사도 85%</span>
               </div>
-              <h1 className="text-white text-2xl font-bold leading-tight">엔비디아 Rubin GPU 양산 가속화</h1>
-              <p className="text-white/60 text-sm mt-1">CES 2026 기조연설 · AI 인프라 변곡점</p>
+              <h1 className="text-white text-2xl font-bold leading-tight">2022년 Ampere → Hopper 전환</h1>
+              <p className="text-white/60 text-sm mt-1">AI 학습·추론 성능 대폭 개선 · 데이터센터 혁명</p>
             </div>
           </div>
         </div>
@@ -72,7 +73,7 @@ function HistoricalPatternAnalysis() {
                 </div>
                 <div className="space-y-3">
                   <p className="text-white/90 text-sm leading-relaxed">
-                    분석 결과, 엔비디아의 <span className="text-primary font-bold">Rubin GPU 조기 양산과 Cosmos AI 오픈소스 공개</span>는 AI가 "비싸고 제한적인 기술"에서 "모든 산업에 깔리는 인프라"로 넘어가는 역사적 변곡점입니다. 추론 비용 1/10 절감은 AI 서비스 대중화를 가속화할 것으로 예상됩니다.
+                    2022년 <span className="text-primary font-bold">Hopper(H100) 아키텍처 공개</span>는 현재 Rubin GPU 발표와 85% 유사합니다. 당시 AI 학습·추론 성능이 대폭 개선되며 데이터센터 시장 패러다임이 전환되었고, <span className="text-primary font-bold">AI 인프라 본격 확산의 시작점</span>이 되었습니다. 현재 상황도 이와 유사한 변곡점으로 평가됩니다.
                   </p>
                   <button className="flex items-center gap-1.5 text-primary text-xs font-bold py-1 px-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-all duration-300 hover:scale-105 active:scale-95">
                     <span className="material-symbols-outlined text-sm">chat</span>
@@ -109,7 +110,7 @@ function HistoricalPatternAnalysis() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="glass-card rounded-2xl p-4">
-            <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">과거 유사도</p>
+            <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">패턴 유사도</p>
             <div className="flex items-end gap-1">
               <p className="text-2xl font-bold text-white">85%</p>
               <span className="text-blue-500 material-symbols-outlined text-lg mb-1">hub</span>
@@ -119,57 +120,82 @@ function HistoricalPatternAnalysis() {
             </div>
           </div>
           <div className="glass-card rounded-2xl p-4">
-            <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">예상 영향</p>
+            <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">당시 영향</p>
             <div className="flex items-end gap-1">
-              <p className="text-2xl font-bold text-red-500">-4.2%</p>
-              <span className="text-red-500 material-symbols-outlined text-lg mb-1">trending_down</span>
+              <p className="text-2xl font-bold text-emerald-400">+12.5%</p>
+              <span className="text-emerald-500 material-symbols-outlined text-lg mb-1">trending_up</span>
             </div>
-            <p className="text-[10px] text-white/30 mt-3 italic">7일 이내 단기 조정</p>
+            <p className="text-[10px] text-white/30 mt-3 italic">발표 후 3개월</p>
           </div>
         </div>
         <div className="glass-card rounded-2xl p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h4 className="text-white text-lg font-bold">과거 유사 사례 목록</h4>
-            <span className="text-primary text-xs font-bold cursor-pointer" onClick={() => navigate('/analysis/detail')}>전체보기</span>
+          <div className="mb-3">
+            <h5 className="text-white/60 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">history</span>
+              당시 시장 반응
+            </h5>
           </div>
-          <div className="space-y-4">
+          <div className="bg-white/5 rounded-xl p-4 border border-white/5 mb-4">
+            <p className="text-white/80 text-sm leading-relaxed mb-3">
+              Hopper 발표 이후, NVIDIA 주가는 <span className="text-emerald-400 font-semibold">3개월간 +12.5% 상승</span>했으며, SK하이닉스와 삼성전자 같은 HBM 공급사들도 동반 상승했습니다. 데이터센터 시장이 본격적으로 확대되며 AI 인프라 투자 붐이 일어났습니다.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">주가 상승</span>
+              <span className="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md">공급망 수혜</span>
+              <span className="text-[10px] font-bold bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md">시장 확대</span>
+            </div>
+          </div>
+          <div className="mb-3">
+            <h5 className="text-white/60 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">library_books</span>
+              다른 유사 사례
+            </h5>
+          </div>
+          <div className="space-y-3">
             <div 
               onClick={() => navigate('/analysis/detail')}
-              className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 font-bold">22'</div>
+                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+                  <span className="text-purple-400 font-bold text-xs">24'</span>
+                </div>
                 <div>
-                  <p className="text-white font-bold text-sm">2022년 Ampere → Hopper</p>
-                  <p className="text-white/40 text-xs">과거 유사도: 85%</p>
+                  <p className="text-white font-bold text-sm">2024년 Blackwell 아키텍처 발표</p>
+                  <p className="text-white/40 text-xs">유사도 72% · 추론 비용 혁신 강조</p>
                 </div>
               </div>
               <span className="material-symbols-outlined text-white/40">chevron_right</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5">
+            <div 
+              onClick={() => navigate('/analysis/detail')}
+              className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
+            >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 font-bold">24'</div>
+                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
+                  <span className="text-amber-400 font-bold text-xs">20'</span>
+                </div>
                 <div>
-                  <p className="text-white font-bold text-sm">2024년 Blackwell 공개</p>
-                  <p className="text-white/40 text-xs">과거 유사도: 62%</p>
+                  <p className="text-white font-bold text-sm">2020년 CUDA 생태계 확장</p>
+                  <p className="text-white/40 text-xs">유사도 58% · 개발자 락인 전략</p>
                 </div>
               </div>
               <span className="material-symbols-outlined text-white/40">chevron_right</span>
             </div>
           </div>
         </div>
-      </main>
-      <div className="fixed bottom-0 w-full z-50 p-4 pb-10 bg-background-dark/95 backdrop-blur-xl border-t border-white/5">
-        <div className="max-w-md mx-auto">
+        <div className="mb-6">
           <button 
             onClick={() => navigate('/analysis/strategy')}
-            className="w-full bg-primary h-14 rounded-2xl flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(19,91,236,0.4)] active:scale-[0.98] transition-all"
+            className="w-full bg-primary h-14 rounded-2xl flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(19,91,236,0.4)] active:scale-[0.98] transition-all hover:shadow-[0_0_32px_rgba(19,91,236,0.5)]"
           >
             <span className="material-symbols-outlined text-white">shield</span>
             <span className="text-white font-bold text-lg">방어 전략 수립</span>
           </button>
         </div>
-      </div>
+        <div className="h-24 shrink-0"></div>
+      </main>
+      <Navigation />
     </div>
   );
 }

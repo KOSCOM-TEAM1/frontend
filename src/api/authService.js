@@ -71,7 +71,7 @@ const authService = {
           id: 1,
           email: loginData.email,
           name: 'Alex Johnson',
-          profileImage: 'https://i.pravatar.cc/150?img=12',
+          profileImage: '/profile.jpg',
         },
       });
     }

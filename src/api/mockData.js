@@ -3,12 +3,12 @@
  * 실제 API 연결 전에 사용하는 테스트 데이터
  */
 
-// 사용자 정보 목 데이터
+// 사용자 정보 목 데이터 (여성 - 최지원)
 export const mockUser = {
   id: 1,
-  name: "Alex Johnson",
-  email: "alex.johnson@example.com",
-  profileImage: "https://i.pravatar.cc/150?img=12",
+  name: "최지원",
+  email: "jiwon@example.com",
+  profileImage: "/profile.jpg",
   phoneNumber: "010-1234-5678",
   createdAt: "2024-01-15T09:00:00",
 };

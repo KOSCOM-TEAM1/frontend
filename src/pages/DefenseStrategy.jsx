@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 
 function DefenseStrategy() {
   const navigate = useNavigate();
@@ -7,10 +8,10 @@ function DefenseStrategy() {
     // 해외 종목
     { 
       id: 1,
-      icon: 'data_object', 
+      icon: 'memory', 
       name: 'NVDA', 
-      subName: '엔비디아', 
-      price: '₩168,450', 
+      subName: '엔비디아 (NVIDIA)', 
+      impact: '★★★★★', 
       change: '+5.21%', 
       positive: true,
       type: '해외',
@@ -20,14 +21,14 @@ function DefenseStrategy() {
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
       shadowColor: 'rgba(16, 185, 129, 0.4)',
-      reason: 'AI 반도체 섹터 강세'
+      reason: 'AI 추론 시장 지배력 강화'
     },
     { 
       id: 2,
-      icon: 'token', 
-      name: 'ETH', 
-      subName: '이더리움', 
-      price: '₩3,841,100', 
+      icon: 'electric_car', 
+      name: 'TSLA', 
+      subName: '테슬라 (Tesla)', 
+      impact: '★★★', 
       change: '+2.14%', 
       positive: true,
       type: '해외',
@@ -37,50 +38,33 @@ function DefenseStrategy() {
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/30',
       shadowColor: 'rgba(59, 130, 246, 0.4)',
-      reason: '상승 추세 지속 관찰'
+      reason: '자율주행 생태계 표준 발전'
     },
-    // 국내 종목
     { 
       id: 3,
-      icon: 'precision_manufacturing', 
-      name: '삼성전자', 
-      subName: 'Samsung Electronics', 
-      price: '₩8,240,000', 
-      change: '-0.32%', 
-      positive: false,
-      type: '국내',
+      icon: 'movie', 
+      name: 'NFLX', 
+      subName: '넷플릭스 (Netflix)', 
+      impact: '★★', 
+      change: '+1.32%', 
+      positive: true,
+      type: '해외',
       recommendation: '유지',
       recommendationColor: 'text-blue-400',
       dotColor: 'bg-blue-500',
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/30',
       shadowColor: 'rgba(59, 130, 246, 0.4)',
-      reason: '단기 조정 구간'
+      reason: 'AI 추천·제작 비용 절감'
     },
+    // 국내 종목
     { 
       id: 4,
       icon: 'memory', 
       name: 'SK하이닉스', 
       subName: 'SK Hynix', 
-      price: '₩12,850,000', 
-      change: '-0.58%', 
-      positive: false,
-      type: '국내',
-      recommendation: '매도',
-      recommendationColor: 'text-rose-400',
-      dotColor: 'bg-rose-500',
-      bgColor: 'bg-rose-500/10',
-      borderColor: 'border-rose-500/30',
-      shadowColor: 'rgba(244, 63, 94, 0.4)',
-      reason: '메모리 반도체 약세'
-    },
-    { 
-      id: 5,
-      icon: 'public', 
-      name: 'NAVER', 
-      subName: '네이버', 
-      price: '₩14,580,450', 
-      change: '+0.12%', 
+      impact: '★★★★★', 
+      change: '+3.89%', 
       positive: true,
       type: '국내',
       recommendation: '매수',
@@ -89,7 +73,58 @@ function DefenseStrategy() {
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
       shadowColor: 'rgba(16, 185, 129, 0.4)',
-      reason: 'AI 서비스 확대 전망'
+      reason: 'HBM4 직접 수혜 최대'
+    },
+    { 
+      id: 5,
+      icon: 'precision_manufacturing', 
+      name: '삼성전자', 
+      subName: 'Samsung Electronics', 
+      impact: '★★★★', 
+      change: '+1.24%', 
+      positive: true,
+      type: '국내',
+      recommendation: '매수',
+      recommendationColor: 'text-emerald-400',
+      dotColor: 'bg-emerald-500',
+      bgColor: 'bg-emerald-500/10',
+      borderColor: 'border-emerald-500/30',
+      shadowColor: 'rgba(16, 185, 129, 0.4)',
+      reason: 'HBM·파운드리 공급 확대'
+    },
+    { 
+      id: 6,
+      icon: 'search', 
+      name: '네이버', 
+      subName: 'NAVER', 
+      impact: '★★★', 
+      change: '+1.78%', 
+      positive: true,
+      type: '국내',
+      recommendation: '유지',
+      recommendationColor: 'text-blue-400',
+      dotColor: 'bg-blue-500',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
+      shadowColor: 'rgba(59, 130, 246, 0.4)',
+      reason: 'AI 서비스 수익성 개선'
+    },
+    { 
+      id: 7,
+      icon: 'restaurant', 
+      name: '삼양식품', 
+      subName: 'Samyang Foods', 
+      impact: '★', 
+      change: '+1.83%', 
+      positive: true,
+      type: '국내',
+      recommendation: '중립',
+      recommendationColor: 'text-slate-400',
+      dotColor: 'bg-slate-500',
+      bgColor: 'bg-slate-500/10',
+      borderColor: 'border-slate-500/30',
+      shadowColor: 'rgba(100, 116, 139, 0.4)',
+      reason: '간접 수혜 (수요예측 AI)'
     }
   ];
 
@@ -101,7 +136,7 @@ function DefenseStrategy() {
             <button onClick={() => navigate(-1)} className="w-8 h-8 flex items-center justify-center -ml-1">
               <span className="material-symbols-outlined text-white text-xl">arrow_back_ios_new</span>
             </button>
-            <h2 className="text-white text-[17px] font-bold tracking-tight">리스크 방어 전략 수립</h2>
+            <h2 className="text-white text-[17px] font-bold tracking-tight">기업 연관 분석</h2>
           </div>
           <div className="flex items-center gap-1.5 bg-primary/20 px-3 py-1 rounded-full border border-primary/30">
             <span className="flex h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>
@@ -129,7 +164,7 @@ function DefenseStrategy() {
                 </div>
                 <div className="flex-1 overflow-hidden">
                   <p className="text-white/95 text-[14px] leading-[1.6] break-keep">
-                    현재 시장 데이터는 <span className="text-primary font-bold">2008년 금융위기 당시와 85% 유사한 패턴</span>을 보입니다. 변동성 대응을 위한 전략이 즉시 필요합니다.
+                    엔비디아 <span className="text-primary font-bold">Rubin 조기 양산 + Cosmos 공개</span>는 AI가 "비싸고 제한적인 기술"에서 "모든 산업에 깔리는 인프라"로 넘어가는 신호입니다. 수혜 강도는 <span className="text-emerald-400 font-bold">SK하이닉스 {'>'} 삼성전자 {'>'} 네이버 {'>'} 간접 수혜</span> 순입니다.
                   </p>
                 </div>
               </div>
@@ -165,17 +200,13 @@ function DefenseStrategy() {
                   </circle>
                 </svg>
               </div>
-              <button className="w-full py-3.5 bg-primary/10 hover:bg-primary/20 rounded-xl border border-primary/30 flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20">
-                <span className="material-symbols-outlined text-primary text-sm">auto_awesome</span>
-                <span className="text-primary text-[13px] font-bold tracking-tight">AI 심층 분석 리포트 보기</span>
-              </button>
             </div>
           </div>
         </section>
         <section className="space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h4 className="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em]">AI 보유 종목 추천</h4>
-            <span className="text-white/30 text-[10px] font-bold">{holdings.length}개 종목</span>
+            <h4 className="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em]">관련 기업 영향도 분석</h4>
+            <span className="text-white/30 text-[10px] font-bold">{holdings.length}개 기업</span>
           </div>
           <div className="space-y-3">
             {holdings.map((stock) => (
@@ -202,10 +233,7 @@ function DefenseStrategy() {
                   </div>
                   <p className="text-slate-400 text-xs mb-2">{stock.subName}</p>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-white font-bold text-sm">{stock.price}</span>
-                    <span className={`text-xs font-bold ${stock.positive ? 'text-emerald-400' : 'text-rose-400'}`}>
-                      {stock.change}
-                    </span>
+                    <span className="text-amber-400 font-bold text-sm">{stock.impact}</span>
                     <span className="text-[11px] text-white/40 bg-white/5 px-2 py-0.5 rounded">{stock.reason}</span>
                   </div>
                 </div>
@@ -217,13 +245,37 @@ function DefenseStrategy() {
             ))}
           </div>
         </section>
-        <div className="bg-slate-500/10 border border-slate-500/20 rounded-2xl p-4 flex gap-3">
-          <span className="material-symbols-outlined text-slate-400 text-xl shrink-0">lightbulb</span>
-          <p className="text-slate-300 text-[12px] leading-snug break-keep">
-            위 전략은 AI 분석 기반 참고용 제안입니다. 투자 결정은 본인 판단과 책임 하에 진행해 주세요.
-          </p>
+        <div className="space-y-4">
+          <div className="glass-card rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="material-symbols-outlined text-emerald-400 text-xl">rocket_launch</span>
+              <h4 className="text-white font-bold text-sm">핵심 수혜 기업</h4>
+            </div>
+            <div className="space-y-3">
+              <div className="bg-emerald-500/5 rounded-xl p-3 border border-emerald-500/20">
+                <p className="text-emerald-400 font-bold text-xs mb-1">🥇 SK하이닉스 (국내 최대 수혜)</p>
+                <p className="text-white/70 text-xs leading-relaxed">Rubin 성능 4배 향상 → HBM4 탑재량 증가 가능성. 엔비디아 핵심 공급사로 가장 직접적 수혜</p>
+              </div>
+              <div className="bg-blue-500/5 rounded-xl p-3 border border-blue-500/20">
+                <p className="text-blue-400 font-bold text-xs mb-1">🥈 삼성전자 (메모리 수요 레벨업)</p>
+                <p className="text-white/70 text-xs leading-relaxed">AI GPU 세대 교체 = 메모리 수요 레벨업. 첨단 공정 경쟁 심화로 파운드리 사업 기회 확대</p>
+              </div>
+              <div className="bg-purple-500/5 rounded-xl p-3 border border-purple-500/20">
+                <p className="text-purple-400 font-bold text-xs mb-1">🥉 네이버 (서비스 비용 절감)</p>
+                <p className="text-white/70 text-xs leading-relaxed">추론 비용 하락 → 검색·광고·AI 비서 서비스 수익성 개선. 자체 LLM vs GPU 인프라 활용 선택지 확대</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-slate-500/10 border border-slate-500/20 rounded-2xl p-4 flex gap-3">
+            <span className="material-symbols-outlined text-slate-400 text-xl shrink-0">info</span>
+            <p className="text-slate-300 text-[12px] leading-snug break-keep">
+              위 분석은 AI 기반 참고 자료입니다. 실제 투자 결정은 본인의 판단과 책임 하에 진행해 주세요.
+            </p>
+          </div>
         </div>
+        <div className="h-24 shrink-0"></div>
       </main>
+      <Navigation />
     </div>
   );
 }
