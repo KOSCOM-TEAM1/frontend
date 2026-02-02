@@ -4,6 +4,39 @@ import Navigation from '../components/Navigation';
 function SleepRoutineSettings() {
   const navigate = useNavigate();
 
+  // 설정 변경 히스토리 (최근 7일)
+  const settingsHistory = [
+    { date: '1/25', bedtime: '23:00', wakeTime: '07:00' },
+    { date: '1/26', bedtime: '23:30', wakeTime: '07:30' },
+    { date: '1/27', bedtime: '23:00', wakeTime: '07:00' },
+    { date: '1/28', bedtime: '22:30', wakeTime: '06:30' },
+    { date: '1/29', bedtime: '22:30', wakeTime: '06:30' },
+    { date: '1/30', bedtime: '22:30', wakeTime: '06:30' },
+    { date: '1/31', bedtime: '22:30', wakeTime: '06:30' },
+  ];
+
+  // 시간을 분으로 변환 (그래프 높이 계산용)
+  const timeToMinutes = (time) => {
+    const [hour, minute] = time.split(':').map(Number);
+    return hour * 60 + minute;
+  };
+
+  // 취침 시간 그래프 높이 (22:00 기준으로 정규화)
+  const getBedtimeHeight = (bedtime) => {
+    const minutes = timeToMinutes(bedtime);
+    const baseMinutes = timeToMinutes('22:00');
+    const diff = minutes - baseMinutes;
+    return 50 + (diff / 120) * 50; // 22:00 = 50%, ±2시간 범위
+  };
+
+  // 기상 시간 그래프 높이 (07:00 기준으로 정규화)
+  const getWakeTimeHeight = (wakeTime) => {
+    const minutes = timeToMinutes(wakeTime);
+    const baseMinutes = timeToMinutes('07:00');
+    const diff = minutes - baseMinutes;
+    return 50 + (diff / 120) * 50; // 07:00 = 50%, ±2시간 범위
+  };
+
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">
       <div className="bg-blur-circle bg-primary w-64 h-64 -top-20 -left-20" style={{position: 'absolute', borderRadius: '50%', filter: 'blur(80px)', zIndex: 0, opacity: 0.5}}></div>
@@ -43,9 +76,9 @@ function SleepRoutineSettings() {
               </div>
               <div className="text-white font-bold px-2">:</div>
               <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">15</div>
+                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">20</div>
                 <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-primary/40 rounded-lg py-1">30</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">45</div>
+                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">40</div>
               </div>
             </div>
           </div>
@@ -67,60 +100,130 @@ function SleepRoutineSettings() {
               </div>
               <div className="text-white font-bold px-2">:</div>
               <div className="flex flex-1">
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">15</div>
+                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">20</div>
                 <div className="flex flex-col flex-1 items-center justify-center text-xl font-bold bg-accent-purple/40 rounded-lg py-1">30</div>
-                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">45</div>
+                <div className="flex flex-col flex-1 items-center justify-center opacity-40 text-sm">40</div>
               </div>
             </div>
           </div>
         </div>
         <div className="mt-8 px-4">
           <h3 className="text-white text-sm font-bold px-2 mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-xs">analytics</span>
-            영향 분석 미리보기
+            <span className="material-symbols-outlined text-xs">history</span>
+            설정 변경 히스토리
           </h3>
           <div className="glass rounded-xl p-4 overflow-hidden relative">
-            <div className="flex justify-between items-end h-32 w-full gap-1 mb-2">
-              {[50, 75, 66, 86, 100, 80, 66, 75, 50, 66, 33, 50].map((height, index) => (
-                <div
-                  key={index}
-                  className={`w-full rounded-t-sm ${
-                    index === 3 ? 'bg-primary relative group' :
-                    index >= 4 && index <= 6 ? 'bg-primary/60' :
-                    'bg-white/10'
-                  }`}
-                  style={{height: `${height}%`}}
-                >
-                  {index === 3 && (
-                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-[10px] px-1.5 py-0.5 rounded">취침</div>
-                  )}
-                </div>
+            {/* 라인 그래프 */}
+            <div className="relative h-40 w-full mb-4">
+              {/* 그리드 라인 */}
+              <div className="absolute inset-0 flex flex-col justify-between">
+                <div className="border-t border-white/5"></div>
+                <div className="border-t border-white/10"></div>
+                <div className="border-t border-white/5"></div>
+              </div>
+              
+              {/* SVG 그래프 */}
+              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                {/* 취침 시간 라인 */}
+                <polyline
+                  points={settingsHistory.map((item, index) => {
+                    const x = (index / (settingsHistory.length - 1)) * 100;
+                    const y = 100 - getBedtimeHeight(item.bedtime);
+                    return `${x},${y}`;
+                  }).join(' ')}
+                  fill="none"
+                  stroke="#135bec"
+                  strokeWidth="0.5"
+                  className="animate-fade-in"
+                />
+                
+                {/* 기상 시간 라인 */}
+                <polyline
+                  points={settingsHistory.map((item, index) => {
+                    const x = (index / (settingsHistory.length - 1)) * 100;
+                    const y = 100 - getWakeTimeHeight(item.wakeTime);
+                    return `${x},${y}`;
+                  }).join(' ')}
+                  fill="none"
+                  stroke="#9d50bb"
+                  strokeWidth="0.5"
+                  strokeDasharray="2 2"
+                  className="animate-fade-in"
+                />
+                
+                {/* 취침 시간 점 */}
+                {settingsHistory.map((item, index) => {
+                  const x = (index / (settingsHistory.length - 1)) * 100;
+                  const y = 100 - getBedtimeHeight(item.bedtime);
+                  return (
+                    <circle
+                      key={`bed-${index}`}
+                      cx={x}
+                      cy={y}
+                      r="1.5"
+                      fill="#135bec"
+                      className="animate-scale-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    />
+                  );
+                })}
+                
+                {/* 기상 시간 점 */}
+                {settingsHistory.map((item, index) => {
+                  const x = (index / (settingsHistory.length - 1)) * 100;
+                  const y = 100 - getWakeTimeHeight(item.wakeTime);
+                  return (
+                    <circle
+                      key={`wake-${index}`}
+                      cx={x}
+                      cy={y}
+                      r="1.5"
+                      fill="#9d50bb"
+                      className="animate-scale-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    />
+                  );
+                })}
+              </svg>
+            </div>
+
+            {/* 날짜 레이블 */}
+            <div className="flex justify-between text-[10px] text-[#92a4c9] font-medium border-t border-white/10 pt-2 mb-4">
+              {settingsHistory.map((item, index) => (
+                <span key={index} className={index === settingsHistory.length - 1 ? 'text-primary font-bold' : ''}>
+                  {item.date}
+                </span>
               ))}
             </div>
-            <div className="flex justify-between text-[10px] text-[#92a4c9] font-medium border-t border-white/10 pt-2">
-              <span>18:00</span>
-              <span className="text-primary font-bold">22:30</span>
-              <span className="text-primary font-bold">06:30</span>
-              <span>12:00</span>
-            </div>
-            <div className="mt-4 flex items-center justify-between bg-white/5 p-3 rounded-lg">
+
+            {/* 범례 */}
+            <div className="flex items-center justify-center gap-6 bg-white/5 p-3 rounded-lg">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-sm">schedule</span>
-                <span className="text-xs text-[#92a4c9]">8시간 시장 대응 공백</span>
+                <div className="w-3 h-3 rounded-full bg-primary"></div>
+                <span className="text-xs text-[#92a4c9]">취침 시간</span>
               </div>
-              <span className="text-xs font-bold text-white">예상 변동성 4.2%</span>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-accent-purple"></div>
+                <span className="text-xs text-[#92a4c9]">기상 시간</span>
+              </div>
+            </div>
+
+            {/* 통계 정보 */}
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="bg-white/5 p-3 rounded-lg">
+                <p className="text-[10px] text-[#92a4c9] mb-1">평균 취침</p>
+                <p className="text-sm font-bold text-primary">22:50</p>
+              </div>
+              <div className="bg-white/5 p-3 rounded-lg">
+                <p className="text-[10px] text-[#92a4c9] mb-1">평균 기상</p>
+                <p className="text-sm font-bold text-accent-purple">06:50</p>
+              </div>
             </div>
           </div>
         </div>
         <div className="mt-auto p-6 flex flex-col gap-4 pb-32">
-          <div className="flex items-center justify-between glass p-4 rounded-xl">
-            <span className="text-sm font-medium">주말 루틴 적용</span>
-            <div className="w-10 h-5 bg-primary rounded-full relative">
-              <div className="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
-            </div>
-          </div>
           <button className="w-full bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all duration-300 py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-[1.02]">
-            분석 보정하기
+            설정 저장하기
           </button>
         </div>
       </div>

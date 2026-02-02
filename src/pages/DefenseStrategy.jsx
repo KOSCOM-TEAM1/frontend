@@ -13,7 +13,13 @@ function DefenseStrategy() {
       price: '₩168,450', 
       change: '+5.21%', 
       positive: true,
-      type: '해외'
+      type: '해외',
+      recommendation: '매수',
+      recommendationColor: 'text-emerald-400',
+      dotColor: 'bg-emerald-500',
+      bgColor: 'bg-emerald-500/10',
+      borderColor: 'border-emerald-500/30',
+      reason: 'AI 반도체 섹터 강세'
     },
     { 
       id: 2,
@@ -23,7 +29,13 @@ function DefenseStrategy() {
       price: '₩3,841,100', 
       change: '+2.14%', 
       positive: true,
-      type: '해외'
+      type: '해외',
+      recommendation: '유지',
+      recommendationColor: 'text-blue-400',
+      dotColor: 'bg-blue-500',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
+      reason: '상승 추세 지속 관찰'
     },
     // 국내 종목
     { 
@@ -34,7 +46,13 @@ function DefenseStrategy() {
       price: '₩8,240,000', 
       change: '-0.32%', 
       positive: false,
-      type: '국내'
+      type: '국내',
+      recommendation: '유지',
+      recommendationColor: 'text-blue-400',
+      dotColor: 'bg-blue-500',
+      bgColor: 'bg-blue-500/10',
+      borderColor: 'border-blue-500/30',
+      reason: '단기 조정 구간'
     },
     { 
       id: 4,
@@ -44,7 +62,13 @@ function DefenseStrategy() {
       price: '₩12,850,000', 
       change: '-0.58%', 
       positive: false,
-      type: '국내'
+      type: '국내',
+      recommendation: '매도',
+      recommendationColor: 'text-rose-400',
+      dotColor: 'bg-rose-500',
+      bgColor: 'bg-rose-500/10',
+      borderColor: 'border-rose-500/30',
+      reason: '메모리 반도체 약세'
     },
     { 
       id: 5,
@@ -54,54 +78,13 @@ function DefenseStrategy() {
       price: '₩14,580,450', 
       change: '+0.12%', 
       positive: true,
-      type: '국내'
-    }
-  ];
-
-  const strategies = [
-    {
-      id: 0,
-      icon: 'trending_down',
-      title: '인버스 ETF 매수',
-      subtitle: '리스크 헤징',
+      type: '국내',
       recommendation: '매수',
       recommendationColor: 'text-emerald-400',
       dotColor: 'bg-emerald-500',
       bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30'
-    },
-    {
-      id: 1,
-      icon: 'account_balance_wallet',
-      title: '안전자산 비중 확대',
-      subtitle: '금/달러 30%',
-      recommendation: '매수',
-      recommendationColor: 'text-emerald-400',
-      dotColor: 'bg-emerald-500',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30'
-    },
-    {
-      id: 2,
-      icon: 'do_not_disturb_on',
-      title: '손절가 설정',
-      subtitle: '현재가 -5%',
-      recommendation: '중립',
-      recommendationColor: 'text-yellow-400',
-      dotColor: 'bg-yellow-500',
-      bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/30'
-    },
-    {
-      id: 3,
-      icon: 'trending_up',
-      title: '고위험 레버리지 상품',
-      subtitle: '변동성 높음',
-      recommendation: '매도',
-      recommendationColor: 'text-rose-400',
-      dotColor: 'bg-rose-500',
-      bgColor: 'bg-rose-500/10',
-      borderColor: 'border-rose-500/30'
+      borderColor: 'border-emerald-500/30',
+      reason: 'AI 서비스 확대 전망'
     }
   ];
 
@@ -125,47 +108,6 @@ function DefenseStrategy() {
         <div className="ai-glow-effect top-0 -left-20" style={{position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(19, 91, 236, 0.25) 0%, transparent 70%)', filter: 'blur(60px)', zIndex: -1, pointerEvents: 'none'}}></div>
         <div className="ai-glow-effect bottom-20 -right-20 opacity-50" style={{position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(19, 91, 236, 0.25) 0%, transparent 70%)', filter: 'blur(60px)', zIndex: -1, pointerEvents: 'none'}}></div>
         
-        {/* 보유 종목 섹션 */}
-        <section className="space-y-4 animate-slide-in-up">
-          <div className="flex items-center justify-between px-1">
-            <h4 className="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em]">내 보유 종목</h4>
-            <span className="text-white/30 text-[10px] font-bold">{holdings.length}개 보유</span>
-          </div>
-          <div className="glass-card-deep rounded-2xl p-4 space-y-3">
-            {holdings.map((stock, index) => (
-              <div 
-                key={stock.id}
-                className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer group"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 glass rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                    <span className="material-symbols-outlined text-white text-lg">{stock.icon}</span>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-white font-bold text-sm">{stock.name}</p>
-                      <span className={`text-[9px] px-1.5 py-0.5 rounded ${
-                        stock.type === '해외' 
-                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-                          : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                      }`}>
-                        {stock.type}
-                      </span>
-                    </div>
-                    <p className="text-slate-400 text-xs">{stock.subName}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-white font-bold text-sm">{stock.price}</p>
-                  <p className={`text-xs font-bold ${stock.positive ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {stock.change}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
         <section className="relative animate-slide-in-up">
           <div className="glass-card-deep rounded-2xl p-5 shadow-2xl hover-lift transition-all duration-300">
@@ -226,25 +168,42 @@ function DefenseStrategy() {
           </div>
         </section>
         <section className="space-y-4">
-          <h4 className="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em] px-1">AI 방어 전략 제안</h4>
+          <div className="flex items-center justify-between px-1">
+            <h4 className="text-white/40 text-[11px] font-bold uppercase tracking-[0.15em]">AI 보유 종목 추천</h4>
+            <span className="text-white/30 text-[10px] font-bold">{holdings.length}개 종목</span>
+          </div>
           <div className="space-y-3">
-            {strategies.map((strategy) => (
+            {holdings.map((stock) => (
               <div
-                key={strategy.id}
-                className="glass-card rounded-2xl p-4 flex items-center gap-4 border-l-4 border-l-primary/50 hover-lift hover:border-l-primary transition-all duration-300 cursor-pointer"
+                key={stock.id}
+                className={`glass-card rounded-2xl p-4 flex items-center gap-4 border-l-4 hover-lift transition-all duration-300 cursor-pointer ${stock.borderColor.replace('border-', 'border-l-')}`}
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center border bg-white/5 border-white/10 shrink-0">
-                  <span className="material-symbols-outlined text-2xl text-primary">{strategy.icon}</span>
+                  <span className="material-symbols-outlined text-2xl text-primary">{stock.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-bold text-[15px] mb-1.5">{strategy.title}</p>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[11px] text-white/40 bg-white/5 px-1.5 py-0.5 rounded">{strategy.subtitle}</span>
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-white font-bold text-[15px]">{stock.name}</p>
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded ${
+                      stock.type === '해외' 
+                        ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                        : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                    }`}>
+                      {stock.type}
+                    </span>
+                  </div>
+                  <p className="text-slate-400 text-xs mb-2">{stock.subName}</p>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-white font-bold text-sm">{stock.price}</span>
+                    <span className={`text-xs font-bold ${stock.positive ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      {stock.change}
+                    </span>
+                    <span className="text-[11px] text-white/40 bg-white/5 px-2 py-0.5 rounded">{stock.reason}</span>
                   </div>
                 </div>
-                <div className={`px-3 py-1.5 rounded-lg ${strategy.bgColor} border ${strategy.borderColor} flex items-center gap-1.5 shrink-0`}>
-                  <div className={`w-1.5 h-1.5 ${strategy.dotColor} rounded-full animate-pulse`}></div>
-                  <span className={`text-sm ${strategy.recommendationColor} font-bold`}>{strategy.recommendation}</span>
+                <div className={`px-3 py-1.5 rounded-lg ${stock.bgColor} border ${stock.borderColor} flex items-center gap-1.5 shrink-0`}>
+                  <div className={`w-1.5 h-1.5 ${stock.dotColor} rounded-full animate-pulse`}></div>
+                  <span className={`text-sm ${stock.recommendationColor} font-bold`}>{stock.recommendation}</span>
                 </div>
               </div>
             ))}
