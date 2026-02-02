@@ -118,8 +118,8 @@ function MorningDashboard() {
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">1,345.80</span>
-                  <span className="text-rose-400 text-xs font-semibold">-0.12%</span>
+                  <span className="text-white text-base font-bold">1,452.40</span>
+                  <span className="text-emerald-400 text-xs font-semibold">+0.03%</span>
                 </div>
               </div>
             </div>
