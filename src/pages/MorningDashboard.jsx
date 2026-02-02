@@ -7,6 +7,25 @@ function MorningDashboard() {
   const [memberInfo, setMemberInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // 현재 시간 업데이트
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // 시간 포맷팅 함수
+  const getFormattedTime = () => {
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    const ampm = hours >= 12 ? '오후' : '오전';
+    const displayHours = hours % 12 || 12;
+    return `${ampm} ${displayHours}:${minutes.toString().padStart(2, '0')}`;
+  };
 
   useEffect(() => {
     // 컴포넌트 마운트 시 회원 정보 불러오기
@@ -67,22 +86,10 @@ function MorningDashboard() {
               <div className="w-full h-full bg-center bg-no-repeat bg-cover" style={{backgroundImage: `url("${profileImage}")`}}></div>
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
-                  좋은 아침입니다, {displayName}님
-                </h2>
-                {memberInfo && (
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-bold uppercase tracking-wider border border-emerald-500/30">
-                    API 연결됨
-                  </span>
-                )}
-                {error && (
-                  <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 text-[9px] font-bold uppercase tracking-wider border border-rose-500/30">
-                    API 오류
-                  </span>
-                )}
-              </div>
-              <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">시장 업데이트 • 오전 7:30</p>
+              <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
+                좋은 아침입니다, {displayName}님
+              </h2>
+              <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">시장 업데이트 • {getFormattedTime()}</p>
             </div>
           </div>
           <button className="flex size-10 items-center justify-center rounded-full glass text-white transition-all duration-200 active:scale-95 hover-scale hover:bg-white/10">
