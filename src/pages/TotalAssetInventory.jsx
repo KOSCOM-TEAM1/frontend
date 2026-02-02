@@ -75,7 +75,7 @@ function TotalAssetInventory() {
             <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
+                  <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     국내 주식
                   </span>
                   <h3 className="text-2xl font-extrabold text-rose-400 tracking-tight mb-1">
@@ -92,34 +92,76 @@ function TotalAssetInventory() {
                   </span>
                 </div>
               </div>
-              <div className="space-y-4 pt-4 border-t border-white/5">
-                <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] font-bold leading-none">
-                      삼성
+              <div className="pt-4 border-t border-white/5">
+                {/* 도넛 차트 */}
+                <div className="flex items-center justify-center mb-4">
+                  <div className="relative w-40 h-40">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      {/* 배경 원 */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.05)"
+                        strokeWidth="16"
+                      />
+                      {/* 종합 위탁 계좌 (61.7%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="#2563eb"
+                        strokeWidth="16"
+                        strokeDasharray="155 251"
+                        strokeDashoffset="0"
+                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
+                        style={{ animationDelay: '0.2s', filter: 'drop-shadow(0 0 8px rgba(37, 99, 235, 0.5))' }}
+                      />
+                      {/* CMA 파킹 계좌 (38.3%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="#10b981"
+                        strokeWidth="16"
+                        strokeDasharray="96 251"
+                        strokeDashoffset="-155"
+                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
+                        style={{ animationDelay: '0.4s', filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))' }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                      <p className="text-[10px] text-slate-400 font-semibold">국내 총액</p>
+                      <p className="text-sm font-bold text-white">₩35.7M</p>
                     </div>
-                    <span className="text-sm font-medium text-gray-200">
-                      종합 위탁 계좌
-                    </span>
                   </div>
-                  <span className="text-sm font-bold text-white">
-                    ₩22,000,000
-                  </span>
                 </div>
-                <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center text-[10px] font-bold leading-none">
-                      한국
-                      <br />
-                      투자
+                
+                {/* 범례 */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-sm bg-blue-600"></div>
+                      <span className="text-xs text-gray-300">종합 위탁 계좌</span>
                     </div>
-                    <span className="text-sm font-medium text-gray-200">
-                      CMA 파킹 계좌
-                    </span>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-white">₩22.0M</p>
+                      <p className="text-[10px] text-blue-400">61.7%</p>
+                    </div>
                   </div>
-                  <span className="text-sm font-bold text-white">
-                    ₩13,670,450
-                  </span>
+                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-sm bg-emerald-600"></div>
+                      <span className="text-xs text-gray-300">CMA 파킹 계좌</span>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-white">₩13.7M</p>
+                      <p className="text-[10px] text-emerald-400">38.3%</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -143,34 +185,76 @@ function TotalAssetInventory() {
                   </span>
                 </div>
               </div>
-              <div className="space-y-4 pt-4 border-t border-white/5">
-                <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-[10px] font-bold leading-none">
-                      미래
-                      <br />
-                      에셋
+              <div className="pt-4 border-t border-white/5">
+                {/* 도넛 차트 */}
+                <div className="flex items-center justify-center mb-4">
+                  <div className="relative w-40 h-40">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                      {/* 배경 원 */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.05)"
+                        strokeWidth="16"
+                      />
+                      {/* 미국 주식 일반 (94.5%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="#6366f1"
+                        strokeWidth="16"
+                        strokeDasharray="237 251"
+                        strokeDashoffset="0"
+                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
+                        style={{ animationDelay: '0.2s', filter: 'drop-shadow(0 0 8px rgba(99, 102, 241, 0.5))' }}
+                      />
+                      {/* 외화 예수금 (5.5%) */}
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="none"
+                        stroke="#f97316"
+                        strokeWidth="16"
+                        strokeDasharray="14 251"
+                        strokeDashoffset="-237"
+                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
+                        style={{ animationDelay: '0.4s', filter: 'drop-shadow(0 0 8px rgba(249, 115, 22, 0.5))' }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                      <p className="text-[10px] text-slate-400 font-semibold">해외 총액</p>
+                      <p className="text-sm font-bold text-white">₩72.5M</p>
                     </div>
-                    <span className="text-sm font-medium text-gray-200">
-                      미국 주식 일반
-                    </span>
                   </div>
-                  <span className="text-sm font-bold text-white">
-                    ₩68,440,550
-                  </span>
                 </div>
-                <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg ">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-[10px] font-bold leading-none">
-                      키움
+                
+                {/* 범례 */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-sm bg-indigo-600"></div>
+                      <span className="text-xs text-gray-300">미국 주식 일반</span>
                     </div>
-                    <span className="text-sm font-medium text-gray-200">
-                      외화 예수금
-                    </span>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-white">₩68.4M</p>
+                      <p className="text-[10px] text-indigo-400">94.5%</p>
+                    </div>
                   </div>
-                  <span className="text-sm font-bold text-white">
-                    ₩4,009,450
-                  </span>
+                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-sm bg-orange-600"></div>
+                      <span className="text-xs text-gray-300">외화 예수금</span>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-white">₩4.0M</p>
+                      <p className="text-[10px] text-orange-400">5.5%</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
