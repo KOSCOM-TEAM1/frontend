@@ -149,7 +149,7 @@ function MorningDashboard() {
                 <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20">상승</span>
               </div>
               <div className="flex flex-col gap-1 mb-2">
-                <h2 className="text-emerald-400 text-2xl font-extrabold tracking-tight leading-tight">+₩74,000 (+0.79%)</h2>
+                <h2 className="text-emerald-400 text-2xl font-extrabold tracking-tight leading-tight">+₩235,000 (+2.50%)</h2>
                 <div className="flex items-center gap-1.5 opacity-60">
                   <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
                   <p className="text-white text-xs font-bold">₩9,380,000</p>
@@ -210,31 +210,31 @@ function MorningDashboard() {
             </div>
           </div>
         </div>
-ㄹ        {/* 총 자산 잔액 (해외 ₩9,380,000 + 국내 ₩16,449,000 = ₩25,829,000 / -₩66,000, -0.26%) */}
+        {/* 총 자산 잔액 (해외 +₩235,000 + 국내 -₩140,000 = +₩95,000 / +0.37%) */}
         <div className="px-6 py-2 shrink-0 animate-slide-in-up">
           <div className="glass rounded-xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-rose-500/10 blur-3xl rounded-full"></div>
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full"></div>
             <div className="relative z-10">
               <p className="text-slate-400 text-sm font-medium mb-1">총 수익</p>
               <div className="flex flex-col gap-1 mb-4">
-                <h1 className="text-rose-400 text-3xl font-extrabold tracking-tight">-₩66,000 (-0.26%)</h1>
+                <h1 className="text-emerald-400 text-3xl font-extrabold tracking-tight">+₩95,000 (+0.37%)</h1>
                 <div className="flex items-center gap-1.5 opacity-60">
                   <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
                   <p className="text-white text-sm font-bold">₩25,829,000</p>
                 </div>
               </div>
               <div className="mt-8 h-28 w-full flex items-end gap-1.5">
-                {[100, 92, 88, 85, 82, 78, 75, 72, 68, 65].map((height, index) => (
+                {[28, 32, 38, 42, 48, 55, 62, 72, 85, 100].map((height, index) => (
                   <div 
                     key={index}
                     className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${
-                      index === 0 ? 'bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)] animate-bar-pulse' : 
-                      index <= 3 ? 'bg-rose-500/80' : 
-                      index <= 6 ? 'bg-rose-500/60' : 
-                      index >= 7 ? 'bg-rose-500/50' : 
-                      index >= 5 ? 'bg-rose-500/40' : 
-                      index >= 4 ? 'bg-rose-500/30' : 
-                      index >= 2 ? 'bg-rose-500/20' : 'bg-rose-500/10'
+                      index === 9 ? 'bg-primary shadow-[0_0_15px_rgba(19,91,236,0.5)] animate-bar-pulse' : 
+                      index >= 8 ? 'bg-primary/80' : 
+                      index >= 7 ? 'bg-primary/60' : 
+                      index >= 6 ? 'bg-primary/50' : 
+                      index >= 5 ? 'bg-primary/40' : 
+                      index >= 4 ? 'bg-primary/30' : 
+                      index >= 2 ? 'bg-primary/20' : 'bg-primary/10'
                     }`}
                     style={{
                       height: `${height}%`,
@@ -256,9 +256,9 @@ function MorningDashboard() {
         <div className="px-6 space-y-3 flex-grow">
           <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">해외</p>
           {[
-            { icon: 'data_object', name: 'NVIDIA', subName: '엔비디아', price: '$951.25', change: '+0.52%', positive: true },
-            { icon: 'directions_car', name: 'Tesla', subName: '테슬라', price: '$5,090.04', change: '+1.47%', positive: true },
-            { icon: 'movie', name: 'Netflix', subName: '넷플릭스', price: '$415.95', change: '+0.37%', positive: true }
+            { icon: 'data_object', name: 'NVIDIA', subName: '엔비디아', price: '$951.25', change: '+1.50%', positive: true },
+            { icon: 'directions_car', name: 'Tesla', subName: '테슬라', price: '$5,090.04', change: '+2.50%', positive: true },
+            { icon: 'movie', name: 'Netflix', subName: '넷플릭스', price: '$415.95', change: '+3.50%', positive: true }
           ].map((stock, index) => (
             <motion.div
               key={index}

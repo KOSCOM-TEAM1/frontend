@@ -35,8 +35,8 @@ function HistoricalPatternAnalysis() {
                 <span className="text-[10px] font-bold bg-primary px-2 py-0.5 rounded uppercase tracking-wider">거시 경제</span>
                 <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">심층 분석</span>
               </div>
-              <h1 className="text-white text-2xl font-bold leading-tight">글로벌 자산 시장 유사도 분석</h1>
-              <p className="text-white/60 text-sm mt-1">AI가 탐지한 과거 금융 위기와의 연관성</p>
+              <h1 className="text-white text-2xl font-bold leading-tight">엔비디아 Rubin GPU 양산 가속화</h1>
+              <p className="text-white/60 text-sm mt-1">CES 2026 기조연설 · AI 인프라 변곡점</p>
             </div>
           </div>
         </div>
@@ -72,8 +72,7 @@ function HistoricalPatternAnalysis() {
                 </div>
                 <div className="space-y-3">
                   <p className="text-white/90 text-sm leading-relaxed">
-                    분석 결과, <span className="text-primary font-bold">현재 사건은 2008년 금융위기 당시와 85% 유사합니다.</span> 
-                    시장의 변동성 지수와 거래량 패턴이 당시 하락 직전의 징후와 매우 흡사한 경로를 밟고 있습니다.
+                    분석 결과, 엔비디아의 <span className="text-primary font-bold">Rubin GPU 조기 양산과 Cosmos AI 오픈소스 공개</span>는 AI가 "비싸고 제한적인 기술"에서 "모든 산업에 깔리는 인프라"로 넘어가는 역사적 변곡점입니다. 추론 비용 1/10 절감은 AI 서비스 대중화를 가속화할 것으로 예상됩니다.
                   </p>
                   <button className="flex items-center gap-1.5 text-primary text-xs font-bold py-1 px-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-all duration-300 hover:scale-105 active:scale-95">
                     <span className="material-symbols-outlined text-sm">chat</span>
@@ -139,9 +138,9 @@ function HistoricalPatternAnalysis() {
               className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 font-bold">08'</div>
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 font-bold">22'</div>
                 <div>
-                  <p className="text-white font-bold text-sm">2008년 금융 위기</p>
+                  <p className="text-white font-bold text-sm">2022년 Ampere → Hopper</p>
                   <p className="text-white/40 text-xs">과거 유사도: 85%</p>
                 </div>
               </div>
@@ -149,9 +148,9 @@ function HistoricalPatternAnalysis() {
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 font-bold">18'</div>
+                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/60 font-bold">24'</div>
                 <div>
-                  <p className="text-white font-bold text-sm">2018년 미중 무역 갈등</p>
+                  <p className="text-white font-bold text-sm">2024년 Blackwell 공개</p>
                   <p className="text-white/40 text-xs">과거 유사도: 62%</p>
                 </div>
               </div>
