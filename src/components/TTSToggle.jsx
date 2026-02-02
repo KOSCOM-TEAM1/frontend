@@ -7,25 +7,21 @@ const TTS_PLAYLIST = [
     id: 1, 
     title: '2월 24일 마켓 브리핑', 
     text: '좋은 아침입니다. 2월 24일 오늘의 주요 시장 업데이트를 전해드립니다. 반도체 섹터의 강력한 실적 발표로 코스피가 0.85% 상승하며 2548포인트로 마감했습니다.',
-    duration: '3:45',
   },
   { 
     id: 2, 
     title: '어제 주요 지표 분석', 
     text: '어제 발표된 주요 경제 지표를 분석해드리겠습니다. 미국 소비자물가지수가 전월 대비 0.3% 상승하며 시장 예상치를 소폭 상회했습니다.',
-    duration: '2:12',
   },
   { 
     id: 3, 
     title: '섹터별 수급 현황', 
     text: '섹터별 자금 흐름을 살펴보겠습니다. 반도체와 이차전지 섹터로 외국인 자금이 집중되고 있으며, 바이오 섹터는 자금 이탈이 지속되고 있습니다.',
-    duration: '4:30',
   },
   { 
     id: 4, 
     title: '포트폴리오 리밸런싱 제언', 
     text: '현재 포트폴리오를 분석한 결과, 해외 주식 비중 조정을 권장드립니다. 변동성이 큰 섹터의 비중을 줄이고 안정적인 배당주 비중을 늘리는 것이 좋겠습니다.',
-    duration: '1:55',
   }
 ];
 
@@ -38,6 +34,7 @@ function TTSToggle() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [trackDurations, setTrackDurations] = useState({}); // 각 트랙의 실제 길이 저장
   const audioRef = useRef(null);
 
   // 컴포넌트 언마운트 시 오디오 정리
@@ -90,11 +87,21 @@ function TTSToggle() {
         newAudio.addEventListener('loadedmetadata', () => {
           console.log('📊 오디오 메타데이터 로드됨, duration:', newAudio.duration);
           setDuration(newAudio.duration);
+          // 트랙별 실제 길이 저장
+          setTrackDurations(prev => ({
+            ...prev,
+            [track.id]: newAudio.duration
+          }));
         });
         
         newAudio.addEventListener('durationchange', () => {
           console.log('📊 Duration 변경됨:', newAudio.duration);
           setDuration(newAudio.duration);
+          // 트랙별 실제 길이 저장
+          setTrackDurations(prev => ({
+            ...prev,
+            [track.id]: newAudio.duration
+          }));
         });
         
         newAudio.addEventListener('ended', () => {
@@ -227,6 +234,7 @@ function TTSToggle() {
                   {TTS_PLAYLIST.map((item) => {
                     const isActive = item.id === currentTrackId;
                     const isCurrentlyPlaying = isActive && isPlaying;
+                    const trackDuration = trackDurations[item.id];
                     
                     return (
                       <div
@@ -243,7 +251,7 @@ function TTSToggle() {
                             {item.title}
                           </span>
                           <span className={`text-[10px] ${isActive ? 'text-primary/70' : 'text-slate-500'}`}>
-                            {item.duration}
+                            {trackDuration ? formatTime(trackDuration) : '로딩 중...'}
                           </span>
                         </div>
                         <span className={`material-symbols-outlined text-lg shrink-0 ${isActive ? 'text-primary fill-[1]' : 'text-slate-400'}`}>
