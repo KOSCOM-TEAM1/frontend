@@ -188,10 +188,6 @@ function TotalAssetInventory() {
                 </span>
               </div>
             </div>
-
-            <button className="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold text-gray-400 transition-all border border-white/5 hover:border-white/20 hover:scale-[1.02] active:scale-95">
-              계좌 추가 연결하기
-            </button>
           </div>
 
           <div className="p-6 text-center space-y-4 mt-4 pb-32">
