@@ -58,7 +58,7 @@ function TotalAssetInventory() {
             <p className="text-gray-400 text-sm font-normal leading-relaxed pt-2">
               연결된 모든 계좌의 자산을 실시간으로 확인하세요.
             </p>
-            <div className="mt-4 py-4 px-4 rounded-2xl bg-white/5 border border-white/10">
+            <div className="mt-4 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 hover-lift hover-glow transition-all duration-300 cursor-pointer">
               <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
                 총 수익
               </p>
@@ -72,7 +72,7 @@ function TotalAssetInventory() {
             </div>
           </div>
           <div className="px-4 space-y-6 flex-1 animate-slide-in-up">
-            <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift transition-all duration-300">
+            <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <span className="text-xs font-bold text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
@@ -123,7 +123,7 @@ function TotalAssetInventory() {
                 </div>
               </div>
             </div>
-            <div className="glass-card rounded-3xl p-6 relative overflow-hidden">
+            <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
@@ -177,7 +177,7 @@ function TotalAssetInventory() {
 
             {/* <div className="flex flex-col"> */}
 
-            <div className="mt-4 py-4 px-4 rounded-2xl bg-white/5 border border-white/10">
+            <div className="mt-4 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 hover-lift hover-glow transition-all duration-300 cursor-pointer">
               <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
                 실시간 환율 (USD/KRW)
               </span>
