@@ -1,5 +1,6 @@
 import apiClient from './client';
-import { API_ENDPOINTS } from './types';
+import { API_ENDPOINTS, USE_MOCK_DATA, createResponse } from './types';
+import { mockNews } from './mockData';
 
 /**
  * 뉴스 관련 API 서비스
@@ -14,6 +15,23 @@ const newsService = {
    * @returns {Promise<Object>} 뉴스 목록 응답
    */
   getNewsList: async (params = {}) => {
+    // 🎭 목 데이터 모드
+    if (USE_MOCK_DATA) {
+      const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
+      
+      console.log('🎭 [MOCK] 뉴스 목록 조회:', { page, size, sort });
+      
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      return createResponse(true, {
+        content: mockNews,
+        totalElements: mockNews.length,
+        totalPages: 1,
+        currentPage: page,
+      });
+    }
+
+    // 🌐 실제 API 호출
     try {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       
@@ -66,6 +84,25 @@ const newsService = {
    * @returns {Promise<Object>} 뉴스 상세 정보
    */
   getNewsDetail: async (newsId) => {
+    // 🎭 목 데이터 모드
+    if (USE_MOCK_DATA) {
+      console.log('🎭 [MOCK] 뉴스 상세 조회:', newsId);
+      
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      const news = mockNews.find(n => n.id === newsId);
+      
+      if (!news) {
+        return createResponse(false, null, {
+          code: 'NOT_FOUND',
+          message: '뉴스를 찾을 수 없습니다.',
+        });
+      }
+      
+      return createResponse(true, news);
+    }
+
+    // 🌐 실제 API 호출
     try {
       console.log('📰 뉴스 상세 조회 시작:', newsId);
       
@@ -100,6 +137,25 @@ const newsService = {
    * @returns {Promise<Object>} 분석된 뉴스 목록
    */
   getAnalyzedNews: async (params = {}) => {
+    // 🎭 목 데이터 모드
+    if (USE_MOCK_DATA) {
+      const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
+      
+      console.log('🎭 [MOCK] 분석된 뉴스 조회');
+      
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      const analyzedNews = mockNews.filter(news => news.isAnalyzed);
+      
+      return createResponse(true, {
+        content: analyzedNews,
+        totalElements: analyzedNews.length,
+        totalPages: 1,
+        currentPage: page,
+      });
+    }
+
+    // 🌐 실제 API 호출
     try {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       

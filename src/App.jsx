@@ -8,6 +8,7 @@ import HistoricalPatternAnalysis from './pages/HistoricalPatternAnalysis';
 import HistoricalPatternDetail from './pages/HistoricalPatternDetail';
 import DefenseStrategy from './pages/DefenseStrategy';
 import MydataAccountIntegration from './pages/MydataAccountIntegration';
+import ApiTestPage from './pages/ApiTestPage';
 import TTSToggle from './components/TTSToggle';
 import './App.css';
 
@@ -25,6 +26,8 @@ function App() {
         <Route path="/analysis" element={<HistoricalPatternAnalysis />} />
         <Route path="/analysis/detail" element={<HistoricalPatternDetail />} />
         <Route path="/analysis/strategy" element={<DefenseStrategy />} />
+        {/* API 테스트 페이지 */}
+        <Route path="/api-test" element={<ApiTestPage />} />
       </Routes>
       <TTSToggle />
     </Router>

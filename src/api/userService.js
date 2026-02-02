@@ -1,4 +1,6 @@
 import apiClient from './client';
+import { API_ENDPOINTS, USE_MOCK_DATA, createResponse } from './types';
+import { mockUser, mockUserSettings } from './mockData';
 
 /**
  * 회원 정보 API 서비스
@@ -10,14 +12,28 @@ const userService = {
    * @returns {Promise} API 응답 데이터
    */
   getMemberInfo: async (memberId = 1) => {
+    // 🎭 목 데이터 모드
+    if (USE_MOCK_DATA) {
+      console.log('🎭 [MOCK] 회원 정보 조회:', memberId);
+      
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      return createResponse(true, {
+        ...mockUser,
+        ...mockUserSettings,
+        id: memberId,
+      });
+    }
+
+    // 🌐 실제 API 호출
     try {
-      const response = await apiClient.get('/api/v1/member/allInfo', {
+      const response = await apiClient.get(API_ENDPOINTS.MEMBER_INFO, {
         headers: {
           'id': memberId,
         },
       });
       
-      console.log('API 원본 응답:', response.data);
+      console.log('✅ API 원본 응답:', response.data);
       
       // 성공 응답 처리
       if (response.data.success) {
@@ -49,7 +65,7 @@ const userService = {
       }
     } catch (error) {
       // 네트워크 에러 또는 서버 에러
-      console.error('getMemberInfo 에러:', error);
+      console.error('❌ getMemberInfo 에러:', error);
       return {
         success: false,
         error: {
