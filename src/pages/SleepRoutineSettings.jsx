@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '../components/Navigation';
 
 function SleepRoutineSettings() {
@@ -113,10 +114,23 @@ function SleepRoutineSettings() {
                 >
                   keyboard_arrow_up
                 </button>
-                <div className="flex flex-col items-center justify-center py-2">
-                  <div className="text-xs text-slate-500 mb-1">{String((bedtimeHour - 1 + 24) % 24).padStart(2, '0')}</div>
-                  <div className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2">{String(bedtimeHour).padStart(2, '0')}</div>
-                  <div className="text-xs text-slate-500 mt-1">{String((bedtimeHour + 1) % 24).padStart(2, '0')}</div>
+                <div className="flex flex-col items-center justify-center py-2 relative h-24 overflow-hidden">
+                  <div className="text-xs text-slate-500 mb-1 transition-all duration-300">{String((bedtimeHour - 1 + 24) % 24).padStart(2, '0')}</div>
+                  <div className="relative overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={bedtimeHour}
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 20, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2"
+                      >
+                        {String(bedtimeHour).padStart(2, '0')}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1 transition-all duration-300">{String((bedtimeHour + 1) % 24).padStart(2, '0')}</div>
                 </div>
                 <button 
                   onClick={() => adjustTime('bedtime', 'hour', 'down')}
@@ -136,10 +150,23 @@ function SleepRoutineSettings() {
                 >
                   keyboard_arrow_up
                 </button>
-                <div className="flex flex-col items-center justify-center py-2">
-                  <div className="text-xs text-slate-500 mb-1">{String((bedtimeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
-                  <div className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2">{String(bedtimeMinute).padStart(2, '0')}</div>
-                  <div className="text-xs text-slate-500 mt-1">{String((bedtimeMinute + 10) % 60).padStart(2, '0')}</div>
+                <div className="flex flex-col items-center justify-center py-2 relative h-24 overflow-hidden">
+                  <div className="text-xs text-slate-500 mb-1 transition-all duration-300">{String((bedtimeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
+                  <div className="relative overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={bedtimeMinute}
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 20, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="text-2xl font-bold bg-primary/40 rounded-lg px-4 py-2"
+                      >
+                        {String(bedtimeMinute).padStart(2, '0')}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1 transition-all duration-300">{String((bedtimeMinute + 10) % 60).padStart(2, '0')}</div>
                 </div>
                 <button 
                   onClick={() => adjustTime('bedtime', 'minute', 'down')}
@@ -169,10 +196,23 @@ function SleepRoutineSettings() {
                 >
                   keyboard_arrow_up
                 </button>
-                <div className="flex flex-col items-center justify-center py-2">
-                  <div className="text-xs text-slate-500 mb-1">{String((wakeHour - 1 + 24) % 24).padStart(2, '0')}</div>
-                  <div className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2">{String(wakeHour).padStart(2, '0')}</div>
-                  <div className="text-xs text-slate-500 mt-1">{String((wakeHour + 1) % 24).padStart(2, '0')}</div>
+                <div className="flex flex-col items-center justify-center py-2 relative h-24 overflow-hidden">
+                  <div className="text-xs text-slate-500 mb-1 transition-all duration-300">{String((wakeHour - 1 + 24) % 24).padStart(2, '0')}</div>
+                  <div className="relative overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={wakeHour}
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 20, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2"
+                      >
+                        {String(wakeHour).padStart(2, '0')}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1 transition-all duration-300">{String((wakeHour + 1) % 24).padStart(2, '0')}</div>
                 </div>
                 <button 
                   onClick={() => adjustTime('wake', 'hour', 'down')}
@@ -192,10 +232,23 @@ function SleepRoutineSettings() {
                 >
                   keyboard_arrow_up
                 </button>
-                <div className="flex flex-col items-center justify-center py-2">
-                  <div className="text-xs text-slate-500 mb-1">{String((wakeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
-                  <div className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2">{String(wakeMinute).padStart(2, '0')}</div>
-                  <div className="text-xs text-slate-500 mt-1">{String((wakeMinute + 10) % 60).padStart(2, '0')}</div>
+                <div className="flex flex-col items-center justify-center py-2 relative h-24 overflow-hidden">
+                  <div className="text-xs text-slate-500 mb-1 transition-all duration-300">{String((wakeMinute - 10 + 60) % 60).padStart(2, '0')}</div>
+                  <div className="relative overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={wakeMinute}
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 20, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="text-2xl font-bold bg-accent-purple/40 rounded-lg px-4 py-2"
+                      >
+                        {String(wakeMinute).padStart(2, '0')}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1 transition-all duration-300">{String((wakeMinute + 10) % 60).padStart(2, '0')}</div>
                 </div>
                 <button 
                   onClick={() => adjustTime('wake', 'minute', 'down')}
