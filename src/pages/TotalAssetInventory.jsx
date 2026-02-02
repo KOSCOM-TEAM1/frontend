@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Navigation from "../components/Navigation";
 
 function TotalAssetInventory() {
   const navigate = useNavigate();
+  const [hoveredDomestic, setHoveredDomestic] = useState(null);
+  const [hoveredForeign, setHoveredForeign] = useState(null);
 
   return (
     <div className="bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">
@@ -113,11 +116,19 @@ function TotalAssetInventory() {
                         r="40"
                         fill="none"
                         stroke="#2563eb"
-                        strokeWidth="16"
+                        strokeWidth={hoveredDomestic === 'savings' ? "18" : "16"}
                         strokeDasharray="155 251"
                         strokeDashoffset="0"
-                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
-                        style={{ animationDelay: '0.2s', filter: 'drop-shadow(0 0 8px rgba(37, 99, 235, 0.5))' }}
+                        className="transition-all duration-300 cursor-pointer"
+                        style={{ 
+                          animationDelay: '0.2s', 
+                          filter: hoveredDomestic === 'savings' 
+                            ? 'drop-shadow(0 0 12px rgba(37, 99, 235, 0.8))' 
+                            : 'drop-shadow(0 0 6px rgba(37, 99, 235, 0.4))',
+                          opacity: hoveredDomestic && hoveredDomestic !== 'savings' ? 0.4 : 1
+                        }}
+                        onMouseEnter={() => setHoveredDomestic('savings')}
+                        onMouseLeave={() => setHoveredDomestic(null)}
                       />
                       {/* CMA 파킹 계좌 (38.3%) */}
                       <circle
@@ -126,25 +137,57 @@ function TotalAssetInventory() {
                         r="40"
                         fill="none"
                         stroke="#10b981"
-                        strokeWidth="16"
+                        strokeWidth={hoveredDomestic === 'cma' ? "18" : "16"}
                         strokeDasharray="96 251"
                         strokeDashoffset="-155"
-                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
-                        style={{ animationDelay: '0.4s', filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.5))' }}
+                        className="transition-all duration-300 cursor-pointer"
+                        style={{ 
+                          animationDelay: '0.4s', 
+                          filter: hoveredDomestic === 'cma' 
+                            ? 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.8))' 
+                            : 'drop-shadow(0 0 6px rgba(16, 185, 129, 0.4))',
+                          opacity: hoveredDomestic && hoveredDomestic !== 'cma' ? 0.4 : 1
+                        }}
+                        onMouseEnter={() => setHoveredDomestic('cma')}
+                        onMouseLeave={() => setHoveredDomestic(null)}
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <p className="text-[10px] text-slate-400 font-semibold">국내 총액</p>
-                      <p className="text-sm font-bold text-white">₩35.7M</p>
+                      {!hoveredDomestic ? (
+                        <>
+                          <p className="text-[10px] text-slate-400 font-semibold">국내 총액</p>
+                          <p className="text-sm font-bold text-white">₩35.7M</p>
+                        </>
+                      ) : hoveredDomestic === 'savings' ? (
+                        <>
+                          <p className="text-[10px] text-blue-400 font-semibold">종합 위탁</p>
+                          <p className="text-lg font-bold text-white">₩22.0M</p>
+                          <p className="text-[10px] text-blue-400 font-semibold">61.7%</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-[10px] text-emerald-400 font-semibold">CMA 파킹</p>
+                          <p className="text-lg font-bold text-white">₩13.7M</p>
+                          <p className="text-[10px] text-emerald-400 font-semibold">38.3%</p>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
                 
                 {/* 범례 */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                  <div 
+                    className={`flex items-center justify-between p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+                      hoveredDomestic === 'savings' ? 'bg-blue-500/20 scale-105' : 'hover:bg-white/5'
+                    }`}
+                    onMouseEnter={() => setHoveredDomestic('savings')}
+                    onMouseLeave={() => setHoveredDomestic(null)}
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-sm bg-blue-600"></div>
+                      <div className={`w-3 h-3 rounded-sm bg-blue-600 transition-transform duration-200 ${
+                        hoveredDomestic === 'savings' ? 'scale-125' : ''
+                      }`}></div>
                       <span className="text-xs text-gray-300">종합 위탁 계좌</span>
                     </div>
                     <div className="text-right">
@@ -152,9 +195,17 @@ function TotalAssetInventory() {
                       <p className="text-[10px] text-blue-400">61.7%</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                  <div 
+                    className={`flex items-center justify-between p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+                      hoveredDomestic === 'cma' ? 'bg-emerald-500/20 scale-105' : 'hover:bg-white/5'
+                    }`}
+                    onMouseEnter={() => setHoveredDomestic('cma')}
+                    onMouseLeave={() => setHoveredDomestic(null)}
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-sm bg-emerald-600"></div>
+                      <div className={`w-3 h-3 rounded-sm bg-emerald-600 transition-transform duration-200 ${
+                        hoveredDomestic === 'cma' ? 'scale-125' : ''
+                      }`}></div>
                       <span className="text-xs text-gray-300">CMA 파킹 계좌</span>
                     </div>
                     <div className="text-right">
@@ -206,11 +257,19 @@ function TotalAssetInventory() {
                         r="40"
                         fill="none"
                         stroke="#6366f1"
-                        strokeWidth="16"
+                        strokeWidth={hoveredForeign === 'us' ? "18" : "16"}
                         strokeDasharray="237 251"
                         strokeDashoffset="0"
-                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
-                        style={{ animationDelay: '0.2s', filter: 'drop-shadow(0 0 8px rgba(99, 102, 241, 0.5))' }}
+                        className="transition-all duration-300 cursor-pointer"
+                        style={{ 
+                          animationDelay: '0.2s', 
+                          filter: hoveredForeign === 'us' 
+                            ? 'drop-shadow(0 0 12px rgba(99, 102, 241, 0.8))' 
+                            : 'drop-shadow(0 0 6px rgba(99, 102, 241, 0.4))',
+                          opacity: hoveredForeign && hoveredForeign !== 'us' ? 0.4 : 1
+                        }}
+                        onMouseEnter={() => setHoveredForeign('us')}
+                        onMouseLeave={() => setHoveredForeign(null)}
                       />
                       {/* 외화 예수금 (5.5%) */}
                       <circle
@@ -219,25 +278,57 @@ function TotalAssetInventory() {
                         r="40"
                         fill="none"
                         stroke="#f97316"
-                        strokeWidth="16"
+                        strokeWidth={hoveredForeign === 'cash' ? "18" : "16"}
                         strokeDasharray="14 251"
                         strokeDashoffset="-237"
-                        className="transition-all duration-300 cursor-pointer hover:stroke-[18] hover:brightness-125"
-                        style={{ animationDelay: '0.4s', filter: 'drop-shadow(0 0 8px rgba(249, 115, 22, 0.5))' }}
+                        className="transition-all duration-300 cursor-pointer"
+                        style={{ 
+                          animationDelay: '0.4s', 
+                          filter: hoveredForeign === 'cash' 
+                            ? 'drop-shadow(0 0 12px rgba(249, 115, 22, 0.8))' 
+                            : 'drop-shadow(0 0 6px rgba(249, 115, 22, 0.4))',
+                          opacity: hoveredForeign && hoveredForeign !== 'cash' ? 0.4 : 1
+                        }}
+                        onMouseEnter={() => setHoveredForeign('cash')}
+                        onMouseLeave={() => setHoveredForeign(null)}
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <p className="text-[10px] text-slate-400 font-semibold">해외 총액</p>
-                      <p className="text-sm font-bold text-white">₩72.5M</p>
+                      {!hoveredForeign ? (
+                        <>
+                          <p className="text-[10px] text-slate-400 font-semibold">해외 총액</p>
+                          <p className="text-sm font-bold text-white">₩72.5M</p>
+                        </>
+                      ) : hoveredForeign === 'us' ? (
+                        <>
+                          <p className="text-[10px] text-indigo-400 font-semibold">미국 주식</p>
+                          <p className="text-lg font-bold text-white">₩68.4M</p>
+                          <p className="text-[10px] text-indigo-400 font-semibold">94.5%</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-[10px] text-orange-400 font-semibold">외화 예수금</p>
+                          <p className="text-lg font-bold text-white">₩4.0M</p>
+                          <p className="text-[10px] text-orange-400 font-semibold">5.5%</p>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
                 
                 {/* 범례 */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                  <div 
+                    className={`flex items-center justify-between p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+                      hoveredForeign === 'us' ? 'bg-indigo-500/20 scale-105' : 'hover:bg-white/5'
+                    }`}
+                    onMouseEnter={() => setHoveredForeign('us')}
+                    onMouseLeave={() => setHoveredForeign(null)}
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-sm bg-indigo-600"></div>
+                      <div className={`w-3 h-3 rounded-sm bg-indigo-600 transition-transform duration-200 ${
+                        hoveredForeign === 'us' ? 'scale-125' : ''
+                      }`}></div>
                       <span className="text-xs text-gray-300">미국 주식 일반</span>
                     </div>
                     <div className="text-right">
@@ -245,9 +336,17 @@ function TotalAssetInventory() {
                       <p className="text-[10px] text-indigo-400">94.5%</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-all duration-200">
+                  <div 
+                    className={`flex items-center justify-between p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+                      hoveredForeign === 'cash' ? 'bg-orange-500/20 scale-105' : 'hover:bg-white/5'
+                    }`}
+                    onMouseEnter={() => setHoveredForeign('cash')}
+                    onMouseLeave={() => setHoveredForeign(null)}
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-sm bg-orange-600"></div>
+                      <div className={`w-3 h-3 rounded-sm bg-orange-600 transition-transform duration-200 ${
+                        hoveredForeign === 'cash' ? 'scale-125' : ''
+                      }`}></div>
                       <span className="text-xs text-gray-300">외화 예수금</span>
                     </div>
                     <div className="text-right">
