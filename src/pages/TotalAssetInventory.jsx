@@ -59,32 +59,32 @@ function TotalAssetInventory() {
               연결된 모든 계좌의 자산을 실시간으로 확인하세요.
             </p>
             <div className="mt-4 py-4 px-4 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">
-                총 자산 잔액
+              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                총 수익
               </p>
-              <p className="text-white text-2xl font-extrabold tracking-tight">
-                ₩117,894,100
+              <p className="text-emerald-400 text-3xl font-extrabold tracking-tight mb-2">
+                +₩1,060,000 (+0.99%)
               </p>
-              <p className="text-primary text-sm font-semibold mt-1">
-                +₩1,120,500 (+0.96%)
-              </p>
+              <div className="flex items-center gap-1.5 opacity-60">
+                <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
+                <p className="text-white text-xs font-bold">₩108,120,450</p>
+              </div>
             </div>
           </div>
           <div className="px-4 space-y-6 flex-1 animate-slide-in-up">
             <div className="glass-card rounded-3xl p-6 relative overflow-hidden hover-lift transition-all duration-300">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  {/* <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider"> */}
-
-                  <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
+                  <span className="text-xs font-bold text-purple-400 bg-purple-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     국내 주식
                   </span>
-                  <h3 className="text-3xl font-extrabold text-white tracking-tight">
-                    ₩37,178,750
-                  </h3>
-                  <p className="text-rose-400 text-xs font-semibold mt-1">
+                  <h3 className="text-2xl font-extrabold text-rose-400 tracking-tight mb-1">
                     -₩180,000 (-0.42%)
-                  </p>
+                  </h3>
+                  <div className="flex items-center gap-1.5 opacity-60">
+                    <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
+                    <p className="text-white text-xs font-bold">₩35,670,450</p>
+                  </div>
                 </div>
                 <div className="bg-white/5 p-2 rounded-xl">
                   <span className="material-symbols-outlined text-white">
@@ -103,7 +103,7 @@ function TotalAssetInventory() {
                     </span>
                   </div>
                   <span className="text-sm font-bold text-white">
-                    ₩22,524,800
+                    ₩22,000,000
                   </span>
                 </div>
                 <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg">
@@ -118,7 +118,7 @@ function TotalAssetInventory() {
                     </span>
                   </div>
                   <span className="text-sm font-bold text-white">
-                    ₩14,653,950
+                    ₩13,670,450
                   </span>
                 </div>
               </div>
@@ -126,15 +126,16 @@ function TotalAssetInventory() {
             <div className="glass-card rounded-3xl p-6 relative overflow-hidden">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
+                  <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     해외 주식
                   </span>
-                  <h3 className="text-3xl font-extrabold text-white tracking-tight">
-                    ₩72,450,000
-                  </h3>
-                  <p className="text-primary text-xs font-semibold mt-1">
+                  <h3 className="text-2xl font-extrabold text-emerald-400 tracking-tight mb-1">
                     +₩1,240,000 (+2.14%)
-                  </p>
+                  </h3>
+                  <div className="flex items-center gap-1.5 opacity-60">
+                    <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
+                    <p className="text-white text-xs font-bold">₩72,450,000</p>
+                  </div>
                 </div>
                 <div className="bg-white/5 p-2 rounded-xl">
                   <span className="material-symbols-outlined text-white">
@@ -155,7 +156,7 @@ function TotalAssetInventory() {
                     </span>
                   </div>
                   <span className="text-sm font-bold text-white">
-                    ₩69,687,850
+                    ₩68,440,550
                   </span>
                 </div>
                 <div className="flex justify-between items-center hover:bg-white/5 transition-all duration-200 p-2 -mx-2 rounded-lg ">
@@ -168,7 +169,7 @@ function TotalAssetInventory() {
                     </span>
                   </div>
                   <span className="text-sm font-bold text-white">
-                    ₩4,846,150
+                    ₩4,009,450
                   </span>
                 </div>
               </div>
