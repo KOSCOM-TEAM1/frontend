@@ -106,8 +106,8 @@ function MorningDashboard() {
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">코스피</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">2,548.32</span>
-                  <span className="text-emerald-400 text-xs font-semibold">+0.85%</span>
+                  <span className="text-white text-base font-bold">4,949.67</span>
+                  <span className="text-rose-400 text-xs font-semibold">-5.26%</span>
                 </div>
               </div>
             </div>
