@@ -212,7 +212,7 @@ function MorningDashboard() {
         </div>
         {/* 총 자산 잔액 (해외 ₩72,450,000 + 국내 ₩35,670,450 = ₩108,120,450 / +₩1,060,000, +0.99%) */}
         <div className="px-6 py-2 shrink-0 animate-slide-in-up">
-          <div className="glass rounded-xl p-6 relative overflow-hidden hover-lift transition-all duration-300">
+          <div className="glass rounded-xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full"></div>
             <div className="relative z-10">
               <p className="text-slate-400 text-sm font-medium mb-1">총 수익</p>
