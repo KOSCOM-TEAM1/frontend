@@ -19,6 +19,7 @@ function DefenseStrategy() {
       dotColor: 'bg-emerald-500',
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
+      shadowColor: 'rgba(16, 185, 129, 0.4)',
       reason: 'AI 반도체 섹터 강세'
     },
     { 
@@ -35,6 +36,7 @@ function DefenseStrategy() {
       dotColor: 'bg-blue-500',
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/30',
+      shadowColor: 'rgba(59, 130, 246, 0.4)',
       reason: '상승 추세 지속 관찰'
     },
     // 국내 종목
@@ -52,6 +54,7 @@ function DefenseStrategy() {
       dotColor: 'bg-blue-500',
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/30',
+      shadowColor: 'rgba(59, 130, 246, 0.4)',
       reason: '단기 조정 구간'
     },
     { 
@@ -68,6 +71,7 @@ function DefenseStrategy() {
       dotColor: 'bg-rose-500',
       bgColor: 'bg-rose-500/10',
       borderColor: 'border-rose-500/30',
+      shadowColor: 'rgba(244, 63, 94, 0.4)',
       reason: '메모리 반도체 약세'
     },
     { 
@@ -84,6 +88,7 @@ function DefenseStrategy() {
       dotColor: 'bg-emerald-500',
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
+      shadowColor: 'rgba(16, 185, 129, 0.4)',
       reason: 'AI 서비스 확대 전망'
     }
   ];
@@ -176,7 +181,10 @@ function DefenseStrategy() {
             {holdings.map((stock) => (
               <div
                 key={stock.id}
-                className={`glass-card rounded-2xl p-4 flex items-center gap-4 border-l-4 hover-lift transition-all duration-300 cursor-pointer ${stock.borderColor.replace('border-', 'border-l-')}`}
+                className="glass-card rounded-2xl p-4 flex items-center gap-4 hover-lift transition-all duration-300 cursor-pointer relative"
+                style={{
+                  boxShadow: `-4px 0 12px -2px ${stock.shadowColor}`
+                }}
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center border bg-white/5 border-white/10 shrink-0">
                   <span className="material-symbols-outlined text-2xl text-primary">{stock.icon}</span>
