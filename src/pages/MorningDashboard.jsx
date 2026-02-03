@@ -6,7 +6,7 @@ import userService from '../api/userService';
 // 잠든 사이 변화 - 작은 아이콘 카드 (마키용, 간단한 내용)
 const overnightItems = [
   { id: 'kospi', icon: 'show_chart', label: '코스피', change: '+3.39%', positive: true },
-  { id: 'usdkrw', icon: 'currency_exchange', label: 'USD/KRW', change: '+0.03%', positive: true },
+  { id: 'usdkrw', icon: 'currency_exchange', label: 'USD/KRW', change: '-0.35%', positive: false },
   { id: 'overseas', icon: 'language', label: '해외', change: '+2.50%', positive: true },
   { id: 'domestic', icon: 'account_balance', label: '국내', change: '-0.85%', positive: false },
   { id: 'total', icon: 'account_balance_wallet', label: '총자산', change: '+0.37%', positive: true },
@@ -127,8 +127,8 @@ function MorningDashboard() {
               <div className="flex flex-col">
                 <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">1,452.40</span>
-                  <span className="text-emerald-400 text-sm font-semibold">+0.03%</span>
+                  <span className="text-white text-base font-bold">1,448.40</span>
+                  <span className="text-rose-400 text-sm font-semibold">-0.35%</span>
                 </div>
               </div>
             </div>

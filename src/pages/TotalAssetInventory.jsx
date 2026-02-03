@@ -410,9 +410,9 @@ function TotalAssetInventory() {
                 실시간 환율 (USD/KRW)
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-white text-base font-bold">1,452.40</span>
-                <span className="text-emerald-400 text-xs font-semibold">
-                  +0.03%
+                <span className="text-white text-base font-bold">1,448.40</span>
+                <span className="text-rose-400 text-xs font-semibold">
+                  -0.35%
                 </span>
               </div>
             </div>
