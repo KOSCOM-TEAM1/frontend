@@ -9,14 +9,13 @@ const ttsService = {
    * AI 분석 결과를 CLOVA Voice로 음성(MP3)으로 변환합니다.
    * 
    * @param {number} analysisId - 분석 ID
-   * @param {string} speaker - 화자 (기본값: 'jinho')
+   * @param {string} speaker - 화자 (기본값: 'nara' - Naver TTS Premium 공통 지원)
    * @returns {Promise} 음성 파일 정보
    * 
    * @example
-   * const result = await ttsService.newsAnalysisToSpeech(123, 'jinho');
-   * // { success: true, data: { filename: "...", downloadUrl: "...", speaker: "jinho", message: "..." } }
+   * const result = await ttsService.newsAnalysisToSpeech(123, 'nara');
    */
-  newsAnalysisToSpeech: async (analysisId, speaker = 'jinho') => {
+  newsAnalysisToSpeech: async (analysisId, speaker = 'nara') => {
     try {
       const response = await apiClient.post(
         `/api/tts/news-analysis/${analysisId}`,
@@ -57,22 +56,13 @@ const ttsService = {
    * 
    * @param {Object} options - 음성 변환 옵션
    * @param {string} options.text - 변환할 텍스트 (필수)
-   * @param {string} options.speaker - 화자 (선택, 기본값: 'jinho')
+   * @param {string} options.speaker - 화자 (선택, 기본값: 'nara' - Naver TTS Premium 공통 지원)
    * @param {number} options.speed - 속도 (선택, -5 ~ 5)
    * @param {number} options.pitch - 음높이 (선택, -5 ~ 5)
    * @param {number} options.volume - 볼륨 (선택, -5 ~ 5)
    * @returns {Promise} 음성 파일 정보
-   * 
-   * @example
-   * const result = await ttsService.textToSpeech({
-   *   text: "안녕하세요",
-   *   speaker: "jinho",
-   *   speed: 0,
-   *   pitch: 0,
-   *   volume: 0
-   * });
    */
-  textToSpeech: async ({ text, speaker = 'jinho', speed = 0, pitch = 0, volume = 0 }) => {
+  textToSpeech: async ({ text, speaker = 'nara', speed = 0, pitch = 0, volume = 0 }) => {
     try {
       if (!text || text.trim() === '') {
         return {
@@ -158,17 +148,16 @@ const ttsService = {
 
   /**
    * 음성 파일 URL 생성
-   * 생성된 MP3 파일의 다운로드/재생 URL을 반환합니다.
-   * 
+   * 프로덕션에서는 백엔드 절대 URL을 사용해야 Vercel 등에서 404가 나지 않습니다.
+   *
    * @param {string} filename - 파일명
    * @returns {string} 음성 파일 URL
-   * 
-   * @example
-   * const audioUrl = ttsService.getAudioUrl('audio_123.mp3');
-   * // "/api/tts/audio/audio_123.mp3"
    */
   getAudioUrl: (filename) => {
-    return `/api/tts/audio/${filename}`;
+    const baseUrl = import.meta.env.DEV
+      ? ''
+      : (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+    return baseUrl ? `${baseUrl}/api/tts/audio/${filename}` : `/api/tts/audio/${filename}`;
   },
 
   /**
