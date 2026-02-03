@@ -80,7 +80,7 @@ function TTSToggle() {
         try {
           const result = await ttsService.textToSpeech({
             text: track.text,
-            speaker: 'nara',
+            speaker: 'jinho',
             speed: 0,
             pitch: 0,
             volume: 0,
@@ -128,7 +128,7 @@ function TTSToggle() {
       if (!audioUrl) {
         const result = await ttsService.textToSpeech({
           text: track.text,
-          speaker: 'nara',
+          speaker: 'jinho',
           speed: 0,
           pitch: 0,
           volume: 0,

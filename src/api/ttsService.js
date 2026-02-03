@@ -9,13 +9,13 @@ const ttsService = {
    * AI 분석 결과를 CLOVA Voice로 음성(MP3)으로 변환합니다.
    * 
    * @param {number} analysisId - 분석 ID
-   * @param {string} speaker - 화자 (기본값: 'nara' - Naver TTS Premium 공통 지원)
+   * @param {string} speaker - 화자 (기본값: 'jinho' - Naver TTS Premium 공통 지원)
    * @returns {Promise} 음성 파일 정보
    * 
    * @example
-   * const result = await ttsService.newsAnalysisToSpeech(123, 'nara');
+   * const result = await ttsService.newsAnalysisToSpeech(123, 'jinho');
    */
-  newsAnalysisToSpeech: async (analysisId, speaker = 'nara') => {
+  newsAnalysisToSpeech: async (analysisId, speaker = 'jinho') => {
     try {
       const response = await apiClient.post(
         `/api/tts/news-analysis/${analysisId}`,
@@ -56,13 +56,13 @@ const ttsService = {
    * 
    * @param {Object} options - 음성 변환 옵션
    * @param {string} options.text - 변환할 텍스트 (필수)
-   * @param {string} options.speaker - 화자 (선택, 기본값: 'nara' - Naver TTS Premium 공통 지원)
+   * @param {string} options.speaker - 화자 (선택, 기본값: 'jinho' - Naver TTS Premium 공통 지원)
    * @param {number} options.speed - 속도 (선택, -5 ~ 5)
    * @param {number} options.pitch - 음높이 (선택, -5 ~ 5)
    * @param {number} options.volume - 볼륨 (선택, -5 ~ 5)
    * @returns {Promise} 음성 파일 정보
    */
-  textToSpeech: async ({ text, speaker = 'nara', speed = 0, pitch = 0, volume = 0 }) => {
+  textToSpeech: async ({ text, speaker = 'jinho', speed = 0, pitch = 0, volume = 0 }) => {
     try {
       if (!text || text.trim() === '') {
         return {
