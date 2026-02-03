@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-// 환경 변수에서 API URL 가져오기
+// 환경 변수에서 API URL 가져오기 (로드밸런서: https://koscomhackathon.cloud)
 // 개발 환경에서는 프록시를 사용하므로 상대 경로만 사용
 const BASE_URL = import.meta.env.DEV 
   ? ''  // 개발 환경: Vite 프록시 사용 (상대 경로)
-  : import.meta.env.VITE_API_BASE_URL || 'http://221.168.36.171:8080';  // 프로덕션: 절대 경로
+  : (import.meta.env.VITE_API_BASE_URL || 'https://koscomhackathon.cloud').replace(/\/$/, '');  // 프로덕션: 로드밸런서
 
 // API 클라이언트 기본 설정
 const apiClient = axios.create({
