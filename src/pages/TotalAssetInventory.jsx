@@ -1,11 +1,34 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
+import { fetchAssetsData } from "../api/mockData";
 
 function TotalAssetInventory() {
   const navigate = useNavigate();
   const [hoveredDomestic, setHoveredDomestic] = useState(null);
   const [hoveredForeign, setHoveredForeign] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAssetsData().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading || !data) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const { totalAsset, domestic, foreign, exchangeRate } = data;
 
   return (
     <div className="bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">
@@ -66,11 +89,11 @@ function TotalAssetInventory() {
                 총 수익
               </p>
               <p className="text-emerald-400 text-3xl font-extrabold tracking-tight mb-2">
-                +₩95,000 (+0.37%)
+                {totalAsset.changeText}
               </p>
               <div className="flex items-center gap-1.5 opacity-60">
                 <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
-                <p className="text-white text-xs font-bold">₩25,829,000</p>
+                <p className="text-white text-xs font-bold">{totalAsset.balance}</p>
               </div>
             </div>
           </div>
@@ -79,14 +102,14 @@ function TotalAssetInventory() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
-                    국내 주식
+                    {domestic.label}
                   </span>
                   <h3 className="text-2xl font-extrabold text-rose-400 tracking-tight mb-1">
-                    -₩140,000 (-0.85%)
+                    {domestic.changeText}
                   </h3>
                   <div className="flex items-center gap-1.5 opacity-60">
                     <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
-                    <p className="text-white text-xs font-bold">₩16,449,000</p>
+                    <p className="text-white text-xs font-bold">{domestic.balance}</p>
                   </div>
                 </div>
                 <div className="bg-white/5 p-2 rounded-xl">
@@ -155,64 +178,56 @@ function TotalAssetInventory() {
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                       {!hoveredDomestic ? (
                         <>
-                          <p className="text-[10px] text-slate-400 font-semibold">국내 총액</p>
-                          <p className="text-sm font-bold text-white">₩16.4M</p>
+                          <p className="text-[10px] text-slate-400 font-semibold">{domestic.totalLabel}</p>
+                          <p className="text-sm font-bold text-white">{domestic.totalShort}</p>
                         </>
-                      ) : hoveredDomestic === 'savings' ? (
-                        <>
-                          <p className="text-xs font-bold text-sky-300">종합 위탁 계좌</p>
-                          <p className="text-xl font-extrabold text-white">₩10.2M</p>
-                          <p className="text-xs font-bold text-sky-300">61.7%</p>
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-xs font-bold text-emerald-300">CMA 파킹 계좌</p>
-                          <p className="text-xl font-extrabold text-white">₩6.3M</p>
-                          <p className="text-xs font-bold text-emerald-300">38.3%</p>
-                        </>
-                      )}
+                      ) : domestic.accounts.find((a) => a.id === hoveredDomestic) ? (
+                        (() => {
+                          const acc = domestic.accounts.find((a) => a.id === hoveredDomestic);
+                          const colorClass = acc.color === "sky" ? "text-sky-300" : "text-emerald-300";
+                          return (
+                            <>
+                              <p className={`text-xs font-bold ${colorClass}`}>{acc.name}</p>
+                              <p className="text-xl font-extrabold text-white">{acc.amount}</p>
+                              <p className={`text-xs font-bold ${colorClass}`}>{acc.pct}</p>
+                            </>
+                          );
+                        })()
+                      ) : null}
                     </div>
                   </div>
                 </div>
                 
-                {/* 범례 - 해외주식과 동일 스타일 */}
                 <div className="space-y-3">
-                  <div 
-                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
-                      hoveredDomestic === 'savings' ? 'bg-sky-500/25 border-sky-400/50 scale-[1.02]' : 'bg-sky-500/10 border-sky-400/20 hover:bg-sky-500/15'
-                    }`}
-                    onMouseEnter={() => setHoveredDomestic('savings')}
-                    onMouseLeave={() => setHoveredDomestic(null)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-md bg-sky-400 shrink-0 transition-transform duration-200 ${
-                        hoveredDomestic === 'savings' ? 'scale-110 shadow-[0_0_10px_rgba(56,189,248,0.6)]' : ''
-                      }`}></div>
-                      <span className="text-sm font-semibold text-sky-200">종합 위탁 계좌</span>
+                  {domestic.accounts.map((acc) => (
+                    <div
+                      key={acc.id}
+                      className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
+                        hoveredDomestic === acc.id
+                          ? acc.color === "sky"
+                            ? "bg-sky-500/25 border-sky-400/50 scale-[1.02]"
+                            : "bg-emerald-500/25 border-emerald-400/50 scale-[1.02]"
+                          : acc.color === "sky"
+                            ? "bg-sky-500/10 border-sky-400/20 hover:bg-sky-500/15"
+                            : "bg-emerald-500/10 border-emerald-400/20 hover:bg-emerald-500/15"
+                      }`}
+                      onMouseEnter={() => setHoveredDomestic(acc.id)}
+                      onMouseLeave={() => setHoveredDomestic(null)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-4 h-4 rounded-md shrink-0 transition-transform duration-200 ${
+                            acc.color === "sky" ? "bg-sky-400" : "bg-emerald-400"
+                          } ${hoveredDomestic === acc.id ? "scale-110 shadow-[0_0_10px_rgba(56,189,248,0.6)]" : ""}`}
+                        />
+                        <span className={`text-sm font-semibold ${acc.color === "sky" ? "text-sky-200" : "text-emerald-200"}`}>{acc.name}</span>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-base font-bold text-white">{acc.amount}</p>
+                        <p className={`text-xs font-bold ${acc.color === "sky" ? "text-sky-300" : "text-emerald-300"}`}>{acc.pct}</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-base font-bold text-white">₩10.2M</p>
-                      <p className="text-xs font-bold text-sky-300">61.7%</p>
-                    </div>
-                  </div>
-                  <div 
-                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
-                      hoveredDomestic === 'cma' ? 'bg-emerald-500/25 border-emerald-400/50 scale-[1.02]' : 'bg-emerald-500/10 border-emerald-400/20 hover:bg-emerald-500/15'
-                    }`}
-                    onMouseEnter={() => setHoveredDomestic('cma')}
-                    onMouseLeave={() => setHoveredDomestic(null)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-md bg-emerald-400 shrink-0 transition-transform duration-200 ${
-                        hoveredDomestic === 'cma' ? 'scale-110 shadow-[0_0_10px_rgba(52,211,153,0.6)]' : ''
-                      }`}></div>
-                      <span className="text-sm font-semibold text-emerald-200">CMA 파킹 계좌</span>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-base font-bold text-white">₩6.3M</p>
-                      <p className="text-xs font-bold text-emerald-300">38.3%</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -220,14 +235,14 @@ function TotalAssetInventory() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
-                    해외 주식
+                    {foreign.label}
                   </span>
                   <h3 className="text-2xl font-extrabold text-emerald-400 tracking-tight mb-1">
-                    +₩235,000 (+2.50%)
+                    {foreign.changeText}
                   </h3>
                   <div className="flex items-center gap-1.5 opacity-60">
                     <p className="text-slate-300 text-xs font-medium">자산 잔액</p>
-                    <p className="text-white text-xs font-bold">₩9,380,000</p>
+                    <p className="text-white text-xs font-bold">{foreign.balance}</p>
                   </div>
                 </div>
                 <div className="bg-white/5 p-2 rounded-xl">
@@ -317,88 +332,56 @@ function TotalAssetInventory() {
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                       {!hoveredForeign ? (
                         <>
-                          <p className="text-[10px] text-slate-400 font-semibold">해외 총액</p>
-                          <p className="text-sm font-bold text-white">₩9.4M</p>
+                          <p className="text-[10px] text-slate-400 font-semibold">{foreign.totalLabel}</p>
+                          <p className="text-sm font-bold text-white">{foreign.totalShort}</p>
                         </>
-                      ) : hoveredForeign === 'us' ? (
-                        <>
-                          <p className="text-xs font-bold text-sky-300">미국 주식 일반</p>
-                          <p className="text-xl font-extrabold text-white">₩6.6M</p>
-                          <p className="text-xs font-bold text-sky-300">70%</p>
-                        </>
-                      ) : hoveredForeign === 'isa' ? (
-                        <>
-                          <p className="text-xs font-bold text-violet-300">미국 ISA 계좌</p>
-                          <p className="text-xl font-extrabold text-white">₩2.3M</p>
-                          <p className="text-xs font-bold text-violet-300">25%</p>
-                        </>
-                      ) : (
-                        <>
-                          <p className="text-xs font-bold text-amber-300">외화 예수금</p>
-                          <p className="text-xl font-extrabold text-white">₩0.5M</p>
-                          <p className="text-xs font-bold text-amber-300">5%</p>
-                        </>
-                      )}
+                      ) : foreign.accounts.find((a) => a.id === hoveredForeign) ? (
+                        (() => {
+                          const acc = foreign.accounts.find((a) => a.id === hoveredForeign);
+                          const colorClass = acc.color === "sky" ? "text-sky-300" : acc.color === "violet" ? "text-violet-300" : "text-amber-300";
+                          return (
+                            <>
+                              <p className={`text-xs font-bold ${colorClass}`}>{acc.name}</p>
+                              <p className="text-xl font-extrabold text-white">{acc.amount}</p>
+                              <p className={`text-xs font-bold ${colorClass}`}>{acc.pct}</p>
+                            </>
+                          );
+                        })()
+                      ) : null}
                     </div>
                   </div>
                 </div>
                 
-                {/* 범례 */}
                 <div className="space-y-3">
-                  <div 
-                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
-                      hoveredForeign === 'us' ? 'bg-sky-500/25 border-sky-400/50 scale-[1.02]' : 'bg-sky-500/10 border-sky-400/20 hover:bg-sky-500/15'
-                    }`}
-                    onMouseEnter={() => setHoveredForeign('us')}
-                    onMouseLeave={() => setHoveredForeign(null)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-md bg-sky-400 shrink-0 transition-transform duration-200 ${
-                        hoveredForeign === 'us' ? 'scale-110 shadow-[0_0_10px_rgba(56,189,248,0.6)]' : ''
-                      }`}></div>
-                      <span className="text-sm font-semibold text-sky-200">미국 주식 일반</span>
+                  {foreign.accounts.map((acc) => (
+                    <div
+                      key={acc.id}
+                      className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
+                        hoveredForeign === acc.id
+                          ? acc.color === "sky"
+                            ? "bg-sky-500/25 border-sky-400/50 scale-[1.02]"
+                            : acc.color === "violet"
+                              ? "bg-violet-500/25 border-violet-400/50 scale-[1.02]"
+                              : "bg-amber-500/25 border-amber-400/50 scale-[1.02]"
+                          : acc.color === "sky"
+                            ? "bg-sky-500/10 border-sky-400/20 hover:bg-sky-500/15"
+                            : acc.color === "violet"
+                              ? "bg-violet-500/10 border-violet-400/20 hover:bg-violet-500/15"
+                              : "bg-amber-500/10 border-amber-400/20 hover:bg-amber-500/15"
+                      }`}
+                      onMouseEnter={() => setHoveredForeign(acc.id)}
+                      onMouseLeave={() => setHoveredForeign(null)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-4 h-4 rounded-md shrink-0 transition-transform duration-200 ${hoveredForeign === acc.id ? "scale-110" : ""}`} style={{ backgroundColor: acc.color === "sky" ? "rgb(56 189 248)" : acc.color === "violet" ? "rgb(192 132 252)" : "rgb(251 191 36)" }} />
+                        <span className={`text-sm font-semibold ${acc.color === "sky" ? "text-sky-200" : acc.color === "violet" ? "text-violet-200" : "text-amber-200"}`}>{acc.name}</span>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-base font-bold text-white">{acc.amount}</p>
+                        <p className={`text-xs font-bold ${acc.color === "sky" ? "text-sky-300" : acc.color === "violet" ? "text-violet-300" : "text-amber-300"}`}>{acc.pct}</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-base font-bold text-white">₩6.6M</p>
-                      <p className="text-xs font-bold text-sky-300">70%</p>
-                    </div>
-                  </div>
-                  <div 
-                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
-                      hoveredForeign === 'isa' ? 'bg-violet-500/25 border-violet-400/50 scale-[1.02]' : 'bg-violet-500/10 border-violet-400/20 hover:bg-violet-500/15'
-                    }`}
-                    onMouseEnter={() => setHoveredForeign('isa')}
-                    onMouseLeave={() => setHoveredForeign(null)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-md bg-violet-400 shrink-0 transition-transform duration-200 ${
-                        hoveredForeign === 'isa' ? 'scale-110 shadow-[0_0_10px_rgba(192,132,252,0.6)]' : ''
-                      }`}></div>
-                      <span className="text-sm font-semibold text-violet-200">미국 ISA 계좌</span>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-base font-bold text-white">₩2.3M</p>
-                      <p className="text-xs font-bold text-violet-300">25%</p>
-                    </div>
-                  </div>
-                  <div 
-                    className={`flex items-center justify-between p-3 rounded-xl transition-all duration-200 cursor-pointer border ${
-                      hoveredForeign === 'cash' ? 'bg-amber-500/25 border-amber-400/50 scale-[1.02]' : 'bg-amber-500/10 border-amber-400/20 hover:bg-amber-500/15'
-                    }`}
-                    onMouseEnter={() => setHoveredForeign('cash')}
-                    onMouseLeave={() => setHoveredForeign(null)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-4 h-4 rounded-md bg-amber-400 shrink-0 transition-transform duration-200 ${
-                        hoveredForeign === 'cash' ? 'scale-110 shadow-[0_0_10px_rgba(251,191,36,0.6)]' : ''
-                      }`}></div>
-                      <span className="text-sm font-semibold text-amber-200">외화 예수금</span>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-base font-bold text-white">₩0.5M</p>
-                      <p className="text-xs font-bold text-amber-300">5%</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -410,9 +393,9 @@ function TotalAssetInventory() {
                 실시간 환율 (USD/KRW)
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-white text-base font-bold">1,448.40</span>
-                <span className="text-rose-400 text-xs font-semibold">
-                  -0.35%
+                <span className="text-white text-base font-bold">{exchangeRate.value}</span>
+                <span className={`text-xs font-semibold ${exchangeRate.positive ? "text-emerald-400" : "text-rose-400"}`}>
+                  {exchangeRate.change}
                 </span>
               </div>
             </div>

@@ -1,8 +1,32 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
+import { fetchAnalysisData } from '../api/mockData';
 
 function HistoricalPatternAnalysis() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAnalysisData().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading || !data) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const { hero, analysisText, similarityPercent, trendLabel } = data;
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-white min-h-screen">
@@ -29,15 +53,15 @@ function HistoricalPatternAnalysis() {
         <div className="relative rounded-2xl overflow-hidden group">
           <div 
             className="bg-cover bg-center flex flex-col justify-end min-h-[200px]" 
-            style={{backgroundImage: 'linear-gradient(0deg, rgba(16, 22, 34, 1) 0%, rgba(16, 22, 34, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDckHQKWafDEShJpEgEhJK9pKgY3Zlhy2EYRWxl5c16AO1JnOGi4iHa1zDFuCT4oqF1Z6cp8BlaYWiH2zdJuc2Ws6PHGH0wTk0HrA9V34ZenIRA1ifdVhiVCFWtOuQN8O2E4j7sslq4e4uGWbQZaAu6qBRWBqls5sr0qCb7TdRXBKnjhBQ1l-RB6teXMW6Iay3fpX89lOoosNxiM59hziu7qoWP85F_vQNIhaExGrh1tjzgs5glabcLqOeq5kjAnjbgSHb-ZEcQ_eA")'}}
+            style={{ backgroundImage: `linear-gradient(0deg, rgba(16, 22, 34, 1) 0%, rgba(16, 22, 34, 0.4) 100%), url("${hero.image}")` }}
           >
             <div className="p-5">
               <div className="flex gap-2 mb-2">
-                <span className="text-[10px] font-bold bg-primary px-2 py-0.5 rounded uppercase tracking-wider">과거 사례</span>
-                <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">유사도 85%</span>
+                <span className="text-[10px] font-bold bg-primary px-2 py-0.5 rounded uppercase tracking-wider">{hero.badge}</span>
+                <span className="text-[10px] font-bold bg-white/10 px-2 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">유사도 {hero.similarity}</span>
               </div>
-              <h1 className="text-white text-2xl font-bold leading-tight">2022년 Ampere → Hopper 전환</h1>
-              <p className="text-white/60 text-sm mt-1">AI 학습·추론 성능 대폭 개선 · 데이터센터 혁명</p>
+              <h1 className="text-white text-2xl font-bold leading-tight">{hero.title}</h1>
+              <p className="text-white/60 text-sm mt-1">{hero.subtitle}</p>
             </div>
           </div>
         </div>
@@ -72,9 +96,7 @@ function HistoricalPatternAnalysis() {
                   <span className="material-symbols-outlined text-white text-sm">robot_2</span>
                 </div>
                 <div className="space-y-3">
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    2022년 <span className="text-primary font-bold">Hopper(H100) 아키텍처 공개</span>는 현재 Rubin GPU 발표와 85% 유사합니다. 당시 AI 학습·추론 성능이 대폭 개선되며 데이터센터 시장 패러다임이 전환되었고, <span className="text-primary font-bold">AI 인프라 본격 확산의 시작점</span>이 되었습니다. 현재 상황도 이와 유사한 변곡점으로 평가됩니다.
-                  </p>
+                  <p className="text-white/90 text-sm leading-relaxed">{analysisText}</p>
                   <button className="flex items-center gap-1.5 text-primary text-xs font-bold py-1 px-3 bg-primary/10 rounded-full hover:bg-primary/20 transition-all duration-300 hover:scale-105 active:scale-95">
                     <span className="material-symbols-outlined text-sm">chat</span>
                     <span>AI에게 더 자세히 물어보기</span>
@@ -84,7 +106,7 @@ function HistoricalPatternAnalysis() {
             </div>
             <div className="space-y-4">
               <div className="flex justify-between items-end px-1">
-                <span className="text-[11px] font-bold text-white/40 uppercase tracking-widest">Trend Comparison</span>
+                <span className="text-[11px] font-bold text-white/40 uppercase tracking-widest">{trendLabel}</span>
                 <div className="flex gap-4">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-primary"></div>
@@ -112,11 +134,11 @@ function HistoricalPatternAnalysis() {
           <div className="glass-card rounded-2xl p-4">
             <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">패턴 유사도</p>
             <div className="flex items-end gap-1">
-              <p className="text-2xl font-bold text-white">85%</p>
+              <p className="text-2xl font-bold text-white">{similarityPercent}%</p>
               <span className="text-blue-500 material-symbols-outlined text-lg mb-1">hub</span>
             </div>
             <div className="w-full h-1 bg-white/10 rounded-full mt-3 overflow-hidden">
-              <div className="w-[85%] h-full bg-primary shadow-[0_0_8px_rgba(19,91,236,0.6)]"></div>
+              <div className="h-full bg-primary shadow-[0_0_8px_rgba(19,91,236,0.6)]" style={{ width: `${similarityPercent}%` }}></div>
             </div>
           </div>
           <div className="glass-card rounded-2xl p-4">

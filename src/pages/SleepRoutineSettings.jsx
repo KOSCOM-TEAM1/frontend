@@ -1,27 +1,33 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '../components/Navigation';
+import { fetchSleepSettingsData } from '../api/mockData';
 
 function SleepRoutineSettings() {
   const navigate = useNavigate();
-
-  // 현재 설정 시간
+  const [data, setData] = useState(null);
   const [bedtimeHour, setBedtimeHour] = useState(22);
   const [bedtimeMinute, setBedtimeMinute] = useState(30);
   const [wakeHour, setWakeHour] = useState(6);
   const [wakeMinute, setWakeMinute] = useState(30);
 
-  // 설정 변경 히스토리 (최근 7일)
-  const settingsHistory = [
-    { date: '1/25', bedtime: '23:00', wakeTime: '07:00' },
-    { date: '1/26', bedtime: '23:30', wakeTime: '07:30' },
-    { date: '1/27', bedtime: '23:00', wakeTime: '07:00' },
-    { date: '1/28', bedtime: '22:30', wakeTime: '06:30' },
-    { date: '1/29', bedtime: '22:30', wakeTime: '06:30' },
-    { date: '1/30', bedtime: '22:30', wakeTime: '06:30' },
-    { date: '1/31', bedtime: '22:30', wakeTime: '06:30' },
-  ];
+  useEffect(() => {
+    fetchSleepSettingsData().then((res) => {
+      setData(res);
+      if (res.initialBedtime) {
+        setBedtimeHour(res.initialBedtime.hour);
+        setBedtimeMinute(res.initialBedtime.minute);
+      }
+      if (res.initialWake) {
+        setWakeHour(res.initialWake.hour);
+        setWakeMinute(res.initialWake.minute);
+      }
+    });
+  }, []);
+
+  const settingsHistory = data?.settingsHistory ?? [];
+  const loading = data === null;
 
   // 시간 조정 함수
   const adjustTime = (type, unit, direction) => {
@@ -73,6 +79,17 @@ function SleepRoutineSettings() {
     const diff = minutes - baseMinutes;
     return 50 + (diff / 120) * 50; // 07:00 = 50%, ±2시간 범위
   };
+
+  if (loading) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-white min-h-screen relative overflow-x-hidden">

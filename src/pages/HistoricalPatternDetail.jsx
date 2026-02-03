@@ -1,7 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { fetchAnalysisDetailData } from '../api/mockData';
 
 function HistoricalPatternDetail() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAnalysisDetailData().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading || !data) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const { title, subtitle, hero, similarityPercent, analysisText } = data;
 
   return (
     <div className="bg-background-dark font-display text-white min-h-screen antialiased">
@@ -13,8 +37,8 @@ function HistoricalPatternDetail() {
             <span className="material-symbols-outlined text-white text-[22px]">chevron_left</span>
           </button>
           <div className="flex flex-col items-center">
-            <h2 className="text-sm font-bold tracking-tight">2024년 Blackwell 발표</h2>
-            <span className="text-[9px] text-white/40 font-medium uppercase tracking-widest">PAST CASE ANALYSIS</span>
+            <h2 className="text-sm font-bold tracking-tight">{title}</h2>
+            <span className="text-[9px] text-white/40 font-medium uppercase tracking-widest">{subtitle}</span>
           </div>
           <div className="w-10 flex justify-end">
             <span className="material-symbols-outlined text-white/60 text-[20px] cursor-pointer">share</span>
@@ -25,15 +49,15 @@ function HistoricalPatternDetail() {
         <div className="relative rounded-3xl overflow-hidden glass-panel hover-lift transition-all duration-300">
           <div 
             className="h-44 bg-cover bg-center relative" 
-            style={{backgroundImage: 'linear-gradient(0deg, rgba(7, 9, 15, 1) 0%, rgba(7, 9, 15, 0.2) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDckHQKWafDEShJpEgEhJK9pKgY3Zlhy2EYRWxl5c16AO1JnOGi4iHa1zDFuCT4oqF1Z6cp8BlaYWiH2zdJuc2Ws6PHGH0wTk0HrA9V34ZenIRA1ifdVhiVCFWtOuQN8O2E4j7sslq4e4uGWbQZaAu6qBRWBqls5sr0qCb7TdRXBKnjhBQ1l-RB6teXMW6Iay3fpX89lOoosNxiM59hziu7qoWP85F_vQNIhaExGrh1tjzgs5glabcLqOeq5kjAnjbgSHb-ZEcQ_eA")'}}
+            style={{ backgroundImage: `linear-gradient(0deg, rgba(7, 9, 15, 1) 0%, rgba(7, 9, 15, 0.2) 100%), url("${hero.image}")` }}
           >
             <div className="absolute bottom-4 left-5 right-5">
               <div className="flex gap-2 mb-2">
-                <span className="text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded-md">과거 사례</span>
-                <span className="text-[10px] font-bold bg-white/10 text-white/80 px-2 py-0.5 rounded-md border border-white/10">유사도 72%</span>
+                <span className="text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 px-2 py-0.5 rounded-md">{hero.badge}</span>
+                <span className="text-[10px] font-bold bg-white/10 text-white/80 px-2 py-0.5 rounded-md border border-white/10">유사도 {hero.similarity}</span>
               </div>
-              <h1 className="text-xl font-bold leading-tight">Blackwell 아키텍처 공개</h1>
-              <p className="text-white/50 text-[11px] mt-0.5">2024 GTC · 추론 비용 혁신 & 데이터센터 최적화</p>
+              <h1 className="text-xl font-bold leading-tight">{hero.title}</h1>
+              <p className="text-white/50 text-[11px] mt-0.5">{hero.desc}</p>
             </div>
           </div>
         </div>
@@ -53,7 +77,7 @@ function HistoricalPatternDetail() {
             </div>
             <div className="text-right">
               <span className="text-[10px] font-bold text-purple-400 block mb-0.5">SIMILARITY</span>
-              <span className="text-2xl font-bold tracking-tighter text-white">72%</span>
+              <span className="text-2xl font-bold tracking-tighter text-white">{similarityPercent}%</span>
             </div>
           </div>
           <div className="bg-white/5 rounded-2xl p-4 mb-5 border border-white/5">
@@ -62,9 +86,7 @@ function HistoricalPatternDetail() {
                 <span className="material-symbols-outlined text-white text-base">bolt</span>
               </div>
               <div className="space-y-3">
-                <p className="text-white/90 text-[13px] leading-[1.6]">
-                  2024년 GTC에서 공개된 <span className="text-purple-400 font-semibold">Blackwell 아키텍처</span>는 Hopper 대비 <span className="text-primary font-bold">최대 65배 AI 컴퓨팅 성능</span>과 <span className="text-primary font-bold">15배 추론 비용 절감</span>을 달성했습니다. FP4/FP6 저정밀 연산 지원과 NVLink 5 기술로 AI 추론 중심 시장을 본격화했으며, 현재 Rubin 발표와 72% 유사한 패턴을 보입니다.
-                </p>
+                <p className="text-white/90 text-[13px] leading-[1.6]">{analysisText}</p>
                 <button 
                   onClick={() => navigate('/analysis/strategy')}
                   className="w-full h-11 flex items-center justify-center gap-2 text-white text-[12px] font-bold bg-primary rounded-xl active:scale-[0.98] transition-all shadow-lg shadow-primary/20"

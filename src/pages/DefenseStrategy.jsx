@@ -1,132 +1,32 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
+import { fetchStrategyData } from '../api/mockData';
 
 function DefenseStrategy() {
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const holdings = [
-    // 해외 종목
-    { 
-      id: 1,
-      icon: 'memory', 
-      name: 'NVDA', 
-      subName: '엔비디아 (NVIDIA)', 
-      impact: '★★★★★', 
-      change: '+5.21%', 
-      positive: true,
-      type: '해외',
-      recommendation: '매수',
-      recommendationColor: 'text-emerald-400',
-      dotColor: 'bg-emerald-500',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30',
-      shadowColor: 'rgba(16, 185, 129, 0.4)',
-      reason: 'AI 추론 시장 지배력 강화'
-    },
-    { 
-      id: 2,
-      icon: 'electric_car', 
-      name: 'TSLA', 
-      subName: '테슬라 (Tesla)', 
-      impact: '★★★', 
-      change: '+2.14%', 
-      positive: true,
-      type: '해외',
-      recommendation: '유지',
-      recommendationColor: 'text-blue-400',
-      dotColor: 'bg-blue-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      shadowColor: 'rgba(59, 130, 246, 0.4)',
-      reason: '자율주행 생태계 표준 발전'
-    },
-    { 
-      id: 3,
-      icon: 'movie', 
-      name: 'NFLX', 
-      subName: '넷플릭스 (Netflix)', 
-      impact: '★★', 
-      change: '+1.32%', 
-      positive: true,
-      type: '해외',
-      recommendation: '유지',
-      recommendationColor: 'text-blue-400',
-      dotColor: 'bg-blue-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      shadowColor: 'rgba(59, 130, 246, 0.4)',
-      reason: 'AI 추천·제작 비용 절감'
-    },
-    // 국내 종목
-    { 
-      id: 4,
-      icon: 'memory', 
-      name: 'SK하이닉스', 
-      subName: 'SK Hynix', 
-      impact: '★★★★★', 
-      change: '+3.89%', 
-      positive: true,
-      type: '국내',
-      recommendation: '매수',
-      recommendationColor: 'text-emerald-400',
-      dotColor: 'bg-emerald-500',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30',
-      shadowColor: 'rgba(16, 185, 129, 0.4)',
-      reason: 'HBM4 직접 수혜 최대'
-    },
-    { 
-      id: 5,
-      icon: 'precision_manufacturing', 
-      name: '삼성전자', 
-      subName: 'Samsung Electronics', 
-      impact: '★★★★', 
-      change: '+1.24%', 
-      positive: true,
-      type: '국내',
-      recommendation: '매수',
-      recommendationColor: 'text-emerald-400',
-      dotColor: 'bg-emerald-500',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30',
-      shadowColor: 'rgba(16, 185, 129, 0.4)',
-      reason: 'HBM·파운드리 공급 확대'
-    },
-    { 
-      id: 6,
-      icon: 'search', 
-      name: '네이버', 
-      subName: 'NAVER', 
-      impact: '★★★', 
-      change: '+1.78%', 
-      positive: true,
-      type: '국내',
-      recommendation: '유지',
-      recommendationColor: 'text-blue-400',
-      dotColor: 'bg-blue-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      shadowColor: 'rgba(59, 130, 246, 0.4)',
-      reason: 'AI 서비스 수익성 개선'
-    },
-    { 
-      id: 7,
-      icon: 'restaurant', 
-      name: '삼양식품', 
-      subName: 'Samyang Foods', 
-      impact: '★', 
-      change: '+1.83%', 
-      positive: true,
-      type: '국내',
-      recommendation: '중립',
-      recommendationColor: 'text-slate-400',
-      dotColor: 'bg-slate-500',
-      bgColor: 'bg-slate-500/10',
-      borderColor: 'border-slate-500/30',
-      shadowColor: 'rgba(100, 116, 139, 0.4)',
-      reason: '간접 수혜 (수요예측 AI)'
-    }
-  ];
+  useEffect(() => {
+    fetchStrategyData().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading || !data) {
+    return (
+      <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const { holdings } = data;
 
   return (
     <div className="bg-background-dark font-display text-white overflow-x-hidden min-h-screen">

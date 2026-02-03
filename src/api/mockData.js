@@ -549,3 +549,75 @@ export const dashboardMockResponse = {
 /** API처럼 대시보드 데이터 조회 (목데이터, 지연 시뮬레이션) */
 export const fetchDashboardData = () =>
   new Promise((resolve) => setTimeout(() => resolve(dashboardMockResponse), 400));
+
+// --- 타임라인(뉴스) API 형태 목데이터 ---
+export const timelineMockResponse = {
+  dateLabel: "오늘, 2월 3일",
+  newsItems: [
+    { time: "오후 11:30", impact: "high", impactText: "높은 영향", title: "엔비디아, CES 2026서 루빈 GPU 양산 가속화·자율주행 AI 공개", summary: "젠슨 황 엔비디아 CEO는 CES 2026 기조연설에서 블랙웰을 이을 차세대 GPU 아키텍처 루빈이 예상보다 빠르게 본격 양산에 돌입했다고 밝혔다. 루빈은 블랙웰 대비 성능이 4배 향상됐으며, 추론 토큰 비용은 10분의 1로 절감됐다.", tags: ["#엔비디아", "#루빈GPU", "#자율주행AI"], image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkFcQP7j2bdoBfd1A6bsKtUnmzQQEe92iF0Urqi8lr_P7uE9AlDgnhXd1hSkYEE7k6Cd2PsLpBaS_d5TS6VDJKMxKHpq7Z_AH2NbNtO1q46LvVjF4M-myhJjzKLERF65bpeGV8EMvGaAQOEc3kw9PdJnGFF5t1Ey9lpqgD6dkPzvGSVv-V9W-S0o1BKkfGvw5-1EOHzDtazUV21FATgTTNbWyz_jLg-YDgy_vqztSHN_VAUFUEV98r3noywNHTxOeJqT-mkoY579A", active: true, hasButton: true },
+    { time: "오전 1:15", impact: "medium", impactText: "중간 영향", title: "테슬라, 모델 S·모델 X 2026년 2분기 단종 확정...로봇 옵티머스 생산 전환", summary: "일론 머스크 테슬라 CEO는 2026년 2분기 말까지 모델 S와 모델 X의 생산을 완전히 중단할 계획이라고 공식적으로 밝혔다. 기존 생산 라인은 휴머노이드 로봇 옵티머스 생산 라인으로 전환된다.", tags: ["#테슬라", "#모델S단종", "#옵티머스"], active: false, hasButton: false },
+    { time: "오전 3:20", impact: "high", impactText: "높은 영향", title: "삼성전자, 2025년 4분기 영업이익 20조원 달성…HBM4 공급 가속화", summary: "삼성전자는 2025년 4분기 매출은 93.8조원으로 집계돼 분기 기준 역대 최대치를 경신했다. DS 부문이 주도한 고부가 제품 판매 확대 전략이 전사 실적을 강력하게 견인한 결과로 풀이된다. 2026년 1분기부터 차세대 HBM4 제품 공급을 시작할 계획이다.", tags: ["#삼성전자", "#영업이익", "#HBM4"], active: false, hasButton: true },
+    { time: "오전 5:00", impact: "high", impactText: "높은 영향", title: "코스피, 5,200 돌파하며 사상 최고치 경신...반도체 실적 견인", summary: "벤치마크 KOSPI는 목요일 0.98% 상승하여 5,221로 마감하며 강력한 반도체 실적이 시장 심리를 끌어올리면서 사상 최고치를 기록했다. 투자자들은 4분기 강력한 실적과 지속적인 AI 주도의 수요에 힘입어 첨단 메모리 제품의 지속적인 성장 기대를 강화했다.", tags: ["#코스피", "#사상최고치", "#반도체"], active: false, hasButton: true },
+    { time: "오전 6:45", impact: "medium", impactText: "중간 영향", title: "SK하이닉스, 주가 91만원 돌파… 황제주 진입 코앞", summary: "SK하이닉스가 주가 91만원을 돌파하며 황제주 진입을 코앞에 뒀다. 증권사들은 목표가를 일제히 상향 조정했으며, 메리츠증권이 145만원으로 가장 높게 제시했다. 모건 스탠리는 2026년 DRAM 평균 가격이 62%, NAND는 75% 상승할 것으로 전망했다.", tags: ["#SK하이닉스", "#황제주", "#DRAM"], active: false, hasButton: false },
+    { time: "오전 7:30", impact: "medium", impactText: "중간 영향", title: "네이버, 2026년 안정적 이익 성장 확정...신사업 가치 주가 반영 전망", summary: "하나증권은 네이버에 대해 2026년 안정적 이익 성장이 확정적인 상황에서 신사업 가치가 주가에 반영될 가능성이 높다고 밝혔다. 목표주가는 35만 원으로 제시했으며, 1분기 쇼핑 에이전트, 2분기 AI 탭, 이후 통합 에이전트를 출시할 계획이다.", tags: ["#네이버", "#신사업", "#AI탭"], active: false, hasButton: false },
+  ],
+};
+export const fetchTimelineData = () => new Promise((r) => setTimeout(() => r(timelineMockResponse), 300));
+
+// --- 통합 자산 현황 API 형태 목데이터 ---
+export const assetsMockResponse = {
+  totalAsset: { changeText: "+₩95,000 (+0.37%)", balance: "₩25,829,000" },
+  domestic: { label: "국내 주식", changeText: "-₩140,000 (-0.85%)", balance: "₩16,449,000", totalLabel: "국내 총액", totalShort: "₩16.4M", accounts: [{ id: "savings", name: "종합 위탁 계좌", amount: "₩10.2M", pct: "61.7%", color: "sky" }, { id: "cma", name: "CMA 파킹 계좌", amount: "₩6.3M", pct: "38.3%", color: "emerald" }] },
+  foreign: { label: "해외 주식", changeText: "+₩235,000 (+2.50%)", balance: "₩9,380,000", totalLabel: "해외 총액", totalShort: "₩9.4M", accounts: [{ id: "us", name: "미국 주식 일반", amount: "₩6.6M", pct: "70%", color: "sky" }, { id: "isa", name: "미국 ISA 계좌", amount: "₩2.3M", pct: "25%", color: "violet" }, { id: "cash", name: "외화 예수금", amount: "₩0.5M", pct: "5%", color: "amber" }] },
+  exchangeRate: { value: "1,448.40", change: "-0.35%", positive: false },
+};
+export const fetchAssetsData = () => new Promise((r) => setTimeout(() => r(assetsMockResponse), 350));
+
+// --- 수면 루틴 설정 API 형태 목데이터 ---
+export const sleepSettingsMockResponse = {
+  initialBedtime: { hour: 22, minute: 30 },
+  initialWake: { hour: 6, minute: 30 },
+  settingsHistory: [
+    { date: "1/25", bedtime: "23:00", wakeTime: "07:00" },
+    { date: "1/26", bedtime: "23:30", wakeTime: "07:30" },
+    { date: "1/27", bedtime: "23:00", wakeTime: "07:00" },
+    { date: "1/28", bedtime: "22:30", wakeTime: "06:30" },
+    { date: "1/29", bedtime: "22:30", wakeTime: "06:30" },
+    { date: "1/30", bedtime: "22:30", wakeTime: "06:30" },
+    { date: "1/31", bedtime: "22:30", wakeTime: "06:30" },
+  ],
+};
+export const fetchSleepSettingsData = () => new Promise((r) => setTimeout(() => r(sleepSettingsMockResponse), 300));
+
+// --- 과거 패턴 분석 API 형태 목데이터 ---
+export const analysisMockResponse = {
+  hero: { badge: "과거 사례", similarity: "85%", title: "2022년 Ampere → Hopper 전환", subtitle: "AI 학습·추론 성능 대폭 개선 · 데이터센터 혁명", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDckHQKWafDEShJpEgEhJK9pKgY3Zlhy2EYRWxl5c16AO1JnOGi4iHa1zDFuCT4oqF1Z6cp8BlaYWiH2zdJuc2Ws6PHGH0wTk0HrA9V34ZenIRA1ifdVhiVCFWtOuQN8O2E4j7sslq4e4uGWbQZaAu6qBRWBqls5sr0qCb7TdRXBKnjhBQ1l-RB6teXMW6Iay3fpX89lOoosNxiM59hziu7qoWP85F_vQNIhaExGrh1tjzgs5glabcLqOeq5kjAnjbgSHb-ZEcQ_eA" },
+  analysisText: "2022년 Hopper(H100) 아키텍처 공개는 현재 Rubin GPU 발표와 85% 유사합니다. 당시 AI 학습·추론 성능이 대폭 개선되며 데이터센터 시장 패러다임이 전환되었고, AI 인프라 본격 확산의 시작점이 되었습니다. 현재 상황도 이와 유사한 변곡점으로 평가됩니다.",
+  similarityPercent: 85,
+  trendLabel: "Trend Comparison",
+};
+export const fetchAnalysisData = () => new Promise((r) => setTimeout(() => r(analysisMockResponse), 300));
+
+// --- 과거 패턴 상세 API 형태 목데이터 ---
+export const analysisDetailMockResponse = {
+  title: "2024년 Blackwell 발표",
+  subtitle: "PAST CASE ANALYSIS",
+  hero: { badge: "과거 사례", similarity: "72%", title: "Blackwell 아키텍처 공개", desc: "2024 GTC · 추론 비용 혁신 & 데이터센터 최적화", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDckHQKWafDEShJpEgEhJK9pKgY3Zlhy2EYRWxl5c16AO1JnOGi4iHa1zDFuCT4oqF1Z6cp8BlaYWiH2zdJuc2Ws6PHGH0wTk0HrA9V34ZenIRA1ifdVhiVCFWtOuQN8O2E4j7sslq4e4uGWbQZaAu6qBRWBqls5sr0qCb7TdRXBKnjhBQ1l-RB6teXMW6Iay3fpX89lOoosNxiM59hziu7qoWP85F_vQNIhaExGrh1tjzgs5glabcLqOeq5kjAnjbgSHb-ZEcQ_eA" },
+  similarityPercent: 72,
+  analysisText: "2024년 GTC에서 공개된 Blackwell 아키텍처는 Hopper 대비 최대 65배 AI 컴퓨팅 성능과 15배 추론 비용 절감을 달성했습니다. FP4/FP6 저정밀 연산 지원과 NVLink 5 기술로 AI 추론 중심 시장을 본격화했으며, 현재 Rubin 발표와 72% 유사한 패턴을 보입니다.",
+};
+export const fetchAnalysisDetailData = () => new Promise((r) => setTimeout(() => r(analysisDetailMockResponse), 300));
+
+// --- 방어 전략(기업 연관 분석) API 형태 목데이터 ---
+export const strategyMockResponse = {
+  holdings: [
+    { id: 1, icon: "memory", name: "NVDA", subName: "엔비디아 (NVIDIA)", impact: "★★★★★", change: "+5.21%", positive: true, type: "해외", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "AI 추론 시장 지배력 강화" },
+    { id: 2, icon: "electric_car", name: "TSLA", subName: "테슬라 (Tesla)", impact: "★★★", change: "+2.14%", positive: true, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "자율주행 생태계 표준 발전" },
+    { id: 3, icon: "movie", name: "NFLX", subName: "넷플릭스 (Netflix)", impact: "★★", change: "+1.32%", positive: true, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 추천·제작 비용 절감" },
+    { id: 4, icon: "memory", name: "SK하이닉스", subName: "SK Hynix", impact: "★★★★★", change: "+3.89%", positive: true, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "HBM4 직접 수혜 최대" },
+    { id: 5, icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics", impact: "★★★★", change: "+1.24%", positive: true, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "HBM·파운드리 공급 확대" },
+    { id: 6, icon: "search", name: "네이버", subName: "NAVER", impact: "★★★", change: "+1.78%", positive: true, type: "국내", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 서비스 수익성 개선" },
+    { id: 7, icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", impact: "★", change: "+1.83%", positive: true, type: "국내", recommendation: "중립", recommendationColor: "text-slate-400", dotColor: "bg-slate-500", bgColor: "bg-slate-500/10", borderColor: "border-slate-500/30", shadowColor: "rgba(100, 116, 139, 0.4)", reason: "간접 수혜 (수요예측 AI)" },
+  ],
+};
+export const fetchStrategyData = () => new Promise((r) => setTimeout(() => r(strategyMockResponse), 350));
