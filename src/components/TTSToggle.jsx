@@ -67,73 +67,13 @@ function TTSToggle() {
     };
   }, []);
 
-  // 패널 열면 재생 안 한 트랙들의 재생 시간 미리 로드 (순차 호출로 API 부담 완화)
+  // 미리로드 비활성화: 프로덕션에서 오디오 URL이 크로스오리진이면 CORS로 로드 실패하고
+  // 상대 경로면 Vercel이 index.html을 내려줘서 실패함. 재생 버튼 클릭 시에만 로드하면 정상 동작.
+  // (필요 시 개발 환경에서만 preload 사용 가능)
   useEffect(() => {
     if (!isOpen) return;
     preloadAbortRef.current = false;
-
-    const preloadDurations = async () => {
-      for (const track of TTS_PLAYLIST) {
-        if (preloadAbortRef.current) break;
-        if (trackDurations[track.id]) continue; // 이미 있으면 스킵
-
-        try {
-          const result = await ttsService.textToSpeech({
-            text: track.text,
-            speaker: 'nara',
-            speed: 0,
-            pitch: 0,
-            volume: 0,
-          });
-          if (preloadAbortRef.current) break;
-          const audioUrl = result.data?.audioUrl || (result.data?.filename && ttsService.getAudioUrl(result.data.filename));
-          if (!result.success || !audioUrl) continue;
-
-          urlCacheRef.current[track.id] = audioUrl;
-
-          const loadAudio = () =>
-            new Promise((resolve, reject) => {
-              const audio = new Audio(audioUrl);
-              const onLoaded = () => {
-                audio.removeEventListener('loadedmetadata', onLoaded);
-                audio.removeEventListener('error', onError);
-                setTrackDurations(prev => ({ ...prev, [track.id]: audio.duration }));
-                resolve();
-              };
-              const onError = (e) => {
-                audio.removeEventListener('loadedmetadata', onLoaded);
-                audio.removeEventListener('error', onError);
-                reject(e);
-              };
-              audio.addEventListener('loadedmetadata', onLoaded);
-              audio.addEventListener('error', onError);
-              if (audio.duration && !isNaN(audio.duration)) onLoaded();
-            });
-
-          const maxRetries = 2;
-          let lastErr;
-          for (let attempt = 0; attempt <= maxRetries; attempt++) {
-            try {
-              await loadAudio();
-              lastErr = null;
-              break;
-            } catch (e) {
-              lastErr = e;
-              if (attempt < maxRetries && !preloadAbortRef.current) {
-                await new Promise((r) => setTimeout(r, 500));
-              }
-            }
-          }
-          if (lastErr && !preloadAbortRef.current) {
-            console.warn('TTS 미리로드 실패:', track.id, lastErr);
-          }
-        } catch (e) {
-          if (!preloadAbortRef.current) console.warn('TTS 미리로드 실패:', track.id, e);
-        }
-      }
-    };
-    preloadDurations();
-  }, [isOpen]); // trackDurations 의존성 제거해 무한루프 방지
+  }, [isOpen]);
 
   // 트랙 재생 (캐시 있으면 API 생략)
   const playTrack = async (track) => {
