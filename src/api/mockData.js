@@ -512,3 +512,40 @@ export const mockReports = [
     importantNewsCount: 3,
   },
 ];
+
+// 대시보드 API 응답 형태 목데이터 (API 연동처럼 사용)
+export const dashboardMockResponse = {
+  marketIndices: [
+    { id: "kospi", label: "코스피 지수", value: "5,117.45", change: "+3.39%", positive: true, icon: "show_chart" },
+    { id: "usdkrw", label: "USD/KRW", value: "1,448.40", change: "-0.35%", positive: false, icon: "currency_exchange" },
+  ],
+  overnightItems: [
+    { id: "kospi", icon: "show_chart", label: "코스피", change: "+3.39%", positive: true },
+    { id: "usdkrw", icon: "currency_exchange", label: "USD/KRW", change: "-0.35%", positive: false },
+    { id: "overseas", icon: "language", label: "해외", change: "+2.50%", positive: true },
+    { id: "domestic", icon: "account_balance", label: "국내", change: "-0.85%", positive: false },
+    { id: "total", icon: "account_balance_wallet", label: "총자산", change: "+0.37%", positive: true },
+  ],
+  regionSummary: [
+    { type: "overseas", label: "해외주식", trend: "up", changeText: "+₩235,000 (+2.50%)", balance: "₩9,380,000", chartHeights: [28, 42, 35, 52, 48, 58, 65, 72, 82, 100] },
+    { type: "domestic", label: "국내 주식", trend: "down", changeText: "-₩140,000 (-0.85%)", balance: "₩16,449,000", chartHeights: [100, 88, 94, 82, 86, 78, 82, 74, 70, 65] },
+  ],
+  totalAsset: { changeText: "+₩95,000 (+0.37%)", balance: "₩25,829,000", chartHeights: [22, 35, 28, 42, 38, 52, 58, 72, 88, 100] },
+  holdings: {
+    overseas: [
+      { icon: "data_object", name: "NVIDIA", subName: "엔비디아", price: "$951.25", change: "+1.50%", positive: true },
+      { icon: "directions_car", name: "Tesla", subName: "테슬라", price: "$5,090.04", change: "+2.50%", positive: true },
+      { icon: "movie", name: "Netflix", subName: "넷플릭스", price: "$415.95", change: "+3.50%", positive: true },
+    ],
+    domestic: [
+      { icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics Co", price: "₩1,283,600", change: "-3.00%", positive: false },
+      { icon: "memory", name: "SK하이닉스", subName: "SK Hynix", price: "₩9,876,000", change: "-2.00%", positive: false },
+      { icon: "public", name: "네이버", subName: "NAVER", price: "₩1,686,000", change: "+1.78%", positive: true },
+      { icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", price: "₩3,603,000", change: "+1.83%", positive: true },
+    ],
+  },
+};
+
+/** API처럼 대시보드 데이터 조회 (목데이터, 지연 시뮬레이션) */
+export const fetchDashboardData = () =>
+  new Promise((resolve) => setTimeout(() => resolve(dashboardMockResponse), 400));

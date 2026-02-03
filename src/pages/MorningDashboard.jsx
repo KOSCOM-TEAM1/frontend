@@ -2,18 +2,11 @@ import Navigation from '../components/Navigation';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import userService from '../api/userService';
-
-// 잠든 사이 변화 - 작은 아이콘 카드 (마키용, 간단한 내용)
-const overnightItems = [
-  { id: 'kospi', icon: 'show_chart', label: '코스피', change: '+3.39%', positive: true },
-  { id: 'usdkrw', icon: 'currency_exchange', label: 'USD/KRW', change: '-0.35%', positive: false },
-  { id: 'overseas', icon: 'language', label: '해외', change: '+2.50%', positive: true },
-  { id: 'domestic', icon: 'account_balance', label: '국내', change: '-0.85%', positive: false },
-  { id: 'total', icon: 'account_balance_wallet', label: '총자산', change: '+0.37%', positive: true },
-];
+import { fetchDashboardData } from '../api/mockData';
 
 function MorningDashboard() {
   const [memberInfo, setMemberInfo] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -37,50 +30,41 @@ function MorningDashboard() {
   };
 
   useEffect(() => {
-    // 컴포넌트 마운트 시 회원 정보 불러오기
-    const fetchMemberInfo = async () => {
+    const loadData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        console.log('🔄 회원 정보 요청 시작...');
-        
-        const result = await userService.getMemberInfo(1);
-        
-        if (result.success) {
-          setMemberInfo(result.data);
-          console.log('✅ 회원 정보 조회 성공:', result.data);
-          console.log('📌 사용자 이름:', result.data.name);
-          console.log('📌 프로필 이미지:', result.data.profileImage);
-        } else {
-          setError(result.error);
-          console.error('❌ 회원 정보 조회 실패:', result.error);
-        }
+        const [memberRes, dashboardRes] = await Promise.all([
+          userService.getMemberInfo(1),
+          fetchDashboardData(),
+        ]);
+        if (memberRes.success) setMemberInfo(memberRes.data);
+        else setError(memberRes.error);
+        setDashboardData(dashboardRes);
       } catch (err) {
         setError({ message: '알 수 없는 오류가 발생했습니다.' });
-        console.error('❌ fetchMemberInfo 에러:', err);
       } finally {
         setLoading(false);
-        console.log('✅ 회원 정보 요청 완료');
       }
     };
-
-    fetchMemberInfo();
+    loadData();
   }, []);
 
   // 고정된 사용자 정보 (여성 프로필)
   const displayName = '최지원';
   const profileImage = memberInfo?.profileImage || '/profile.jpg';
   
-  // 로딩 중일 때 표시
-  if (loading) {
+  if (loading || !dashboardData) {
     return (
       <div className="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4"></div>
-          <p className="text-slate-400">회원 정보를 불러오는 중...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4" />
+          <p className="text-slate-400 text-sm">데이터를 불러오는 중...</p>
         </div>
       </div>
     );
   }
+
+  const { marketIndices, overnightItems, regionSummary, totalAsset, holdings } = dashboardData;
 
   return (
     <div className="bg-background-dark font-display text-white min-h-screen selection:bg-primary/30 overflow-x-hidden">
@@ -105,33 +89,23 @@ function MorningDashboard() {
             <span className="material-symbols-outlined text-[22px]">notifications</span>
           </button>
         </header>
-        {/* 시장 정보 인포 바 */}
+        {/* 시장 정보 인포 바 - API 응답 데이터로 렌더 */}
         <div className="px-6 pt-2 pb-4 shrink-0 animate-fade-in">
           <div className="flex gap-3 overflow-x-auto no-scrollbar">
-            <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 min-w-fit hover-lift transition-all duration-200 border border-white/5">
-              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-primary text-lg">show_chart</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">코스피 지수</span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">5,117.45</span>
-                  <span className="text-emerald-400 text-sm font-semibold">+3.39%</span>
+            {marketIndices.map((item) => (
+              <div key={item.id} className="glass rounded-xl px-4 py-3 flex items-center gap-3 min-w-fit hover-lift transition-all duration-200 border border-white/5">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${item.id === 'usdkrw' ? 'bg-accent-purple/20' : 'bg-primary/20'}`}>
+                  <span className={`material-symbols-outlined text-lg ${item.id === 'usdkrw' ? 'text-accent-purple' : 'text-primary'}`}>{item.icon}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">{item.label}</span>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-white text-base font-bold">{item.value}</span>
+                    <span className={`text-sm font-semibold ${item.positive ? 'text-emerald-400' : 'text-rose-400'}`}>{item.change}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="glass rounded-xl px-4 py-3 flex items-center gap-3 min-w-fit hover-lift transition-all duration-200 border border-white/5">
-              <div className="w-8 h-8 rounded-lg bg-accent-purple/20 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-accent-purple text-lg">currency_exchange</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">USD/KRW</span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">1,448.40</span>
-                  <span className="text-rose-400 text-sm font-semibold">-0.35%</span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="px-6 pt-6 pb-2 shrink-0">
@@ -159,109 +133,79 @@ function MorningDashboard() {
           <h3 className="text-white text-base font-semibold uppercase tracking-wider text-slate-400">국내·해외 구분</h3>
         </div>
         <div className="space-y-4 px-6 mb-6 shrink-0">
-          {/* 해외주식 카드 - 상승 */}
-          <div className="glass rounded-xl p-5 relative overflow-hidden border border-emerald-500/20 hover-lift hover-glow transition-all duration-300 animate-slide-in-up">
-            <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-emerald-400 text-base">language</span>
-                  해외주식
-                </p>
-                <span className="text-emerald-400 text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20">상승</span>
-              </div>
-              <div className="flex flex-col gap-1 mb-2">
-                <h2 className="text-emerald-400 text-2xl font-extrabold tracking-tight leading-tight">+₩235,000 (+2.50%)</h2>
-                <div className="flex items-center gap-1.5 opacity-60">
-                  <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
-                  <p className="text-white text-sm font-bold">₩9,380,000</p>
+          {regionSummary.map((region, regionIdx) => {
+            const isUp = region.trend === 'up';
+            const barClass = (i) =>
+              isUp
+                ? (i === 9 ? 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)] animate-bar-pulse' : i >= 6 ? 'bg-emerald-500/60' : i >= 3 ? 'bg-emerald-500/40' : 'bg-emerald-500/20')
+                : (i === 0 ? 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)] animate-bar-pulse' : i <= 3 ? 'bg-rose-500/60' : i <= 6 ? 'bg-rose-500/40' : 'bg-rose-500/20');
+            return (
+              <div
+                key={region.type}
+                className={`glass rounded-xl p-5 relative overflow-hidden hover-lift hover-glow transition-all duration-300 animate-slide-in-up ${isUp ? 'border border-emerald-500/20' : 'border border-rose-500/20'}`}
+                style={{ animationDelay: `${regionIdx * 0.1}s` }}
+              >
+                <div className={`absolute -top-12 -right-12 w-24 h-24 rounded-full blur-2xl ${isUp ? 'bg-emerald-500/10' : 'bg-rose-500/10'}`} />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                      <span className={`material-symbols-outlined text-base ${isUp ? 'text-emerald-400' : 'text-rose-400'}`}>
+                        {region.type === 'overseas' ? 'language' : 'account_balance'}
+                      </span>
+                      {region.label}
+                    </p>
+                    <span className={`text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${isUp ? 'text-emerald-400 bg-emerald-500/20' : 'text-rose-400 bg-rose-500/20'}`}>
+                      {isUp ? '상승' : '하락'}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 mb-2">
+                    <h2 className={`text-2xl font-extrabold tracking-tight leading-tight ${isUp ? 'text-emerald-400' : 'text-rose-400'}`}>{region.changeText}</h2>
+                    <div className="flex items-center gap-1.5 opacity-60">
+                      <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
+                      <p className="text-white text-sm font-bold">{region.balance}</p>
+                    </div>
+                  </div>
+                  <div className="h-20 w-full flex items-end gap-1">
+                    {region.chartHeights.map((height, index) => (
+                      <div
+                        key={index}
+                        className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${barClass(index)}`}
+                        style={{ height: `${height}%`, animationDelay: `${index * 0.05}s` }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
+                    <span>오후 11:00 (취침)</span>
+                    <span>현재</span>
+                  </div>
                 </div>
               </div>
-              <div className="h-20 w-full flex items-end gap-1">
-                {[28, 42, 35, 52, 48, 58, 65, 72, 82, 100].map((height, index) => (
-                  <div
-                    key={index}
-                    className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${index === 9 ? 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)] animate-bar-pulse' : index >= 6 ? 'bg-emerald-500/60' : index >= 3 ? 'bg-emerald-500/40' : 'bg-emerald-500/20'}`}
-                    style={{ 
-                      height: `${height}%`,
-                      animationDelay: `${index * 0.05}s`
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="flex justify-between mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
-                <span>오후 11:00 (취침)</span>
-                <span>현재</span>
-              </div>
-            </div>
-          </div>
-          {/* 국내 주식 카드 - 하락 */}
-          <div className="glass rounded-xl p-5 relative overflow-hidden border border-rose-500/20 hover-lift hover-glow transition-all duration-300 animate-slide-in-up" style={{animationDelay: '0.1s'}}>
-            <div className="absolute -top-12 -right-12 w-24 h-24 bg-rose-500/10 blur-2xl rounded-full" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-rose-400 text-base">account_balance</span>
-                  국내 주식
-                </p>
-                <span className="text-rose-400 text-sm font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20">하락</span>
-              </div>
-              <div className="flex flex-col gap-1 mb-2">
-                <h2 className="text-rose-400 text-2xl font-extrabold tracking-tight leading-tight">-₩140,000 (-0.85%)</h2>
-                <div className="flex items-center gap-1.5 opacity-60">
-                  <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
-                  <p className="text-white text-sm font-bold">₩16,449,000</p>
-                </div>
-              </div>
-              <div className="h-20 w-full flex items-end gap-1">
-                {[100, 88, 94, 82, 86, 78, 82, 74, 70, 65].map((height, index) => (
-                  <div
-                    key={index}
-                    className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${index === 0 ? 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)] animate-bar-pulse' : index <= 3 ? 'bg-rose-500/60' : index <= 6 ? 'bg-rose-500/40' : 'bg-rose-500/20'}`}
-                    style={{ 
-                      height: `${height}%`,
-                      animationDelay: `${index * 0.05}s`
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="flex justify-between mt-2 text-sm text-slate-500 font-bold uppercase tracking-wider">
-                <span>오후 11:00 (취침)</span>
-                <span>현재</span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
-        {/* 총 자산 잔액 (해외 +₩235,000 + 국내 -₩140,000 = +₩95,000 / +0.37%) */}
+        {/* 총 자산 - API 응답 데이터로 렌더 */}
         <div className="px-6 py-2 shrink-0 animate-slide-in-up">
           <div className="glass rounded-xl p-6 relative overflow-hidden hover-lift hover-glow transition-all duration-300 cursor-pointer">
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full"></div>
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full" />
             <div className="relative z-10">
               <p className="text-slate-400 text-sm font-medium mb-1">총 수익</p>
               <div className="flex flex-col gap-1 mb-4">
-                <h1 className="text-emerald-400 text-3xl font-extrabold tracking-tight">+₩95,000 (+0.37%)</h1>
+                <h1 className="text-emerald-400 text-3xl font-extrabold tracking-tight">{totalAsset.changeText}</h1>
                 <div className="flex items-center gap-1.5 opacity-60">
                   <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
-                  <p className="text-white text-sm font-bold">₩25,829,000</p>
+                  <p className="text-white text-sm font-bold">{totalAsset.balance}</p>
                 </div>
               </div>
               <div className="mt-8 h-28 w-full flex items-end gap-1.5">
-                {[22, 35, 28, 42, 38, 52, 58, 72, 88, 100].map((height, index) => (
-                  <div 
+                {totalAsset.chartHeights.map((height, index) => (
+                  <div
                     key={index}
                     className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${
-                      index === 9 ? 'bg-primary shadow-[0_0_15px_rgba(19,91,236,0.5)] animate-bar-pulse' : 
-                      index >= 8 ? 'bg-primary/80' : 
-                      index >= 7 ? 'bg-primary/60' : 
-                      index >= 6 ? 'bg-primary/50' : 
-                      index >= 5 ? 'bg-primary/40' : 
-                      index >= 4 ? 'bg-primary/30' : 
-                      index >= 2 ? 'bg-primary/20' : 'bg-primary/10'
+                      index === 9 ? 'bg-primary shadow-[0_0_15px_rgba(19,91,236,0.5)] animate-bar-pulse' :
+                      index >= 8 ? 'bg-primary/80' : index >= 7 ? 'bg-primary/60' : index >= 6 ? 'bg-primary/50' :
+                      index >= 5 ? 'bg-primary/40' : index >= 4 ? 'bg-primary/30' : index >= 2 ? 'bg-primary/20' : 'bg-primary/10'
                     }`}
-                    style={{
-                      height: `${height}%`,
-                      animationDelay: `${index * 0.06}s`
-                    }}
+                    style={{ height: `${height}%`, animationDelay: `${index * 0.06}s` }}
                   />
                 ))}
               </div>
@@ -277,13 +221,9 @@ function MorningDashboard() {
         </div>
         <div className="px-6 space-y-3 flex-grow">
           <p className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1">해외</p>
-          {[
-            { icon: 'data_object', name: 'NVIDIA', subName: '엔비디아', price: '$951.25', change: '+1.50%', positive: true },
-            { icon: 'directions_car', name: 'Tesla', subName: '테슬라', price: '$5,090.04', change: '+2.50%', positive: true },
-            { icon: 'movie', name: 'Netflix', subName: '넷플릭스', price: '$415.95', change: '+3.50%', positive: true }
-          ].map((stock, index) => (
+          {holdings.overseas.map((stock, index) => (
             <motion.div
-              key={index}
+              key={stock.name}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1, duration: 0.3 }}
@@ -305,17 +245,12 @@ function MorningDashboard() {
             </motion.div>
           ))}
           <p className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-1 mt-4">국내</p>
-          {[
-            { icon: 'precision_manufacturing', name: '삼성전자', subName: 'Samsung Electronics Co', price: '₩1,283,600', change: '-3.00%', positive: false },
-            { icon: 'memory', name: 'SK하이닉스', subName: 'SK Hynix', price: '₩9,876,000', change: '-2.00%', positive: false },
-            { icon: 'public', name: '네이버', subName: 'NAVER', price: '₩1,686,000', change: '+1.78%', positive: true },
-            { icon: 'restaurant', name: '삼양식품', subName: 'Samyang Foods', price: '₩3,603,000', change: '+1.83%', positive: true }
-          ].map((stock, index) => (
+          {holdings.domestic.map((stock, index) => (
             <motion.div
-              key={index}
+              key={stock.name}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: (index + 3) * 0.1, duration: 0.3 }}
+              transition={{ delay: (index + holdings.overseas.length) * 0.1, duration: 0.3 }}
               className="flex items-center justify-between p-4 glass rounded-xl hover-lift hover:bg-white/5 transition-all duration-200 cursor-pointer"
             >
               <div className="flex items-center gap-3">
