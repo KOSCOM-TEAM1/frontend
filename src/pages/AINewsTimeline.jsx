@@ -41,10 +41,18 @@ function AINewsTimeline() {
             <h1 className="text-lg font-bold tracking-tight">AI 뉴스 타임라인</h1>
           </div>
           <div className="flex gap-4">
-            <button className="flex items-center justify-center size-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+            <button
+              type="button"
+              onClick={() => alert('뉴스 검색은 준비 중입니다.')}
+              className="flex items-center justify-center size-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+            >
               <span className="material-symbols-outlined text-xl">search</span>
             </button>
-            <button className="flex items-center justify-center size-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+            <button
+              type="button"
+              onClick={() => alert('필터 설정은 준비 중입니다.')}
+              className="flex items-center justify-center size-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+            >
               <span className="material-symbols-outlined text-xl">tune</span>
             </button>
           </div>
@@ -119,16 +127,13 @@ function AINewsTimeline() {
                       AI 과거 유사사례 보기 <span className="material-symbols-outlined text-sm">arrow_forward_ios</span>
                     </button>
                   )}
-                  {!news.hasButton && news.tags.length > 0 && (
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-2">
-                        {news.tags.map((tag, tagIndex) => (
-                          <span key={tagIndex} className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-medium text-slate-300">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <button className="text-primary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all duration-200">
+                  {!news.hasButton && (
+                    <div className="flex items-center justify-end">
+                      <button
+                        type="button"
+                        onClick={() => alert('보유 종목 확인은 준비 중입니다.')}
+                        className="text-primary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all duration-200"
+                      >
                         보유 종목 확인 <span className="material-symbols-outlined text-xs">open_in_new</span>
                       </button>
                     </div>

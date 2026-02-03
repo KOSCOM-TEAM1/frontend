@@ -30,7 +30,7 @@ function DefenseStrategy() {
     );
   }
 
-  const { holdings } = data;
+  const { holdings, summaryText, keyBeneficiaries, weakRelation } = data;
 
   return (
     <div className="bg-background-dark font-display text-white overflow-x-hidden min-h-screen">
@@ -68,7 +68,7 @@ function DefenseStrategy() {
                 </div>
                 <div className="flex-1 overflow-hidden">
                   <p className="text-white/95 text-[14px] leading-[1.6] break-keep">
-                    엔비디아 <span className="text-primary font-bold">Rubin 조기 양산 + Cosmos 공개</span>는 AI가 "비싸고 제한적인 기술"에서 "모든 산업에 깔리는 인프라"로 넘어가는 신호입니다. 수혜 강도는 <span className="text-emerald-400 font-bold">SK하이닉스 {'>'} 삼성전자 {'>'} 네이버 {'>'} 간접 수혜</span> 순입니다.
+                    {summaryText || "엔비디아 Rubin·메모리 병목 뉴스는 AI 인프라 확장이 메모리 공급을 앞지르는 구도입니다. 수혜 강도는 SK하이닉스 > 삼성전자 > NVIDIA 순 강한 연관, 네이버는 간접, 테슬라·넷플릭스·삼양식품은 HBM 테마와 직접 연관 낮습니다."}
                   </p>
                 </div>
               </div>
@@ -137,7 +137,6 @@ function DefenseStrategy() {
                   </div>
                   <p className="text-slate-400 text-xs mb-2">{stock.subName}</p>
                   <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-amber-400 font-bold text-sm">{stock.impact}</span>
                     <span className="text-[11px] text-white/40 bg-white/5 px-2 py-0.5 rounded">{stock.reason}</span>
                   </div>
                 </div>
@@ -156,26 +155,32 @@ function DefenseStrategy() {
               <h4 className="text-white font-bold text-sm">핵심 수혜 기업</h4>
             </div>
             <div className="space-y-3">
-              <div className="bg-emerald-500/5 rounded-xl p-3 border border-emerald-500/20">
-                <p className="text-emerald-400 font-bold text-xs mb-1">🥇 SK하이닉스 (국내 최대 수혜)</p>
-                <p className="text-white/70 text-xs leading-relaxed">Rubin 성능 4배 향상 → HBM4 탑재량 증가 가능성. 엔비디아 핵심 공급사로 가장 직접적 수혜</p>
-              </div>
-              <div className="bg-blue-500/5 rounded-xl p-3 border border-blue-500/20">
-                <p className="text-blue-400 font-bold text-xs mb-1">🥈 삼성전자 (메모리 수요 레벨업)</p>
-                <p className="text-white/70 text-xs leading-relaxed">AI GPU 세대 교체 = 메모리 수요 레벨업. 첨단 공정 경쟁 심화로 파운드리 사업 기회 확대</p>
-              </div>
-              <div className="bg-purple-500/5 rounded-xl p-3 border border-purple-500/20">
-                <p className="text-purple-400 font-bold text-xs mb-1">🥉 네이버 (서비스 비용 절감)</p>
-                <p className="text-white/70 text-xs leading-relaxed">추론 비용 하락 → 검색·광고·AI 비서 서비스 수익성 개선. 자체 LLM vs GPU 인프라 활용 선택지 확대</p>
-              </div>
+              {(keyBeneficiaries || []).map((b, i) => (
+                <div key={i} className={`rounded-xl p-3 border ${
+                  i === 0 ? 'bg-emerald-500/5 border-emerald-500/20' : i === 1 ? 'bg-blue-500/5 border-blue-500/20' : 'bg-purple-500/5 border-purple-500/20'
+                }`}>
+                  <p className={`font-bold text-xs mb-1 ${i === 0 ? 'text-emerald-400' : i === 1 ? 'text-blue-400' : 'text-purple-400'}`}>{b.rank} {b.name} ({b.sub})</p>
+                  <p className="text-white/70 text-xs leading-relaxed">{b.text}</p>
+                </div>
+              ))}
+              {weakRelation && (
+                <div className="bg-slate-500/5 rounded-xl p-3 border border-slate-500/20">
+                  <p className="text-slate-400 font-bold text-xs mb-1">약한 연관 · {weakRelation.name}</p>
+                  <p className="text-white/60 text-xs leading-relaxed">{weakRelation.text}</p>
+                </div>
+              )}
             </div>
           </div>
-          <div className="bg-slate-500/10 border border-slate-500/20 rounded-2xl p-4 flex gap-3">
+          <button
+            type="button"
+            onClick={() => alert('위 분석은 AI 기반 참고 자료입니다. 실제 투자 결정은 본인의 판단과 책임 하에 진행해 주세요.')}
+            className="w-full text-left bg-slate-500/10 border border-slate-500/20 rounded-2xl p-4 flex gap-3 hover:bg-slate-500/15 transition-colors"
+          >
             <span className="material-symbols-outlined text-slate-400 text-xl shrink-0">info</span>
             <p className="text-slate-300 text-[12px] leading-snug break-keep">
               위 분석은 AI 기반 참고 자료입니다. 실제 투자 결정은 본인의 판단과 책임 하에 진행해 주세요.
             </p>
-          </div>
+          </button>
         </div>
         <div className="h-24 shrink-0"></div>
       </main>

@@ -85,7 +85,11 @@ function MorningDashboard() {
               <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:50</p>
             </div>
           </div>
-          <button className="flex size-10 items-center justify-center rounded-full glass text-white transition-all duration-200 active:scale-95 hover-scale hover:bg-white/10">
+          <button
+            type="button"
+            onClick={() => alert('알림 목록은 준비 중입니다.')}
+            className="flex size-10 items-center justify-center rounded-full glass text-white transition-all duration-200 active:scale-95 hover-scale hover:bg-white/10"
+          >
             <span className="material-symbols-outlined text-[22px]">notifications</span>
           </button>
         </header>

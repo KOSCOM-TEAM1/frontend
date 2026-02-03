@@ -25,7 +25,7 @@ function HistoricalPatternDetail() {
     );
   }
 
-  const { title, subtitle, hero, similarityPercent, analysisText } = data;
+  const { title, subtitle, hero, similarityPercent, analysisText, oneLiner } = data;
 
   return (
     <div className="bg-background-dark font-display text-white min-h-screen antialiased">
@@ -41,7 +41,25 @@ function HistoricalPatternDetail() {
             <span className="text-[9px] text-white/40 font-medium uppercase tracking-widest">{subtitle}</span>
           </div>
           <div className="w-10 flex justify-end">
-            <span className="material-symbols-outlined text-white/60 text-[20px] cursor-pointer">share</span>
+            <button
+              type="button"
+              onClick={async () => {
+                const url = window.location.href;
+                if (navigator.share) {
+                  try {
+                    await navigator.share({ title: document.title || 'AI 분석 상세', url });
+                    alert('공유되었습니다.');
+                  } catch (e) {
+                    if (e.name !== 'AbortError') navigator.clipboard?.writeText(url).then(() => alert('링크가 복사되었습니다.'));
+                  }
+                } else {
+                  navigator.clipboard?.writeText(url).then(() => alert('링크가 복사되었습니다.'));
+                }
+              }}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              <span className="material-symbols-outlined text-[20px]">share</span>
+            </button>
           </div>
         </div>
       </header>
@@ -58,6 +76,7 @@ function HistoricalPatternDetail() {
               </div>
               <h1 className="text-xl font-bold leading-tight">{hero.title}</h1>
               <p className="text-white/50 text-[11px] mt-0.5">{hero.desc}</p>
+              {oneLiner && <p className="text-primary/90 text-[10px] mt-1.5 italic">"{oneLiner}"</p>}
             </div>
           </div>
         </div>
@@ -103,7 +122,7 @@ function HistoricalPatternDetail() {
               <div className="flex gap-3">
                 <div className="flex items-center gap-1">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
-                  <span className="text-[9px] text-white/50">Blackwell</span>
+                  <span className="text-[9px] text-white/50">HBM 쇼티지</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-1.5 h-1.5 rounded-full bg-white/20 border border-white/40"></div>

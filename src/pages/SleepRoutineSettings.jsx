@@ -102,9 +102,13 @@ function SleepRoutineSettings() {
             <span className="material-symbols-outlined">arrow_back_ios</span>
           </div>
           <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">설정</h2>
-          <div className="size-12 shrink-0 flex items-center justify-end">
-            <span className="material-symbols-outlined text-primary">info</span>
-          </div>
+          <button
+            type="button"
+            onClick={() => alert('수면 시간을 설정하면 24시간 시장 모니터링 시 해당 시간대 변동성 분석에서 제외됩니다.')}
+            className="size-12 shrink-0 flex items-center justify-end text-primary"
+          >
+            <span className="material-symbols-outlined">info</span>
+          </button>
         </div>
         <div className="px-6 py-4">
           <h4 className="text-[#92a4c9] text-sm font-semibold leading-relaxed tracking-[0.015em] text-center">

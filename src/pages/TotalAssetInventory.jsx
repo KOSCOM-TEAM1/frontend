@@ -72,7 +72,11 @@ function TotalAssetInventory() {
               통합 자산 현황
             </h2>
             <div className="flex w-12 items-center justify-end">
-              <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+              <button
+                type="button"
+                onClick={() => alert('자산 필터/정렬은 준비 중입니다.')}
+                className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+              >
                 <span className="material-symbols-outlined">tune</span>
               </button>
             </div>

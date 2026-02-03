@@ -26,7 +26,7 @@ function HistoricalPatternAnalysis() {
     );
   }
 
-  const { hero, analysisText, similarityPercent, trendLabel } = data;
+  const { hero, analysisText, similarityPercent, trendLabel, marketReactionText, marketReactionTags, similarEvents } = data;
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-white min-h-screen">
@@ -43,7 +43,23 @@ function HistoricalPatternAnalysis() {
               <div className="size-2 bg-blue-500 rounded-full"></div>
               <span className="text-[10px] font-bold text-blue-500 uppercase">AI Active</span>
             </div>
-            <button className="flex cursor-pointer items-center justify-center rounded-xl h-10 w-10 bg-white/5 text-white border border-white/10">
+            <button
+              type="button"
+              onClick={async () => {
+                const url = window.location.href;
+                if (navigator.share) {
+                  try {
+                    await navigator.share({ title: 'AI 과거 유사사례 분석', url });
+                    alert('공유되었습니다.');
+                  } catch (e) {
+                    if (e.name !== 'AbortError') navigator.clipboard?.writeText(url).then(() => alert('링크가 복사되었습니다.'));
+                  }
+                } else {
+                  navigator.clipboard?.writeText(url).then(() => alert('링크가 복사되었습니다.'));
+                }
+              }}
+              className="flex cursor-pointer items-center justify-center rounded-xl h-10 w-10 bg-white/5 text-white border border-white/10"
+            >
               <span className="material-symbols-outlined text-xl">share</span>
             </button>
           </div>
@@ -72,7 +88,7 @@ function HistoricalPatternAnalysis() {
           </div>
           <div className="glass-chip flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full px-5">
             <span className="material-symbols-outlined text-green-400 text-lg">history</span>
-            <p className="text-white text-xs font-bold leading-normal">과거 유사도 85%</p>
+            <p className="text-white text-xs font-bold leading-normal">과거 유사도 {similarityPercent}%</p>
           </div>
           <div className="glass-chip flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full px-5">
             <span className="material-symbols-outlined text-purple-400 text-lg">monitoring</span>
@@ -144,7 +160,7 @@ function HistoricalPatternAnalysis() {
           <div className="glass-card rounded-2xl p-4">
             <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">당시 영향</p>
             <div className="flex items-end gap-1">
-              <p className="text-2xl font-bold text-emerald-400">+12.5%</p>
+              <p className="text-2xl font-bold text-emerald-400">+11.8%</p>
               <span className="text-emerald-500 material-symbols-outlined text-lg mb-1">trending_up</span>
             </div>
             <p className="text-[10px] text-white/30 mt-3 italic">발표 후 3개월</p>
@@ -159,12 +175,12 @@ function HistoricalPatternAnalysis() {
           </div>
           <div className="bg-white/5 rounded-xl p-4 border border-white/5 mb-4">
             <p className="text-white/80 text-sm leading-relaxed mb-3">
-              Hopper 발표 이후, NVIDIA 주가는 <span className="text-emerald-400 font-semibold">3개월간 +12.5% 상승</span>했으며, SK하이닉스와 삼성전자 같은 HBM 공급사들도 동반 상승했습니다. 데이터센터 시장이 본격적으로 확대되며 AI 인프라 투자 붐이 일어났습니다.
+              {marketReactionText || "HBM 쇼티지 공식화 이후 메모리 업체 실적 전망이 급변했고, 증권사 리포트 논조가 \"AI 수혜 = 반도체 → 메모리\"로 이동했습니다."}
             </p>
             <div className="flex flex-wrap gap-2">
-              <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">주가 상승</span>
-              <span className="text-[10px] font-bold bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md">공급망 수혜</span>
-              <span className="text-[10px] font-bold bg-purple-500/20 text-purple-400 px-2 py-1 rounded-md">시장 확대</span>
+              {(marketReactionTags || ["주가 상승", "공급망 수혜", "메모리 재평가"]).map((tag, i) => (
+                <span key={i} className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md">{tag}</span>
+              ))}
             </div>
           </div>
           <div className="mb-3">
@@ -174,36 +190,26 @@ function HistoricalPatternAnalysis() {
             </h5>
           </div>
           <div className="space-y-3">
-            <div 
-              onClick={() => navigate('/analysis/detail')}
-              className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                  <span className="text-purple-400 font-bold text-xs">24'</span>
+            {(similarEvents || []).map((ev) => (
+              <div
+                key={ev.id}
+                onClick={() => navigate('/analysis/detail')}
+                className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
+                    ev.colorClass === 'purple' ? 'bg-purple-500/10 border-purple-500/20' : 'bg-amber-500/10 border-amber-500/20'
+                  }`}>
+                    <span className={`font-bold text-xs ${ev.colorClass === 'purple' ? 'text-purple-400' : 'text-amber-400'}`}>{ev.year}</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-sm">{ev.title}</p>
+                    <p className="text-white/40 text-xs">{ev.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-bold text-sm">2024년 Blackwell 아키텍처 발표</p>
-                  <p className="text-white/40 text-xs">유사도 72% · 추론 비용 혁신 강조</p>
-                </div>
+                <span className="material-symbols-outlined text-white/40">chevron_right</span>
               </div>
-              <span className="material-symbols-outlined text-white/40">chevron_right</span>
-            </div>
-            <div 
-              onClick={() => navigate('/analysis/detail')}
-              className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-white/5"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
-                  <span className="text-amber-400 font-bold text-xs">20'</span>
-                </div>
-                <div>
-                  <p className="text-white font-bold text-sm">2020년 CUDA 생태계 확장</p>
-                  <p className="text-white/40 text-xs">유사도 58% · 개발자 락인 전략</p>
-                </div>
-              </div>
-              <span className="material-symbols-outlined text-white/40">chevron_right</span>
-            </div>
+            ))}
           </div>
         </div>
         <div className="mb-6">
