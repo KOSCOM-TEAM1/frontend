@@ -5,7 +5,7 @@ import userService from '../api/userService';
 
 // 잠든 사이 변화 - 작은 아이콘 카드 (마키용, 간단한 내용)
 const overnightItems = [
-  { id: 'kospi', icon: 'show_chart', label: '코스피', change: '-5.26%', positive: false },
+  { id: 'kospi', icon: 'show_chart', label: '코스피', change: '+3.39%', positive: true },
   { id: 'usdkrw', icon: 'currency_exchange', label: 'USD/KRW', change: '+0.03%', positive: true },
   { id: 'overseas', icon: 'language', label: '해외', change: '+2.50%', positive: true },
   { id: 'domestic', icon: 'account_balance', label: '국내', change: '-0.85%', positive: false },
@@ -98,7 +98,7 @@ function MorningDashboard() {
               <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
                 좋은 아침입니다, {displayName}님
               </h2>
-              <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:53</p>
+              <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:50</p>
             </div>
           </div>
           <button className="flex size-10 items-center justify-center rounded-full glass text-white transition-all duration-200 active:scale-95 hover-scale hover:bg-white/10">
@@ -113,10 +113,10 @@ function MorningDashboard() {
                 <span className="material-symbols-outlined text-primary text-lg">show_chart</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">코스피</span>
+                <span className="text-sm text-slate-400 font-semibold uppercase tracking-wider">코스피 지수</span>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-white text-base font-bold">4,949.67</span>
-                  <span className="text-rose-400 text-sm font-semibold">-5.26%</span>
+                  <span className="text-white text-base font-bold">5,117.45</span>
+                  <span className="text-emerald-400 text-sm font-semibold">+3.39%</span>
                 </div>
               </div>
             </div>
@@ -178,7 +178,7 @@ function MorningDashboard() {
                 </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
-                {[25, 38, 42, 48, 55, 62, 70, 78, 88, 100].map((height, index) => (
+                {[28, 42, 35, 52, 48, 58, 65, 72, 82, 100].map((height, index) => (
                   <div
                     key={index}
                     className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${index === 9 ? 'bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)] animate-bar-pulse' : index >= 6 ? 'bg-emerald-500/60' : index >= 3 ? 'bg-emerald-500/40' : 'bg-emerald-500/20'}`}
@@ -214,7 +214,7 @@ function MorningDashboard() {
                 </div>
               </div>
               <div className="h-20 w-full flex items-end gap-1">
-                {[100, 92, 88, 85, 82, 78, 75, 72, 68, 65].map((height, index) => (
+                {[100, 88, 94, 82, 86, 78, 82, 74, 70, 65].map((height, index) => (
                   <div
                     key={index}
                     className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${index === 0 ? 'bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.4)] animate-bar-pulse' : index <= 3 ? 'bg-rose-500/60' : index <= 6 ? 'bg-rose-500/40' : 'bg-rose-500/20'}`}
@@ -246,7 +246,7 @@ function MorningDashboard() {
                 </div>
               </div>
               <div className="mt-8 h-28 w-full flex items-end gap-1.5">
-                {[28, 32, 38, 42, 48, 55, 62, 72, 85, 100].map((height, index) => (
+                {[22, 35, 28, 42, 38, 52, 58, 72, 88, 100].map((height, index) => (
                   <div 
                     key={index}
                     className={`flex-1 rounded-t-sm chart-bar animate-bar-grow ${

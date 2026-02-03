@@ -267,7 +267,7 @@ function TTSToggle() {
 
   const content = (
     <div
-      className="fixed inset-0 flex items-end justify-end p-4 pointer-events-none"
+      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] flex items-end justify-end px-4 pb-4 pointer-events-none"
       style={{ zIndex: 9999 }}
     >
       <div
