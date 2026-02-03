@@ -86,29 +86,47 @@ function TTSToggle() {
             volume: 0,
           });
           if (preloadAbortRef.current) break;
-          if (!result.success || !result.data?.filename) continue;
+          const audioUrl = result.data?.audioUrl || (result.data?.filename && ttsService.getAudioUrl(result.data.filename));
+          if (!result.success || !audioUrl) continue;
 
-          // 프로덕션(Vercel 등)에서는 백엔드 절대 URL 사용 (getAudioUrl이 base URL 붙임)
-          const audioUrl = ttsService.getAudioUrl(result.data.filename);
           urlCacheRef.current[track.id] = audioUrl;
 
-          const audio = new Audio(audioUrl);
-          await new Promise((resolve, reject) => {
-            const onLoaded = () => {
-              audio.removeEventListener('loadedmetadata', onLoaded);
-              audio.removeEventListener('error', onError);
-              setTrackDurations(prev => ({ ...prev, [track.id]: audio.duration }));
-              resolve();
-            };
-            const onError = (e) => {
-              audio.removeEventListener('loadedmetadata', onLoaded);
-              audio.removeEventListener('error', onError);
-              reject(e);
-            };
-            audio.addEventListener('loadedmetadata', onLoaded);
-            audio.addEventListener('error', onError);
-            if (audio.duration && !isNaN(audio.duration)) onLoaded();
-          });
+          const loadAudio = () =>
+            new Promise((resolve, reject) => {
+              const audio = new Audio(audioUrl);
+              const onLoaded = () => {
+                audio.removeEventListener('loadedmetadata', onLoaded);
+                audio.removeEventListener('error', onError);
+                setTrackDurations(prev => ({ ...prev, [track.id]: audio.duration }));
+                resolve();
+              };
+              const onError = (e) => {
+                audio.removeEventListener('loadedmetadata', onLoaded);
+                audio.removeEventListener('error', onError);
+                reject(e);
+              };
+              audio.addEventListener('loadedmetadata', onLoaded);
+              audio.addEventListener('error', onError);
+              if (audio.duration && !isNaN(audio.duration)) onLoaded();
+            });
+
+          const maxRetries = 2;
+          let lastErr;
+          for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+              await loadAudio();
+              lastErr = null;
+              break;
+            } catch (e) {
+              lastErr = e;
+              if (attempt < maxRetries && !preloadAbortRef.current) {
+                await new Promise((r) => setTimeout(r, 500));
+              }
+            }
+          }
+          if (lastErr && !preloadAbortRef.current) {
+            console.warn('TTS 미리로드 실패:', track.id, lastErr);
+          }
         } catch (e) {
           if (!preloadAbortRef.current) console.warn('TTS 미리로드 실패:', track.id, e);
         }
@@ -134,14 +152,14 @@ function TTSToggle() {
           pitch: 0,
           volume: 0,
         });
-        if (!result.success || !result.data?.filename) {
+        const resolvedUrl = result.data?.audioUrl || (result.data?.filename && ttsService.getAudioUrl(result.data.filename));
+        if (!result.success || !resolvedUrl) {
           alert(result.error?.message || '음성 변환에 실패했습니다.');
           setIsLoading(false);
           return;
         }
-        // 프로덕션에서는 백엔드 절대 URL 사용
-        audioUrl = ttsService.getAudioUrl(result.data.filename);
-        urlCacheRef.current[track.id] = audioUrl;
+        urlCacheRef.current[track.id] = resolvedUrl;
+        audioUrl = resolvedUrl;
       }
 
       // 기존 오디오 정리

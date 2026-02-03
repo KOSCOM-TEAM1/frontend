@@ -85,9 +85,11 @@ const ttsService = {
       console.log('텍스트 음성 변환 완료:', response.data);
       
       if (response.data.success) {
+        const data = response.data.data || {};
+        const audioUrl = data.downloadUrl || (data.filename && ttsService.getAudioUrl(data.filename));
         return {
           success: true,
-          data: response.data.data,
+          data: { ...data, audioUrl },
         };
       } else {
         return {
