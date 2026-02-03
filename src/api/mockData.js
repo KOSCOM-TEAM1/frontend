@@ -552,7 +552,7 @@ export const fetchDashboardData = () =>
 
 // --- 타임라인(뉴스) API 형태 목데이터 ---
 export const timelineMockResponse = {
-  dateLabel: "오늘, 2월 3일",
+  dateLabel: "오늘, 2월 4일",
   newsItems: [
     { time: "오후 11:30", impact: "high", impactText: "높은 영향", title: "엔비디아, CES 2026서 루빈 GPU 양산 가속화·자율주행 AI 공개", summary: "젠슨 황 엔비디아 CEO는 CES 2026 기조연설에서 블랙웰을 이을 차세대 GPU 아키텍처 루빈이 예상보다 빠르게 본격 양산에 돌입했다고 밝혔다. 루빈은 블랙웰 대비 성능이 4배 향상됐으며, 추론 토큰 비용은 10분의 1로 절감됐다.", tags: ["#엔비디아", "#루빈GPU", "#자율주행AI"], image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkFcQP7j2bdoBfd1A6bsKtUnmzQQEe92iF0Urqi8lr_P7uE9AlDgnhXd1hSkYEE7k6Cd2PsLpBaS_d5TS6VDJKMxKHpq7Z_AH2NbNtO1q46LvVjF4M-myhJjzKLERF65bpeGV8EMvGaAQOEc3kw9PdJnGFF5t1Ey9lpqgD6dkPzvGSVv-V9W-S0o1BKkfGvw5-1EOHzDtazUV21FATgTTNbWyz_jLg-YDgy_vqztSHN_VAUFUEV98r3noywNHTxOeJqT-mkoY579A", active: true, hasButton: true },
     { time: "오전 1:15", impact: "medium", impactText: "중간 영향", title: "테슬라, 모델 S·모델 X 2026년 2분기 단종 확정...로봇 옵티머스 생산 전환", summary: "일론 머스크 테슬라 CEO는 2026년 2분기 말까지 모델 S와 모델 X의 생산을 완전히 중단할 계획이라고 공식적으로 밝혔다. 기존 생산 라인은 휴머노이드 로봇 옵티머스 생산 라인으로 전환된다.", tags: ["#테슬라", "#모델S단종", "#옵티머스"], active: false, hasButton: false },

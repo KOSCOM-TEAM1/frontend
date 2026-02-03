@@ -246,19 +246,8 @@ function TTSToggle() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // 전체 재생: 1번 트랙부터 끝까지 연속 재생 (기존 ended → 다음 트랙 로직 활용)
-  const handlePlayAll = async () => {
-    if (isPlaying && currentTrackId === 1) {
-      audioRef.current?.pause();
-      setIsPlaying(false);
-      return;
-    }
-    await playTrack(TTS_PLAYLIST[0]);
-  };
-
-  // 전체 재생용: 총 길이, 전체 경과 시간
-  const totalDuration = TTS_PLAYLIST.reduce((sum, t) => sum + (trackDurations[t.id] || 0), 0);
   const currentIndex = TTS_PLAYLIST.findIndex(t => t.id === currentTrackId) + 1;
+  const totalDuration = TTS_PLAYLIST.reduce((sum, t) => sum + (trackDurations[t.id] || 0), 0);
   const elapsedBeforeCurrent = TTS_PLAYLIST.slice(0, currentIndex - 1).reduce(
     (sum, t) => sum + (trackDurations[t.id] || 0),
     0
@@ -323,15 +312,6 @@ function TTSToggle() {
                   </div>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={handlePlayAll}
-                disabled={isLoading}
-                className="w-full py-2.5 rounded-xl bg-primary/20 hover:bg-primary/30 border border-primary/40 flex items-center justify-center gap-2 text-primary font-bold text-sm transition-all active:scale-[0.98] disabled:opacity-50"
-              >
-                <span className="material-symbols-outlined text-lg">playlist_play</span>
-                <span>전체 재생 (1→6 연속)</span>
-              </button>
               <div className="flex flex-col gap-2">
                 <h4 className="text-[11px] font-bold text-slate-400 px-1 uppercase tracking-wider">오늘의 뉴스 (타임라인 6건)</h4>
                 <div className="playlist-scroll overflow-y-auto max-h-[220px] space-y-2 pr-1">

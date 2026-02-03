@@ -1,5 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import WelcomeOnboarding from './pages/WelcomeOnboarding';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 import MorningDashboard from './pages/MorningDashboard';
 import AINewsTimeline from './pages/AINewsTimeline';
 import TotalAssetInventory from './pages/TotalAssetInventory';
@@ -15,6 +24,7 @@ import './App.css';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<WelcomeOnboarding />} />
         <Route path="/onboarding" element={<WelcomeOnboarding />} />

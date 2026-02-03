@@ -9,6 +9,10 @@ function AINewsTimeline() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     fetchTimelineData().then((res) => {
       setData(res);
       setLoading(false);
