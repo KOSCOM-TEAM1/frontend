@@ -25,7 +25,7 @@ export const mockUserSettings = {
   preferredLanguage: "ko",
   timezone: "Asia/Seoul",
 };
-
+ 
 // 사용자 보유 주식 목 데이터
 export const mockUserStocks = [
   {
