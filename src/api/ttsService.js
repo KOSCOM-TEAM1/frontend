@@ -154,9 +154,10 @@ const ttsService = {
    * @returns {string} 음성 파일 URL
    */
   getAudioUrl: (filename) => {
+    // 개발: 상대 경로. 프로덕션: 실제 Backend 주소 (Vercel 등에서 재생 시 404 방지)
     const baseUrl = import.meta.env.DEV
       ? ''
-      : (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+      : (import.meta.env.VITE_API_BASE_URL || 'http://221.168.36.171:8080').replace(/\/$/, '');
     return baseUrl ? `${baseUrl}/api/tts/audio/${filename}` : `/api/tts/audio/${filename}`;
   },
 

@@ -86,9 +86,10 @@ function TTSToggle() {
             volume: 0,
           });
           if (preloadAbortRef.current) break;
-          if (!result.success || !result.data?.downloadUrl) continue;
+          if (!result.success || !result.data?.filename) continue;
 
-          const audioUrl = result.data.downloadUrl;
+          // 프로덕션(Vercel 등)에서는 백엔드 절대 URL 사용 (getAudioUrl이 base URL 붙임)
+          const audioUrl = ttsService.getAudioUrl(result.data.filename);
           urlCacheRef.current[track.id] = audioUrl;
 
           const audio = new Audio(audioUrl);
@@ -133,12 +134,13 @@ function TTSToggle() {
           pitch: 0,
           volume: 0,
         });
-        if (!result.success) {
+        if (!result.success || !result.data?.filename) {
           alert(result.error?.message || '음성 변환에 실패했습니다.');
           setIsLoading(false);
           return;
         }
-        audioUrl = result.data.downloadUrl;
+        // 프로덕션에서는 백엔드 절대 URL 사용
+        audioUrl = ttsService.getAudioUrl(result.data.filename);
         urlCacheRef.current[track.id] = audioUrl;
       }
 
