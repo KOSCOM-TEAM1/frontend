@@ -82,7 +82,7 @@ function MorningDashboard() {
               <h2 className="text-white text-lg font-bold leading-tight tracking-tight">
                 좋은 아침입니다, {displayName}님
               </h2>
-              <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 5:50</p>
+              <p className="text-slate-400 text-sm font-medium uppercase tracking-widest">시장 업데이트 • 오전 7:30</p>
             </div>
           </div>
           <button
