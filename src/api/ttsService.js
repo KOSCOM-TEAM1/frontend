@@ -26,7 +26,7 @@ const ttsService = {
         }
       );
       
-      console.log(`🎙️ 뉴스 분석 ${analysisId} 음성 변환 완료:`, response.data);
+      console.log(`뉴스 분석 ${analysisId} 음성 변환 완료:`, response.data);
       
       if (response.data.success) {
         return {
@@ -92,7 +92,7 @@ const ttsService = {
         volume,
       });
       
-      console.log('🎙️ 텍스트 음성 변환 완료:', response.data);
+      console.log('텍스트 음성 변환 완료:', response.data);
       
       if (response.data.success) {
         return {
@@ -131,7 +131,7 @@ const ttsService = {
     try {
       const response = await apiClient.get('/api/tts/speakers');
       
-      console.log('🎤 화자 목록 조회 완료:', response.data);
+      console.log('화자 목록 조회 완료:', response.data);
       
       if (response.data.success) {
         return {

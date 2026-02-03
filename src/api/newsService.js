@@ -15,11 +15,11 @@ const newsService = {
    * @returns {Promise<Object>} 뉴스 목록 응답
    */
   getNewsList: async (params = {}) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       
-      console.log('🎭 [MOCK] 뉴스 목록 조회:', { page, size, sort });
+      console.log('[MOCK] 뉴스 목록 조회:', { page, size, sort });
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -31,11 +31,11 @@ const newsService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       
-      console.log('📰 뉴스 목록 조회 시작:', { page, size, sort });
+      console.log('뉴스 목록 조회 시작:', { page, size, sort });
       
       const response = await apiClient.get(API_ENDPOINTS.NEWS, {
         params: {
@@ -45,11 +45,11 @@ const newsService = {
         },
       });
 
-      console.log('✅ API 원본 응답:', response.data);
+      console.log('API 원본 응답:', response.data);
 
       // 백엔드 응답 구조 확인: response.data = { success, data, error }
       if (response.data.success === false || !response.data.data) {
-        console.warn('⚠️ 백엔드가 실패 응답 반환:', response.data);
+        console.warn('백엔드가 실패 응답 반환:', response.data);
         return {
           success: false,
           data: null,
@@ -62,7 +62,7 @@ const newsService = {
         data: response.data.data,
       };
     } catch (error) {
-      console.error('❌ 뉴스 목록 조회 실패:', error);
+      console.error('뉴스 목록 조회 실패:', error);
 
       const errorMessage = error.response?.data?.error?.message 
         || error.message 
@@ -84,9 +84,9 @@ const newsService = {
    * @returns {Promise<Object>} 뉴스 상세 정보
    */
   getNewsDetail: async (newsId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 뉴스 상세 조회:', newsId);
+      console.log('[MOCK] 뉴스 상세 조회:', newsId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -102,20 +102,20 @@ const newsService = {
       return createResponse(true, news);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
-      console.log('📰 뉴스 상세 조회 시작:', newsId);
+      console.log('뉴스 상세 조회 시작:', newsId);
       
       const response = await apiClient.get(`${API_ENDPOINTS.NEWS}/${newsId}`);
 
-      console.log('✅ 뉴스 상세 조회 성공:', response.data);
+      console.log('뉴스 상세 조회 성공:', response.data);
 
       return {
         success: true,
         data: response.data.data,
       };
     } catch (error) {
-      console.error('❌ 뉴스 상세 조회 실패:', error);
+      console.error('뉴스 상세 조회 실패:', error);
 
       const errorMessage = error.response?.data?.error?.message 
         || error.message 
@@ -137,11 +137,11 @@ const newsService = {
    * @returns {Promise<Object>} 분석된 뉴스 목록
    */
   getAnalyzedNews: async (params = {}) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       
-      console.log('🎭 [MOCK] 분석된 뉴스 조회');
+      console.log('[MOCK] 분석된 뉴스 조회');
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -155,11 +155,11 @@ const newsService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const { page = 0, size = 10, sort = 'publishedAt,desc' } = params;
       
-      console.log('📊 분석된 뉴스 조회 시작');
+      console.log('분석된 뉴스 조회 시작');
       
       const response = await apiClient.get(API_ENDPOINTS.NEWS, {
         params: {
@@ -170,11 +170,11 @@ const newsService = {
         },
       });
 
-      console.log('✅ API 원본 응답:', response.data);
+      console.log('API 원본 응답:', response.data);
 
       // 백엔드 응답 구조 확인: response.data = { success, data, error }
       if (response.data.success === false || !response.data.data) {
-        console.warn('⚠️ 백엔드가 실패 응답 반환:', response.data);
+        console.warn('백엔드가 실패 응답 반환:', response.data);
         return {
           success: false,
           data: null,
@@ -187,7 +187,7 @@ const newsService = {
         data: response.data.data,
       };
     } catch (error) {
-      console.error('❌ 분석된 뉴스 조회 실패:', error);
+      console.error('분석된 뉴스 조회 실패:', error);
 
       const errorMessage = error.response?.data?.error?.message 
         || error.message 

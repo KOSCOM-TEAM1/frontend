@@ -118,7 +118,7 @@ function TTSToggle() {
 
   // 트랙 재생 (캐시 있으면 API 생략)
   const playTrack = async (track) => {
-    console.log('🎙️ 트랙 재생 시작:', track.title);
+    console.log('트랙 재생 시작:', track.title);
     setIsLoading(true);
     setCurrentTrackId(track.id);
 
@@ -157,7 +157,7 @@ function TTSToggle() {
         });
         
         newAudio.addEventListener('loadedmetadata', () => {
-          console.log('📊 오디오 메타데이터 로드됨, duration:', newAudio.duration);
+          console.log('오디오 메타데이터 로드됨, duration:', newAudio.duration);
           setDuration(newAudio.duration);
           // 트랙별 실제 길이 저장
           setTrackDurations(prev => ({
@@ -167,7 +167,7 @@ function TTSToggle() {
         });
         
         newAudio.addEventListener('durationchange', () => {
-          console.log('📊 Duration 변경됨:', newAudio.duration);
+          console.log('Duration 변경됨:', newAudio.duration);
           setDuration(newAudio.duration);
           // 트랙별 실제 길이 저장
           setTrackDurations(prev => ({
@@ -191,7 +191,7 @@ function TTSToggle() {
         newAudio.addEventListener('pause', () => setIsPlaying(false));
         
         newAudio.addEventListener('error', (e) => {
-          console.error('❌ 오디오 재생 오류:', e);
+          console.error('오디오 재생 오류:', e);
           alert('음성 파일 재생에 실패했습니다.');
           setIsPlaying(false);
           setIsLoading(false);
@@ -200,9 +200,9 @@ function TTSToggle() {
         // 재생 시작
         await newAudio.play();
         setIsPlaying(true);
-        console.log('✅ 재생 시작됨');
+        console.log('재생 시작됨');
     } catch (error) {
-      console.error('❌ 재생 에러:', error);
+      console.error('재생 에러:', error);
       alert('음성 재생에 실패했습니다.');
     } finally {
       setIsLoading(false);

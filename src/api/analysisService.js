@@ -16,26 +16,26 @@ const analysisService = {
    * @returns {Promise<Object>} AI 분석 결과 목록
    */
   getOvernightNewsAnalysis: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 어젯밤 뉴스 AI 분석 조회:', userId);
+      console.log('[MOCK] 어젯밤 뉴스 AI 분석 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 800));
       
       return createResponse(true, mockNewsAnalysis);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.NEWS_ANALYSIS_OVERNIGHT, {
         params: { userId },
       });
       
-      console.log('✅ 어젯밤 뉴스 AI 분석 조회 성공:', response.data);
+      console.log('어젯밤 뉴스 AI 분석 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 어젯밤 뉴스 AI 분석 조회 실패:', error);
+      console.error('어젯밤 뉴스 AI 분석 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'NEWS_ANALYSIS_ERROR',
@@ -53,27 +53,27 @@ const analysisService = {
    * @returns {Promise<Object>} AI 분석 결과
    */
   analyzeNewsByPeriod: async (analysisRequest) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 특정 기간 뉴스 AI 분석 요청:', analysisRequest);
+      console.log('[MOCK] 특정 기간 뉴스 AI 분석 요청:', analysisRequest);
       
       await new Promise(resolve => setTimeout(resolve, 2000)); // AI 분석은 시간이 좀 걸림
       
       return createResponse(true, mockNewsAnalysis);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(
         API_ENDPOINTS.NEWS_ANALYSIS_PERIOD, 
         analysisRequest
       );
       
-      console.log('✅ 특정 기간 뉴스 AI 분석 성공:', response.data);
+      console.log('특정 기간 뉴스 AI 분석 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 특정 기간 뉴스 AI 분석 실패:', error);
+      console.error('특정 기간 뉴스 AI 분석 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'NEWS_ANALYSIS_PERIOD_ERROR',
@@ -88,9 +88,9 @@ const analysisService = {
    * @returns {Promise<Object>} 분석 상세 정보
    */
   getNewsAnalysisDetail: async (analysisId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 뉴스 분석 상세 조회:', analysisId);
+      console.log('[MOCK] 뉴스 분석 상세 조회:', analysisId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -106,15 +106,15 @@ const analysisService = {
       return createResponse(true, analysis);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.NEWS_ANALYSIS_DETAIL(analysisId));
       
-      console.log('✅ 뉴스 분석 상세 조회 성공:', response.data);
+      console.log('뉴스 분석 상세 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 뉴스 분석 상세 조회 실패:', error);
+      console.error('뉴스 분석 상세 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'NEWS_ANALYSIS_DETAIL_ERROR',
@@ -128,24 +128,24 @@ const analysisService = {
    * @returns {Promise<Object>} 과거 패턴 분석 목록
    */
   getHistoricalPatterns: async () => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 과거 패턴 분석 목록 조회');
+      console.log('[MOCK] 과거 패턴 분석 목록 조회');
       
       await new Promise(resolve => setTimeout(resolve, 600));
       
       return createResponse(true, mockHistoricalPatterns);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.HISTORICAL_PATTERNS);
       
-      console.log('✅ 과거 패턴 분석 목록 조회 성공:', response.data);
+      console.log('과거 패턴 분석 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 과거 패턴 분석 목록 조회 실패:', error);
+      console.error('과거 패턴 분석 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'HISTORICAL_PATTERNS_ERROR',
@@ -160,9 +160,9 @@ const analysisService = {
    * @returns {Promise<Object>} 패턴 상세 정보
    */
   getHistoricalPatternDetail: async (patternId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 과거 패턴 상세 분석 조회:', patternId);
+      console.log('[MOCK] 과거 패턴 상세 분석 조회:', patternId);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -178,17 +178,17 @@ const analysisService = {
       return createResponse(true, pattern);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(
         API_ENDPOINTS.HISTORICAL_PATTERN_DETAIL(patternId)
       );
       
-      console.log('✅ 과거 패턴 상세 분석 조회 성공:', response.data);
+      console.log('과거 패턴 상세 분석 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 과거 패턴 상세 분석 조회 실패:', error);
+      console.error('과거 패턴 상세 분석 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'PATTERN_DETAIL_ERROR',
@@ -203,26 +203,26 @@ const analysisService = {
    * @returns {Promise<Object>} 방어 전략 목록
    */
   getDefenseStrategies: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 방어 전략 목록 조회:', userId);
+      console.log('[MOCK] 방어 전략 목록 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 500));
       
       return createResponse(true, mockDefenseStrategies);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.DEFENSE_STRATEGIES, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 방어 전략 목록 조회 성공:', response.data);
+      console.log('방어 전략 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 방어 전략 목록 조회 실패:', error);
+      console.error('방어 전략 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'DEFENSE_STRATEGIES_ERROR',
@@ -237,9 +237,9 @@ const analysisService = {
    * @returns {Promise<Object>} 전략 상세 정보
    */
   getDefenseStrategyDetail: async (strategyId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 방어 전략 상세 조회:', strategyId);
+      console.log('[MOCK] 방어 전략 상세 조회:', strategyId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -255,17 +255,17 @@ const analysisService = {
       return createResponse(true, strategy);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(
         API_ENDPOINTS.DEFENSE_STRATEGY_DETAIL(strategyId)
       );
       
-      console.log('✅ 방어 전략 상세 조회 성공:', response.data);
+      console.log('방어 전략 상세 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 방어 전략 상세 조회 실패:', error);
+      console.error('방어 전략 상세 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'STRATEGY_DETAIL_ERROR',
@@ -279,9 +279,9 @@ const analysisService = {
    * @returns {Promise<Object>} 시장 위기도 정보
    */
   getMarketRiskLevel: async () => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 현재 시장 위기도 분석');
+      console.log('[MOCK] 현재 시장 위기도 분석');
       
       await new Promise(resolve => setTimeout(resolve, 700));
       
@@ -299,15 +299,15 @@ const analysisService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get('/api/v1/analysis/market-risk');
       
-      console.log('✅ 시장 위기도 분석 성공:', response.data);
+      console.log('시장 위기도 분석 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 시장 위기도 분석 실패:', error);
+      console.error('시장 위기도 분석 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'MARKET_RISK_ERROR',

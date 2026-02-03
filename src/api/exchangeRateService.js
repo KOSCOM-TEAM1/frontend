@@ -11,24 +11,24 @@ const exchangeRateService = {
    * @returns {Promise<Object>} 환율 목록
    */
   getExchangeRates: async () => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 환율 정보 조회');
+      console.log('[MOCK] 환율 정보 조회');
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
       return createResponse(true, mockExchangeRates);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.EXCHANGE_RATES);
       
-      console.log('✅ 환율 정보 조회 성공:', response.data);
+      console.log('환율 정보 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 환율 정보 조회 실패:', error);
+      console.error('환율 정보 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'EXCHANGE_RATES_ERROR',
@@ -43,9 +43,9 @@ const exchangeRateService = {
    * @returns {Promise<Object>} 환율 정보
    */
   getExchangeRate: async (currency) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 특정 통화 환율 조회:', currency);
+      console.log('[MOCK] 특정 통화 환율 조회:', currency);
       
       await new Promise(resolve => setTimeout(resolve, 200));
       
@@ -61,15 +61,15 @@ const exchangeRateService = {
       return createResponse(true, rate);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(`${API_ENDPOINTS.EXCHANGE_RATES}/${currency}`);
       
-      console.log('✅ 특정 통화 환율 조회 성공:', response.data);
+      console.log('특정 통화 환율 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 특정 통화 환율 조회 실패:', error);
+      console.error('특정 통화 환율 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'EXCHANGE_RATE_ERROR',

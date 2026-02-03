@@ -14,17 +14,17 @@ function ApiTestPage() {
     setResult(null);
 
     try {
-      console.log(`🧪 [TEST] ${label} 시작...`);
+      console.log(`[TEST] ${label} 시작...`);
       const response = await apiCall();
       
-      console.log(`✅ [TEST] ${label} 성공:`, response);
+      console.log(`[TEST] ${label} 성공:`, response);
       setResult({
         label,
         success: true,
         data: response,
       });
     } catch (error) {
-      console.error(`❌ [TEST] ${label} 실패:`, error);
+      console.error(`[TEST] ${label} 실패:`, error);
       setResult({
         label,
         success: false,
@@ -37,14 +37,14 @@ function ApiTestPage() {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1>🧪 API 테스트 페이지</h1>
+      <h1>API 테스트 페이지</h1>
       <p>목 데이터 모드로 모든 API를 테스트할 수 있습니다.</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '20px' }}>
         
         {/* 인증 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>🔐 인증 서비스</h3>
+          <h3>인증 서비스</h3>
           <button onClick={() => testApi(() => api.auth.login({ email: 'test@test.com', password: '1234' }), '로그인')}>
             로그인 테스트
           </button>
@@ -55,7 +55,7 @@ function ApiTestPage() {
 
         {/* 회원 정보 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>👤 회원 정보</h3>
+          <h3>회원 정보</h3>
           <button onClick={() => testApi(() => api.user.getMemberInfo(1), '회원 정보 조회')}>
             회원 정보 조회
           </button>
@@ -63,7 +63,7 @@ function ApiTestPage() {
 
         {/* 주식 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>📈 주식 정보</h3>
+          <h3>주식 정보</h3>
           <button onClick={() => testApi(() => api.stock.getStockList(), '주식 목록 조회')}>
             주식 목록 조회
           </button>
@@ -74,7 +74,7 @@ function ApiTestPage() {
 
         {/* 뉴스 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>📰 뉴스</h3>
+          <h3>뉴스</h3>
           <button onClick={() => testApi(() => api.news.getNewsList(), '뉴스 목록 조회')}>
             뉴스 목록 조회
           </button>
@@ -85,7 +85,7 @@ function ApiTestPage() {
 
         {/* 자산 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>💰 자산 정보</h3>
+          <h3>자산 정보</h3>
           <button onClick={() => testApi(() => api.asset.getTotalAssets(1), '전체 자산 조회')}>
             전체 자산 조회
           </button>
@@ -96,7 +96,7 @@ function ApiTestPage() {
 
         {/* 계좌 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>🏦 계좌 정보</h3>
+          <h3>계좌 정보</h3>
           <button onClick={() => testApi(() => api.account.getAccounts(1), '계좌 목록 조회')}>
             계좌 목록 조회
           </button>
@@ -107,7 +107,7 @@ function ApiTestPage() {
 
         {/* AI 분석 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>🤖 AI 분석</h3>
+          <h3>AI 분석</h3>
           <button onClick={() => testApi(() => api.analysis.getOvernightNewsAnalysis(1), '어젯밤 뉴스 분석')}>
             어젯밤 뉴스 분석
           </button>
@@ -121,7 +121,7 @@ function ApiTestPage() {
 
         {/* 설정 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>⚙️ 설정</h3>
+          <h3>설정</h3>
           <button onClick={() => testApi(() => api.settings.getUserSettings(1), '사용자 설정 조회')}>
             사용자 설정 조회
           </button>
@@ -129,7 +129,7 @@ function ApiTestPage() {
 
         {/* 환율 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>💱 환율 정보</h3>
+          <h3>환율 정보</h3>
           <button onClick={() => testApi(() => api.exchangeRate.getExchangeRates(), '환율 정보 조회')}>
             환율 정보 조회
           </button>
@@ -140,7 +140,7 @@ function ApiTestPage() {
 
         {/* 리포트 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>📊 리포트</h3>
+          <h3>리포트</h3>
           <button onClick={() => testApi(() => api.report.getOvernightReport(1), '어젯밤 리포트')}>
             어젯밤 리포트
           </button>
@@ -151,7 +151,7 @@ function ApiTestPage() {
 
         {/* TTS 서비스 */}
         <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
-          <h3>🔊 TTS 음성</h3>
+          <h3>TTS 음성</h3>
           <button onClick={() => testApi(() => api.tts.textToSpeech({ text: '안녕하세요' }), 'TTS 변환')}>
             TTS 음성 변환
           </button>
@@ -165,7 +165,7 @@ function ApiTestPage() {
       {/* 결과 표시 영역 */}
       {loading && (
         <div style={{ marginTop: '30px', padding: '20px', background: '#f0f0f0', borderRadius: '8px' }}>
-          <h3>⏳ 로딩 중...</h3>
+          <h3>로딩 중...</h3>
         </div>
       )}
 
@@ -178,7 +178,7 @@ function ApiTestPage() {
           maxHeight: '400px',
           overflow: 'auto',
         }}>
-          <h3>{result.success ? '✅' : '❌'} {result.label} 결과</h3>
+          <h3>{result.label} {result.success ? '성공' : '실패'}</h3>
           <pre style={{ 
             background: '#fff', 
             padding: '15px', 
@@ -192,7 +192,7 @@ function ApiTestPage() {
 
       {/* 사용 방법 안내 */}
       <div style={{ marginTop: '30px', padding: '20px', background: '#e3f2fd', borderRadius: '8px' }}>
-        <h3>📖 사용 방법</h3>
+        <h3>사용 방법</h3>
         <ol>
           <li>위의 버튼들을 클릭하여 각 API를 테스트하세요.</li>
           <li>결과는 아래 영역에 표시됩니다.</li>

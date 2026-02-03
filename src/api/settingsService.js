@@ -12,26 +12,26 @@ const settingsService = {
    * @returns {Promise<Object>} 사용자 설정 정보
    */
   getUserSettings: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 사용자 설정 조회:', userId);
+      console.log('[MOCK] 사용자 설정 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
       return createResponse(true, mockUserSettings);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.USER_SETTINGS, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 사용자 설정 조회 성공:', response.data);
+      console.log('사용자 설정 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 사용자 설정 조회 실패:', error);
+      console.error('사용자 설정 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'SETTINGS_ERROR',
@@ -50,9 +50,9 @@ const settingsService = {
    * @returns {Promise<Object>} 업데이트 결과
    */
   updateSleepTime: async (sleepTimeData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 수면 시간 설정 업데이트:', sleepTimeData);
+      console.log('[MOCK] 수면 시간 설정 업데이트:', sleepTimeData);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -65,18 +65,18 @@ const settingsService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.put(
         API_ENDPOINTS.UPDATE_SLEEP_TIME, 
         sleepTimeData
       );
       
-      console.log('✅ 수면 시간 설정 업데이트 성공:', response.data);
+      console.log('수면 시간 설정 업데이트 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 수면 시간 설정 업데이트 실패:', error);
+      console.error('수면 시간 설정 업데이트 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'UPDATE_SLEEP_TIME_ERROR',
@@ -92,9 +92,9 @@ const settingsService = {
    * @returns {Promise<Object>} 업데이트 결과
    */
   updateUserSettings: async (userId, settingsData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 사용자 설정 업데이트:', userId, settingsData);
+      console.log('[MOCK] 사용자 설정 업데이트:', userId, settingsData);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -106,18 +106,18 @@ const settingsService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.put(API_ENDPOINTS.USER_SETTINGS, {
         userId,
         ...settingsData,
       });
       
-      console.log('✅ 사용자 설정 업데이트 성공:', response.data);
+      console.log('사용자 설정 업데이트 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 사용자 설정 업데이트 실패:', error);
+      console.error('사용자 설정 업데이트 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'UPDATE_SETTINGS_ERROR',
@@ -135,9 +135,9 @@ const settingsService = {
    * @returns {Promise<Object>} 업데이트 결과
    */
   updateNotificationSettings: async (notificationData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 알림 설정 업데이트:', notificationData);
+      console.log('[MOCK] 알림 설정 업데이트:', notificationData);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -149,18 +149,18 @@ const settingsService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.put(
         `${API_ENDPOINTS.USER_SETTINGS}/notifications`, 
         notificationData
       );
       
-      console.log('✅ 알림 설정 업데이트 성공:', response.data);
+      console.log('알림 설정 업데이트 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 알림 설정 업데이트 실패:', error);
+      console.error('알림 설정 업데이트 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'UPDATE_NOTIFICATION_ERROR',

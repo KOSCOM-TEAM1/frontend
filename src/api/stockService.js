@@ -16,9 +16,9 @@ const stockService = {
    * @returns {Promise<Object>} 주식 목록
    */
   getStockList: async (params = {}) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 주식 목록 조회:', params);
+      console.log('[MOCK] 주식 목록 조회:', params);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -42,15 +42,15 @@ const stockService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.STOCKS, { params });
       
-      console.log('✅ 주식 목록 조회 성공:', response.data);
+      console.log('주식 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 주식 목록 조회 실패:', error);
+      console.error( '주식 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'STOCK_LIST_ERROR',
@@ -65,9 +65,9 @@ const stockService = {
    * @returns {Promise<Object>} 주식 상세 정보
    */
   getStockDetail: async (stockId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 주식 상세 조회:', stockId);
+      console.log('[MOCK] 주식 상세 조회:', stockId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -83,15 +83,15 @@ const stockService = {
       return createResponse(true, stock);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.STOCK_DETAIL(stockId));
       
-      console.log('✅ 주식 상세 조회 성공:', response.data);
+      console.log('주식 상세 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 주식 상세 조회 실패:', error);
+      console.error('주식 상세 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'STOCK_DETAIL_ERROR',
@@ -106,9 +106,9 @@ const stockService = {
    * @returns {Promise<Object>} 실시간 시세
    */
   getStockPrice: async (stockCode) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 주식 시세 조회:', stockCode);
+      console.log('[MOCK] 주식 시세 조회:', stockCode);
       
       await new Promise(resolve => setTimeout(resolve, 200));
       
@@ -132,15 +132,15 @@ const stockService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.STOCK_PRICE(stockCode));
       
-      console.log('✅ 주식 시세 조회 성공:', response.data);
+      console.log('주식 시세 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 주식 시세 조회 실패:', error);
+      console.error('주식 시세 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'STOCK_PRICE_ERROR',
@@ -155,9 +155,9 @@ const stockService = {
    * @returns {Promise<Object>} 보유 주식 목록
    */
   getUserStocks: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 사용자 보유 주식 조회:', userId);
+      console.log('[MOCK] 사용자 보유 주식 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -182,17 +182,17 @@ const stockService = {
       return createResponse(true, stocksWithProfit);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.USER_STOCKS, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 사용자 보유 주식 조회 성공:', response.data);
+      console.log('사용자 보유 주식 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 사용자 보유 주식 조회 실패:', error);
+      console.error('사용자 보유 주식 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'USER_STOCKS_ERROR',
@@ -207,9 +207,9 @@ const stockService = {
    * @returns {Promise<Object>} 검색 결과
    */
   searchStocks: async (keyword) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 주식 검색:', keyword);
+      console.log('[MOCK] 주식 검색:', keyword);
       
       await new Promise(resolve => setTimeout(resolve, 200));
       
@@ -220,17 +220,17 @@ const stockService = {
       return createResponse(true, results);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.STOCKS, {
         params: { keyword },
       });
       
-      console.log('✅ 주식 검색 성공:', response.data);
+      console.log('주식 검색 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 주식 검색 실패:', error);
+      console.error('주식 검색 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'STOCK_SEARCH_ERROR',

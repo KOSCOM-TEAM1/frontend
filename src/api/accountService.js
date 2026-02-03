@@ -12,9 +12,9 @@ const accountService = {
    * @returns {Promise<Object>} 계좌 목록
    */
   getAccounts: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 계좌 목록 조회:', userId);
+      console.log('[MOCK] 계좌 목록 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -23,17 +23,17 @@ const accountService = {
       return createResponse(true, userAccounts);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.ACCOUNTS, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 계좌 목록 조회 성공:', response.data);
+      console.log('계좌 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 계좌 목록 조회 실패:', error);
+      console.error('계좌 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ACCOUNTS_ERROR',
@@ -54,9 +54,9 @@ const accountService = {
    * @returns {Promise<Object>} 연동 결과
    */
   linkAccount: async (linkData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 마이데이터 계좌 연동:', linkData);
+      console.log('[MOCK] 마이데이터 계좌 연동:', linkData);
       
       await new Promise(resolve => setTimeout(resolve, 1000)); // 연동은 시간이 좀 걸림
       
@@ -78,15 +78,15 @@ const accountService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(API_ENDPOINTS.ACCOUNTS_LINK, linkData);
       
-      console.log('✅ 마이데이터 계좌 연동 성공:', response.data);
+      console.log('마이데이터 계좌 연동 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 마이데이터 계좌 연동 실패:', error);
+      console.error('마이데이터 계좌 연동 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ACCOUNT_LINK_ERROR',
@@ -101,9 +101,9 @@ const accountService = {
    * @returns {Promise<Object>} 연동 해제 결과
    */
   unlinkAccount: async (accountId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 마이데이터 계좌 연동 해제:', accountId);
+      console.log('[MOCK] 마이데이터 계좌 연동 해제:', accountId);
       
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -113,15 +113,15 @@ const accountService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.delete(API_ENDPOINTS.ACCOUNTS_UNLINK(accountId));
       
-      console.log('✅ 마이데이터 계좌 연동 해제 성공:', response.data);
+      console.log('마이데이터 계좌 연동 해제 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 마이데이터 계좌 연동 해제 실패:', error);
+      console.error('마이데이터 계좌 연동 해제 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ACCOUNT_UNLINK_ERROR',
@@ -136,9 +136,9 @@ const accountService = {
    * @returns {Promise<Object>} 업데이트된 계좌 정보
    */
   refreshAccountBalance: async (accountId) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 계좌 잔액 새로고침:', accountId);
+      console.log('[MOCK] 계좌 잔액 새로고침:', accountId);
       
       await new Promise(resolve => setTimeout(resolve, 800));
       
@@ -161,15 +161,15 @@ const accountService = {
       return createResponse(true, updatedAccount);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(`${API_ENDPOINTS.ACCOUNTS}/${accountId}/refresh`);
       
-      console.log('✅ 계좌 잔액 새로고침 성공:', response.data);
+      console.log('계좌 잔액 새로고침 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 계좌 잔액 새로고침 실패:', error);
+      console.error('계좌 잔액 새로고침 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ACCOUNT_REFRESH_ERROR',
@@ -184,46 +184,46 @@ const accountService = {
    * @returns {Promise<Object>} 금융기관 목록
    */
   getAvailableInstitutions: async (accountType) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 연동 가능한 금융기관 목록 조회:', accountType);
+      console.log('[MOCK] 연동 가능한 금융기관 목록 조회:', accountType);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const mockInstitutions = {
         SECURITIES: [
-          { code: 'mirae', name: '미래에셋증권', logo: '🏦' },
-          { code: 'kiwoom', name: '키움증권', logo: '🏦' },
-          { code: 'samsung', name: '삼성증권', logo: '🏦' },
-          { code: 'kb', name: 'KB증권', logo: '🏦' },
+          { code: 'mirae', name: '미래에셋증권', logo: '' },
+          { code: 'kiwoom', name: '키움증권', logo: '' },
+          { code: 'samsung', name: '삼성증권', logo: '' },
+          { code: 'kb', name: 'KB증권', logo: '' },
         ],
         BANK: [
-          { code: 'shinhan', name: '신한은행', logo: '🏦' },
-          { code: 'kb', name: 'KB국민은행', logo: '🏦' },
-          { code: 'woori', name: '우리은행', logo: '🏦' },
-          { code: 'hana', name: '하나은행', logo: '🏦' },
+          { code: 'shinhan', name: '신한은행', logo: '' },
+          { code: 'kb', name: 'KB국민은행', logo: '' },
+          { code: 'woori', name: '우리은행', logo: '' },
+          { code: 'hana', name: '하나은행', logo: '' },
         ],
         CRYPTO: [
-          { code: 'upbit', name: '업비트', logo: '₿' },
-          { code: 'bithumb', name: '빗썸', logo: '₿' },
-          { code: 'coinone', name: '코인원', logo: '₿' },
+          { code: 'upbit', name: '업비트', logo: '' },
+          { code: 'bithumb', name: '빗썸', logo: '' },
+          { code: 'coinone', name: '코인원', logo: '' },
         ],
       };
       
       return createResponse(true, mockInstitutions[accountType] || []);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(`${API_ENDPOINTS.ACCOUNTS}/institutions`, {
         params: { type: accountType },
       });
       
-      console.log('✅ 금융기관 목록 조회 성공:', response.data);
+      console.log('금융기관 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 금융기관 목록 조회 실패:', error);
+      console.error('금융기관 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'INSTITUTIONS_ERROR',

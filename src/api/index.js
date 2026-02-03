@@ -1,7 +1,7 @@
 /**
  * API 서비스 통합 관리
  * 
- * 🚀 사용 방법:
+ * 사용 방법:
  * import { userService, stockService, newsService } from '@/api';
  * 
  * 또는

@@ -15,9 +15,9 @@ const authService = {
    * @returns {Promise<Object>} 회원가입 결과
    */
   signup: async (signupData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 회원가입:', signupData);
+      console.log('[MOCK] 회원가입:', signupData);
       
       // 가짜 지연 시뮬레이션
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -31,15 +31,15 @@ const authService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(API_ENDPOINTS.SIGNUP, signupData);
       
-      console.log('✅ 회원가입 성공:', response.data);
+      console.log('회원가입 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 회원가입 실패:', error);
+      console.error('회원가입 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'SIGNUP_ERROR',
@@ -56,9 +56,9 @@ const authService = {
    * @returns {Promise<Object>} 로그인 결과 (JWT 토큰 포함)
    */
   login: async (loginData) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 로그인:', loginData);
+      console.log('[MOCK] 로그인:', loginData);
       
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -76,11 +76,11 @@ const authService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(API_ENDPOINTS.LOGIN, loginData);
       
-      console.log('✅ 로그인 성공:', response.data);
+      console.log('로그인 성공:', response.data);
       
       // JWT 토큰을 로컬 스토리지에 저장
       if (response.data.data?.accessToken) {
@@ -90,7 +90,7 @@ const authService = {
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 로그인 실패:', error);
+      console.error('로그인 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'LOGIN_ERROR',
@@ -104,9 +104,9 @@ const authService = {
    * @returns {Promise<Object>} 로그아웃 결과
    */
   logout: async () => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 로그아웃');
+      console.log('[MOCK] 로그아웃');
       
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
@@ -114,17 +114,17 @@ const authService = {
       return createResponse(true, { message: '로그아웃되었습니다.' });
     }
 
-    // 🌐 실제 API 호출 (백엔드에 로그아웃 API가 있다면)
+    // 실제 API 호출 (백엔드에 로그아웃 API가 있다면)
     try {
       // 로컬 스토리지에서 토큰 삭제
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       
-      console.log('✅ 로그아웃 성공');
+      console.log('로그아웃 성공');
       
       return createResponse(true, { message: '로그아웃되었습니다.' });
     } catch (error) {
-      console.error('❌ 로그아웃 실패:', error);
+      console.error('로그아웃 실패:', error);
       
       return createResponse(false, null, {
         code: 'LOGOUT_ERROR',
@@ -138,9 +138,9 @@ const authService = {
    * @returns {Promise<Object>} 새로운 토큰
    */
   refreshToken: async () => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 토큰 갱신');
+      console.log('[MOCK] 토큰 갱신');
       
       return createResponse(true, {
         accessToken: 'mock_new_access_token_' + Date.now(),
@@ -149,7 +149,7 @@ const authService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const refreshToken = localStorage.getItem('refreshToken');
       
@@ -161,7 +161,7 @@ const authService = {
         refreshToken,
       });
       
-      console.log('✅ 토큰 갱신 성공:', response.data);
+      console.log('토큰 갱신 성공:', response.data);
       
       // 새 토큰 저장
       if (response.data.data?.accessToken) {
@@ -170,7 +170,7 @@ const authService = {
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 토큰 갱신 실패:', error);
+      console.error('토큰 갱신 실패:', error);
       
       return createResponse(false, null, {
         code: 'TOKEN_REFRESH_ERROR',

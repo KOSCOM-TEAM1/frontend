@@ -12,9 +12,9 @@ const userService = {
    * @returns {Promise} API 응답 데이터
    */
   getMemberInfo: async (memberId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 회원 정보 조회:', memberId);
+      console.log('[MOCK] 회원 정보 조회:', memberId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -25,7 +25,7 @@ const userService = {
       });
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.MEMBER_INFO, {
         headers: {
@@ -33,7 +33,7 @@ const userService = {
         },
       });
       
-      console.log('✅ API 원본 응답:', response.data);
+      console.log('API 원본 응답:', response.data);
       
       // 성공 응답 처리
       if (response.data.success) {
@@ -65,7 +65,7 @@ const userService = {
       }
     } catch (error) {
       // 네트워크 에러 또는 서버 에러
-      console.error('❌ getMemberInfo 에러:', error);
+      console.error('getMemberInfo 에러:', error);
       return {
         success: false,
         error: {

@@ -12,26 +12,26 @@ const assetService = {
    * @returns {Promise<Object>} 전체 자산 현황
    */
   getTotalAssets: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 전체 자산 현황 조회:', userId);
+      console.log('[MOCK] 전체 자산 현황 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
       return createResponse(true, mockAssets);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.ASSETS_TOTAL, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 전체 자산 현황 조회 성공:', response.data);
+      console.log('전체 자산 현황 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 전체 자산 현황 조회 실패:', error);
+      console.error('전체 자산 현황 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ASSETS_ERROR',
@@ -46,26 +46,26 @@ const assetService = {
    * @returns {Promise<Object>} 지역별 자산 분포
    */
   getAssetsByRegion: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 지역별 자산 분포 조회:', userId);
+      console.log('[MOCK] 지역별 자산 분포 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
       return createResponse(true, mockAssets.assetsByRegion);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.ASSETS_BY_REGION, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 지역별 자산 분포 조회 성공:', response.data);
+      console.log('지역별 자산 분포 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 지역별 자산 분포 조회 실패:', error);
+      console.error('지역별 자산 분포 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ASSETS_BY_REGION_ERROR',
@@ -80,26 +80,26 @@ const assetService = {
    * @returns {Promise<Object>} 자산 유형별 분포
    */
   getAssetsByType: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 자산 유형별 분포 조회:', userId);
+      console.log('[MOCK] 자산 유형별 분포 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 300));
       
       return createResponse(true, mockAssets.assetsByType);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.ASSETS_BY_TYPE, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 자산 유형별 분포 조회 성공:', response.data);
+      console.log('자산 유형별 분포 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 자산 유형별 분포 조회 실패:', error);
+      console.error('자산 유형별 분포 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ASSETS_BY_TYPE_ERROR',
@@ -117,9 +117,9 @@ const assetService = {
    * @returns {Promise<Object>} 자산 변동 내역
    */
   getAssetHistory: async (userId = 1, params = {}) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 자산 변동 내역 조회:', userId, params);
+      console.log('[MOCK] 자산 변동 내역 조회:', userId, params);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -139,7 +139,7 @@ const assetService = {
       return createResponse(true, mockHistory);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.ASSETS, {
         headers: { 'id': userId },
@@ -149,11 +149,11 @@ const assetService = {
         },
       });
       
-      console.log('✅ 자산 변동 내역 조회 성공:', response.data);
+      console.log('자산 변동 내역 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 자산 변동 내역 조회 실패:', error);
+      console.error('자산 변동 내역 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'ASSET_HISTORY_ERROR',

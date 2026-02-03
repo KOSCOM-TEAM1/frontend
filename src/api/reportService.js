@@ -14,9 +14,9 @@ const reportService = {
    * @returns {Promise<Object>} 리포트 목록
    */
   getReports: async (userId = 1, params = {}) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 리포트 목록 조회:', userId, params);
+      console.log('[MOCK] 리포트 목록 조회:', userId, params);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -29,18 +29,18 @@ const reportService = {
       return createResponse(true, filteredReports);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.REPORTS, {
         headers: { 'id': userId },
         params,
       });
       
-      console.log('✅ 리포트 목록 조회 성공:', response.data);
+      console.log('리포트 목록 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 리포트 목록 조회 실패:', error);
+      console.error('리포트 목록 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'REPORTS_ERROR',
@@ -55,9 +55,9 @@ const reportService = {
    * @returns {Promise<Object>} 최신 리포트
    */
   getLatestReport: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 최신 리포트 조회:', userId);
+      console.log('[MOCK] 최신 리포트 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 400));
       
@@ -76,17 +76,17 @@ const reportService = {
       return createResponse(true, latestReport);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.REPORT_LATEST, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 최신 리포트 조회 성공:', response.data);
+      console.log('최신 리포트 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 최신 리포트 조회 실패:', error);
+      console.error( '최신 리포트 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'LATEST_REPORT_ERROR',
@@ -101,9 +101,9 @@ const reportService = {
    * @returns {Promise<Object>} 어젯밤 리포트
    */
   getOvernightReport: async (userId = 1) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 어젯밤 리포트 조회:', userId);
+      console.log('[MOCK] 어젯밤 리포트 조회:', userId);
       
       await new Promise(resolve => setTimeout(resolve, 600));
       
@@ -121,17 +121,17 @@ const reportService = {
       return createResponse(true, overnightReport);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.get(API_ENDPOINTS.REPORT_OVERNIGHT, {
         headers: { 'id': userId },
       });
       
-      console.log('✅ 어젯밤 리포트 조회 성공:', response.data);
+      console.log('어젯밤 리포트 조회 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 어젯밤 리포트 조회 실패:', error);
+      console.error('어젯밤 리포트 조회 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'OVERNIGHT_REPORT_ERROR',
@@ -150,9 +150,9 @@ const reportService = {
    * @returns {Promise<Object>} 생성된 리포트
    */
   generateReport: async (reportRequest) => {
-    // 🎭 목 데이터 모드
+    // 목 데이터 모드
     if (USE_MOCK_DATA) {
-      console.log('🎭 [MOCK] 리포트 생성 요청:', reportRequest);
+      console.log('[MOCK] 리포트 생성 요청:', reportRequest);
       
       await new Promise(resolve => setTimeout(resolve, 2000)); // 리포트 생성은 시간이 걸림
       
@@ -172,15 +172,15 @@ const reportService = {
       return createResponse(true, newReport);
     }
 
-    // 🌐 실제 API 호출
+    // 실제 API 호출
     try {
       const response = await apiClient.post(API_ENDPOINTS.REPORTS, reportRequest);
       
-      console.log('✅ 리포트 생성 성공:', response.data);
+      console.log('리포트 생성 성공:', response.data);
       
       return createResponse(true, response.data.data);
     } catch (error) {
-      console.error('❌ 리포트 생성 실패:', error);
+      console.error('리포트 생성 실패:', error);
       
       return createResponse(false, null, {
         code: error.response?.data?.error?.code || 'GENERATE_REPORT_ERROR',
