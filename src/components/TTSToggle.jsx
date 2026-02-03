@@ -67,12 +67,53 @@ function TTSToggle() {
     };
   }, []);
 
-  // 미리로드 비활성화: 프로덕션에서 오디오 URL이 크로스오리진이면 CORS로 로드 실패하고
-  // 상대 경로면 Vercel이 index.html을 내려줘서 실패함. 재생 버튼 클릭 시에만 로드하면 정상 동작.
-  // (필요 시 개발 환경에서만 preload 사용 가능)
+  // 패널 열면 재생 안 한 트랙들의 재생 시간 미리 로드 (순차 호출로 API 부담 완화)
   useEffect(() => {
     if (!isOpen) return;
     preloadAbortRef.current = false;
+
+    const preloadDurations = async () => {
+      for (const track of TTS_PLAYLIST) {
+        if (preloadAbortRef.current) break;
+        if (trackDurations[track.id]) continue; // 이미 있으면 스킵
+
+        try {
+          const result = await ttsService.textToSpeech({
+            text: track.text,
+            speaker: 'nara',
+            speed: 0,
+            pitch: 0,
+            volume: 0,
+          });
+          if (preloadAbortRef.current) break;
+          if (!result.success || !result.data?.filename) continue;
+
+          const audioUrl = ttsService.getAudioUrl(result.data.filename);
+          urlCacheRef.current[track.id] = audioUrl;
+
+          const audio = new Audio(audioUrl);
+          await new Promise((resolve, reject) => {
+            const onLoaded = () => {
+              audio.removeEventListener('loadedmetadata', onLoaded);
+              audio.removeEventListener('error', onError);
+              setTrackDurations(prev => ({ ...prev, [track.id]: audio.duration }));
+              resolve();
+            };
+            const onError = (e) => {
+              audio.removeEventListener('loadedmetadata', onLoaded);
+              audio.removeEventListener('error', onError);
+              reject(e);
+            };
+            audio.addEventListener('loadedmetadata', onLoaded);
+            audio.addEventListener('error', onError);
+            if (audio.duration && !isNaN(audio.duration)) onLoaded();
+          });
+        } catch (e) {
+          if (!preloadAbortRef.current) console.warn('TTS 미리로드 실패:', track.id, e);
+        }
+      }
+    };
+    preloadDurations();
   }, [isOpen]);
 
   // 트랙 재생 (캐시 있으면 API 생략)
@@ -92,14 +133,13 @@ function TTSToggle() {
           pitch: 0,
           volume: 0,
         });
-        const resolvedUrl = result.data?.audioUrl || (result.data?.filename && ttsService.getAudioUrl(result.data.filename));
-        if (!result.success || !resolvedUrl) {
+        if (!result.success || !result.data?.filename) {
           alert(result.error?.message || '음성 변환에 실패했습니다.');
           setIsLoading(false);
           return;
         }
-        urlCacheRef.current[track.id] = resolvedUrl;
-        audioUrl = resolvedUrl;
+        audioUrl = ttsService.getAudioUrl(result.data.filename);
+        urlCacheRef.current[track.id] = audioUrl;
       }
 
       // 기존 오디오 정리

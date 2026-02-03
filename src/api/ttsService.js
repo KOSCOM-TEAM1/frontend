@@ -1,11 +1,5 @@
 import apiClient from './client';
 
-// 오디오 URL 생성 시 사용 (client와 동일한 base). 프로덕션에서는 항상 백엔드 절대 URL 사용.
-const getApiBaseUrl = () =>
-  import.meta.env.DEV
-    ? ''
-    : (import.meta.env.VITE_API_BASE_URL || 'https://koscomhackathon.cloud').replace(/\/$/, '');
-
 /**
  * CLOVA Voice TTS API 서비스
  */
@@ -91,16 +85,9 @@ const ttsService = {
       console.log('텍스트 음성 변환 완료:', response.data);
       
       if (response.data.success) {
-        const data = response.data.data || {};
-        let audioUrl = data.downloadUrl || (data.filename && ttsService.getAudioUrl(data.filename));
-        // downloadUrl이 상대 경로(예: /api/tts/audio/xxx.mp3)면 프로덕션에서 현재 도메인으로 요청되어 404 발생 → 백엔드 base URL 붙임
-        if (audioUrl && typeof audioUrl === 'string' && audioUrl.startsWith('/')) {
-          const base = getApiBaseUrl();
-          audioUrl = base ? base + audioUrl : audioUrl;
-        }
         return {
           success: true,
-          data: { ...data, audioUrl },
+          data: response.data.data,
         };
       } else {
         return {
@@ -167,7 +154,10 @@ const ttsService = {
    * @returns {string} 음성 파일 URL
    */
   getAudioUrl: (filename) => {
-    const baseUrl = getApiBaseUrl();
+    // 개발: 상대 경로. 프로덕션: 로드밸런서 주소 (TTS 재생 시 404 방지)
+    const baseUrl = import.meta.env.DEV
+      ? ''
+      : (import.meta.env.VITE_API_BASE_URL || 'https://koscomhackathon.cloud').replace(/\/$/, '');
     return baseUrl ? `${baseUrl}/api/tts/audio/${filename}` : `/api/tts/audio/${filename}`;
   },
 
