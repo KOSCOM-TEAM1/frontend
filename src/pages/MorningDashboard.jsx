@@ -194,7 +194,7 @@ function MorningDashboard() {
             <div className="relative z-10">
               <p className="text-slate-400 text-sm font-medium mb-1">총 수익</p>
               <div className="flex flex-col gap-1 mb-4">
-                <h1 className="text-emerald-400 text-3xl font-extrabold tracking-tight">{totalAsset.changeText}</h1>
+                <h1 className={`text-3xl font-extrabold tracking-tight ${totalAsset.positive !== false ? 'text-emerald-400' : 'text-rose-400'}`}>{totalAsset.changeText}</h1>
                 <div className="flex items-center gap-1.5 opacity-60">
                   <p className="text-slate-300 text-sm font-medium">자산 잔액</p>
                   <p className="text-white text-sm font-bold">{totalAsset.balance}</p>

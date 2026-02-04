@@ -463,9 +463,9 @@ export const mockExchangeRates = [
     id: 1,
     currency: "USD",
     currencyName: "미국 달러",
-    exchangeRate: 1320.50,
-    changeRate: 0.8,
-    changeAmount: 10.50,
+    exchangeRate: 1450.80,
+    changeRate: -0.01,
+    changeAmount: -0.15,
     updatedAt: "2026-02-02T09:00:00",
   },
   {
@@ -513,35 +513,35 @@ export const mockReports = [
   },
 ];
 
-// 대시보드 API 응답 형태 목데이터 (API 연동처럼 사용)
+// 대시보드 API 응답 형태 목데이터 (API 연동처럼 사용) — 오늘 장 반영
 export const dashboardMockResponse = {
   marketIndices: [
-    { id: "kospi", label: "코스피 지수", value: "5,117.45", change: "+3.39%", positive: true, icon: "show_chart" },
-    { id: "usdkrw", label: "USD/KRW", value: "1,448.40", change: "-0.35%", positive: false, icon: "currency_exchange" },
+    { id: "kospi", label: "코스피 지수", value: "5,257.00", change: "-0.59%", positive: false, icon: "show_chart" },
+    { id: "usdkrw", label: "USD/KRW", value: "1,450.80", change: "-0.01%", positive: false, icon: "currency_exchange" },
   ],
   overnightItems: [
-    { id: "kospi", icon: "show_chart", label: "코스피", change: "+3.39%", positive: true },
-    { id: "usdkrw", icon: "currency_exchange", label: "USD/KRW", change: "-0.35%", positive: false },
-    { id: "overseas", icon: "language", label: "해외", change: "+2.50%", positive: true },
-    { id: "domestic", icon: "account_balance", label: "국내", change: "-0.85%", positive: false },
-    { id: "total", icon: "account_balance_wallet", label: "총자산", change: "+0.37%", positive: true },
+    { id: "kospi", icon: "show_chart", label: "코스피", change: "-0.59%", positive: false },
+    { id: "usdkrw", icon: "currency_exchange", label: "USD/KRW", change: "-0.01%", positive: false },
+    { id: "overseas", icon: "language", label: "해외", change: "-1.79%", positive: false },
+    { id: "domestic", icon: "account_balance", label: "국내", change: "-1.81%", positive: false },
+    { id: "total", icon: "account_balance_wallet", label: "총자산", change: "-1.79%", positive: false },
   ],
   regionSummary: [
-    { type: "overseas", label: "해외주식", trend: "up", changeText: "+₩235,000 (+2.50%)", balance: "₩9,380,000", chartHeights: [28, 42, 35, 52, 48, 58, 65, 72, 82, 100] },
-    { type: "domestic", label: "국내 주식", trend: "down", changeText: "-₩140,000 (-0.85%)", balance: "₩16,449,000", chartHeights: [100, 88, 94, 82, 86, 78, 82, 74, 70, 65] },
+    { type: "overseas", label: "해외주식", trend: "down", changeText: "-₩213,000 (-1.79%)", balance: "₩11,870,000", chartHeights: [100, 92, 88, 85, 82, 80, 78, 76, 74, 72] },
+    { type: "domestic", label: "국내 주식", trend: "down", changeText: "-₩371,000 (-1.81%)", balance: "₩20,153,000", chartHeights: [100, 94, 90, 86, 84, 82, 80, 78, 76, 74] },
   ],
-  totalAsset: { changeText: "+₩95,000 (+0.37%)", balance: "₩25,829,000", chartHeights: [22, 35, 28, 42, 38, 52, 58, 72, 88, 100] },
+  totalAsset: { changeText: "-₩584,000 (-1.79%)", balance: "₩32,023,000", positive: false, chartHeights: [100, 95, 92, 88, 85, 82, 80, 78, 76, 74] },
   holdings: {
     overseas: [
-      { icon: "data_object", name: "NVIDIA", subName: "엔비디아", price: "$951.25", change: "+1.50%", positive: true },
-      { icon: "directions_car", name: "Tesla", subName: "테슬라", price: "$5,090.04", change: "+2.50%", positive: true },
-      { icon: "movie", name: "Netflix", subName: "넷플릭스", price: "$415.95", change: "+3.50%", positive: true },
+      { icon: "data_object", name: "NVIDIA", subName: "엔비디아", price: "$180.34", change: "-2.84%", positive: false },
+      { icon: "directions_car", name: "Tesla", subName: "테슬라", price: "$421.96", change: "+0.04%", positive: true },
+      { icon: "movie", name: "Netflix", subName: "넷플릭스", price: "$79.94", change: "-3.41%", positive: false },
     ],
     domestic: [
-      { icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics Co", price: "₩1,283,600", change: "-3.00%", positive: false },
-      { icon: "memory", name: "SK하이닉스", subName: "SK Hynix", price: "₩9,876,000", change: "-2.00%", positive: false },
-      { icon: "public", name: "네이버", subName: "NAVER", price: "₩1,686,000", change: "+1.78%", positive: true },
-      { icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", price: "₩3,603,000", change: "+1.83%", positive: true },
+      { icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics Co", price: "₩163,700", change: "-2.27%", positive: false },
+      { icon: "memory", name: "SK하이닉스", subName: "SK Hynix", price: "₩888,000", change: "-2.09%", positive: false },
+      { icon: "public", name: "네이버", subName: "NAVER", price: "₩264,000", change: "-1.86%", positive: false },
+      { icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", price: "₩1,118,000", change: "+0.54%", positive: true },
     ],
   },
 };
@@ -562,12 +562,12 @@ export const timelineMockResponse = {
 };
 export const fetchTimelineData = () => new Promise((r) => setTimeout(() => r(timelineMockResponse), 300));
 
-// --- 통합 자산 현황 API 형태 목데이터 ---
+// --- 통합 자산 현황 API 형태 목데이터 (오늘 장 반영) ---
 export const assetsMockResponse = {
-  totalAsset: { changeText: "+₩95,000 (+0.37%)", balance: "₩25,829,000" },
-  domestic: { label: "국내 주식", changeText: "-₩140,000 (-0.85%)", balance: "₩16,449,000", totalLabel: "국내 총액", totalShort: "₩16.4M", accounts: [{ id: "savings", name: "종합 위탁 계좌", amount: "₩10.2M", pct: "61.7%", color: "sky" }, { id: "cma", name: "CMA 파킹 계좌", amount: "₩6.3M", pct: "38.3%", color: "emerald" }] },
-  foreign: { label: "해외 주식", changeText: "+₩235,000 (+2.50%)", balance: "₩9,380,000", totalLabel: "해외 총액", totalShort: "₩9.4M", accounts: [{ id: "us", name: "미국 주식 일반", amount: "₩6.6M", pct: "70%", color: "sky" }, { id: "isa", name: "미국 ISA 계좌", amount: "₩2.3M", pct: "25%", color: "violet" }, { id: "cash", name: "외화 예수금", amount: "₩0.5M", pct: "5%", color: "amber" }] },
-  exchangeRate: { value: "1,448.40", change: "-0.35%", positive: false },
+  totalAsset: { changeText: "-₩584,000 (-1.79%)", balance: "₩32,023,000", positive: false },
+  domestic: { label: "국내 주식", changeText: "-₩371,000 (-1.81%)", balance: "₩20,153,000", positive: false, totalLabel: "국내 총액", totalShort: "₩20.2M", accounts: [{ id: "savings", name: "종합 위탁 계좌", amount: "₩12.5M", pct: "62.1%", color: "sky" }, { id: "cma", name: "CMA 파킹 계좌", amount: "₩7.6M", pct: "37.9%", color: "emerald" }] },
+  foreign: { label: "해외 주식", changeText: "-₩213,000 (-1.79%)", balance: "₩11,870,000", positive: false, totalLabel: "해외 총액", totalShort: "₩11.9M", accounts: [{ id: "us", name: "미국 주식 일반", amount: "₩8.3M", pct: "70%", color: "sky" }, { id: "isa", name: "미국 ISA 계좌", amount: "₩2.9M", pct: "25%", color: "violet" }, { id: "cash", name: "외화 예수금", amount: "₩0.6M", pct: "5%", color: "amber" }] },
+  exchangeRate: { value: "1,450.80", change: "-0.01%", positive: false },
 };
 export const fetchAssetsData = () => new Promise((r) => setTimeout(() => r(assetsMockResponse), 350));
 
@@ -617,13 +617,13 @@ export const fetchAnalysisDetailData = () => new Promise((r) => setTimeout(() =>
 export const strategyMockResponse = {
   summaryText: "엔비디아 Rubin·메모리 병목 뉴스는 AI 인프라 확장이 메모리 공급을 앞지르는 구도입니다. 수혜 강도는 SK하이닉스 > 삼성전자 > NVIDIA(수요 엔진) 순으로 강한 연관, 네이버는 AI 테마 간접 연관, 테슬라·넷플릭스·삼양식품은 HBM/메모리 테마와 직접 연관 낮습니다.",
   holdings: [
-    { id: 1, icon: "memory", name: "NVDA", subName: "엔비디아 (NVIDIA)", impact: "매우 높음", change: "+5.21%", positive: true, type: "해외", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "메모리 병목 테마의 수요 엔진 · Rubin/HBM4 이슈에 강한 연관" },
-    { id: 2, icon: "electric_car", name: "TSLA", subName: "테슬라 (Tesla)", impact: "낮음", change: "+2.14%", positive: true, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "HBM/메모리 병목 기사와 직접 연관 낮음 · EV·로보택시 이슈 중심" },
-    { id: 3, icon: "movie", name: "NFLX", subName: "넷플릭스 (Netflix)", impact: "매우 낮음", change: "+1.32%", positive: true, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 메모리 사이클과 거의 무관 · 구독·광고·콘텐츠 변수 중심" },
-    { id: 4, icon: "memory", name: "SK하이닉스", subName: "SK Hynix", impact: "매우 높음", change: "+3.89%", positive: true, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "AI 메모리 사이클 직접 수혜 · HBM 시장 우위" },
-    { id: 5, icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics", impact: "높음", change: "+1.24%", positive: true, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "HBM4 모멘텀·엔비디아 공급 보도에 민감 · 같은 방향 연동 가능성 큼" },
-    { id: 6, icon: "search", name: "네이버", subName: "NAVER", impact: "중간", change: "+1.78%", positive: true, type: "국내", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 테마 간접 · 메모리 병목 뉴스와 연결 고리 약함" },
-    { id: 7, icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", impact: "매우 낮음", change: "+1.83%", positive: true, type: "국내", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "반도체/AI 메모리 테마와 무관 · 소비재·수출 변수 중심" },
+    { id: 1, icon: "memory", name: "NVDA", subName: "엔비디아 (NVIDIA)", impact: "매우 높음", change: "-2.84%", positive: false, type: "해외", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "메모리 병목 테마의 수요 엔진 · Rubin/HBM4 이슈에 강한 연관" },
+    { id: 2, icon: "electric_car", name: "TSLA", subName: "테슬라 (Tesla)", impact: "낮음", change: "+0.04%", positive: true, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "HBM/메모리 병목 기사와 직접 연관 낮음 · EV·로보택시 이슈 중심" },
+    { id: 3, icon: "movie", name: "NFLX", subName: "넷플릭스 (Netflix)", impact: "매우 낮음", change: "-3.41%", positive: false, type: "해외", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 메모리 사이클과 거의 무관 · 구독·광고·콘텐츠 변수 중심" },
+    { id: 4, icon: "memory", name: "SK하이닉스", subName: "SK Hynix", impact: "매우 높음", change: "-2.09%", positive: false, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "AI 메모리 사이클 직접 수혜 · HBM 시장 우위" },
+    { id: 5, icon: "precision_manufacturing", name: "삼성전자", subName: "Samsung Electronics", impact: "높음", change: "-2.27%", positive: false, type: "국내", recommendation: "매수", recommendationColor: "text-emerald-400", dotColor: "bg-emerald-500", bgColor: "bg-emerald-500/10", borderColor: "border-emerald-500/30", shadowColor: "rgba(16, 185, 129, 0.4)", reason: "HBM4 모멘텀·엔비디아 공급 보도에 민감 · 같은 방향 연동 가능성 큼" },
+    { id: 6, icon: "search", name: "네이버", subName: "NAVER", impact: "중간", change: "-1.86%", positive: false, type: "국내", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "AI 테마 간접 · 메모리 병목 뉴스와 연결 고리 약함" },
+    { id: 7, icon: "restaurant", name: "삼양식품", subName: "Samyang Foods", impact: "매우 낮음", change: "+0.54%", positive: true, type: "국내", recommendation: "유지", recommendationColor: "text-blue-400", dotColor: "bg-blue-500", bgColor: "bg-blue-500/10", borderColor: "border-blue-500/30", shadowColor: "rgba(59, 130, 246, 0.4)", reason: "반도체/AI 메모리 테마와 무관 · 소비재·수출 변수 중심" },
   ],
   keyBeneficiaries: [
     { rank: "🥇", name: "NVIDIA", sub: "메모리 병목 테마의 수요 엔진 (강한 연관)", text: "AI 가속기(Blackwell/Rubin) 판매가 늘수록 HBM 수요가 같이 커짐. Rubin/HBM4 관련 공급·전환 이슈가 시장의 핵심 내러티브. 단기 조정 가능성(밸류 부담) 참고." },

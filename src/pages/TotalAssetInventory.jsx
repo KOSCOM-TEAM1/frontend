@@ -92,7 +92,7 @@ function TotalAssetInventory() {
               <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2">
                 총 수익
               </p>
-              <p className="text-emerald-400 text-3xl font-extrabold tracking-tight mb-2">
+              <p className={`text-3xl font-extrabold tracking-tight mb-2 ${totalAsset.positive !== false ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {totalAsset.changeText}
               </p>
               <div className="flex items-center gap-1.5 opacity-60">
@@ -108,7 +108,7 @@ function TotalAssetInventory() {
                   <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     {domestic.label}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-rose-400 tracking-tight mb-1">
+                  <h3 className={`text-2xl font-extrabold tracking-tight mb-1 ${domestic.positive !== false ? 'text-emerald-400' : 'text-rose-400'}`}>
                     {domestic.changeText}
                   </h3>
                   <div className="flex items-center gap-1.5 opacity-60">
@@ -241,7 +241,7 @@ function TotalAssetInventory() {
                   <span className="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded-md mb-2 inline-block uppercase tracking-wider">
                     {foreign.label}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-emerald-400 tracking-tight mb-1">
+                  <h3 className={`text-2xl font-extrabold tracking-tight mb-1 ${foreign.positive !== false ? 'text-emerald-400' : 'text-rose-400'}`}>
                     {foreign.changeText}
                   </h3>
                   <div className="flex items-center gap-1.5 opacity-60">
